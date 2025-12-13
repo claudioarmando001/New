@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Agregador de Notícias de Moçambique</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f3f5;
+        margin: 0;
+    }
+
+    /* HEADER */
+    header {
+        background: #1a73e8;
+        color: white;
+        padding: 18px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        position: relative;
+    }
+
+    #refresh-btn {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: white;
+        color: #1a73e8;
+        border: none;
+        padding: 7px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0px 2px 4px rgba(0,0,0,0.25);
+        transition: 0.2s;
+    }
+    #refresh-btn:hover { background: #e6e6e6; }
+
+    /* LISTA */
+    #news-container {
+        max-width: 950px;
+        margin: auto;
+        padding: 12px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 12px;
+        padding: 12px;
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0px 2px 5px rgba(0,0,0,0.08);
+        cursor: pointer;
+        transition: 0.2s;
+        min-height: 90px;
+    }
+    .card:hover { transform: scale(1.01); }
+
+    .card-text { width: 70%; }
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #111;
+        line-height: 1.3;
+    }
+    .card-meta {
+        margin-top: 6px;
+        color: #777;
+        font-size: 13px;
+    }
+
+    .card img {
+        width: 120px;
+        height: 85px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-left: 10px;
+        background: #ddd;
+    }
+
+    /* LOADER */
+    #load-more {
+        text-align:center;
+        padding:20px;
+        color:#666;
+    }
+
+    /* MODAL */
+    #modal {
+        display:none;
+        position:fixed;
+        top:0; left:0;
+        width:100%; height:100%;
+        background:rgba(0,0,0,0.6);
+        justify-content:center;
+        align-items:center;
+        padding:20px;
+        z-index: 9999;
+    }
+    #modal-content {
+        background:white;
+        width:100%;
+        max-width:800px;
+        padding:25px;
+        border-radius:10px;
+        max-height:90vh;
+        overflow-y:auto;
+    }
+    #modal-close {
+        float:right;
+        cursor:pointer;
+        font-size:20px;
+    }
+    #modal-body img {
+        max-width:100%;
+        border-radius:10px;
+        margin:10px 0;
+    }
+
+    /* WHATSAPP */
+    #whatsapp-btn {
+        position: fixed;
+        bottom: 22px;
+        right: 22px;
+        background: #25d366;
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        font-size: 0;
+        box-shadow: 0px 3px 8px rgba(0,0,0,0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        text-decoration: none;
+        z-index: 99999;
+    }
+    #whatsapp-btn img { width: 30px; height: 30px; }
+
+    .error {
+        padding: 16px;
+        text-align: center;
+        color: #b00020;
+        background: #fff;
+        border-radius: 8px;
+        margin-bottom: 12px;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    📰 Notícias de Moçambique
+    <button id="refresh-btn" onclick="manualRefresh()">Atualizar</button>
+</header>
+
+<div id="news-container">
+    <div id="load-more">Carregando fontes...</div>
+</div>
+
+<!-- BOTÃO WHATSAPP -->
+<a id="whatsapp-btn" href="https://whatsapp.com/channel/0029VajvaaDCcW4indlczf2g" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+</a>
+
+<!-- MODAL -->
+<div id="modal">
+    <div id="modal-content">
+        <span id="modal-close">✖</span>
+        <div id="modal-body"></div>
+    </div>
+</div>
+
+<script>
+/* ======== FONTES (mesmas do primeiro código WP-JSON) ======== */
+const sources = [
+    { name: "O País", url: "https://www.opais.co.mz/wp-json/wp/v2/posts?per_page=8&_embed" },
+    { name: "Time de Todos",url: "https://timesdetodos.com/wp-json/wp/v2/posts?per_page=8&_embed" },
+    { name: "Jornal Notícias", url: "https://www.jornalnoticias.co.mz/wp-json/wp/v2/posts?per_page=8&_embed" },
+    { name: "Carta de Moçambique", url: "https://cartamz.com/wp-json/wp/v2/posts?per_page=8&_embed" }
+];
+
+let news = [];
+let hashes = new Set();
+
+const container = document.getElementById("news-container");
+const loader = document.getElementById("load-more");
+
+/* === FETCH COM FALLBACK CORS === */
+async function fetchWithCorsFallback(originalUrl) {
+    try {
+        const r = await fetch(originalUrl);
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        const ct = r.headers.get("content-type") || "";
+        if (ct.includes("application/json")) return await r.json();
+        const txt = await r.text();
+        return JSON.parse(txt);
+    } catch (err) {
+        const proxy = "https://api.allorigins.win/get?url=" + encodeURIComponent(originalUrl);
+        const rp = await fetch(proxy);
+        const j = await rp.json();
+        return JSON.parse(j.contents);
+    }
+}
+
+function sanitizeHTML(html) {
+    return String(html)
+        .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
+        .replace(/\son\w+=(".*?"|'.*?'|[^\s>]+)/gi, "");
+}
+
+function extractImage(article) {
+    try {
+        const fm = article._embedded?.["wp:featuredmedia"]?.[0];
+        if (fm?.source_url) return fm.source_url;
+    } catch(e){}
+    const html = article.content?.rendered || "";
+    const m = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+    return m ? m[1] : "https://via.placeholder.com/300x200?text=Sem+Imagem";
+}
+
+function formatDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleString("pt-PT");
+}
+
+/* === ADICIONAR NOTÍCIA === */
+function pushNews(item) {
+    news.push(item);
+    news.sort((a,b)=>b.date - a.date);
+    renderAll();
+}
+
+function renderAll(){
+    container.innerHTML = "";
+    news.forEach(n => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+            <div class="card-text">
+                <div class="card-title">${n.title}</div>
+                <div class="card-meta">${n.source} • ${formatDate(n.date)}</div>
+            </div>
+            <img src="${n.image}" loading="lazy">
+        `;
+        card.onclick = () => openModal(n);
+        container.appendChild(card);
+    });
+}
+
+/* === MODAL === */
+function openModal(n){
+    const modalBody = document.getElementById("modal-body");
+    modalBody.innerHTML = `
+        <h2>${n.title}</h2>
+        <p><i>${n.source} — ${formatDate(n.date)}</i></p>
+        ${sanitizeHTML(n.content)}
+    `;
+    document.getElementById("modal").style.display = "flex";
+}
+document.getElementById("modal-close").onclick = () => {
+    document.getElementById("modal").style.display = "none";
+};
+
+/* === PROCESSAR ARTIGO === */
+function renderSingleArticle(article, sourceName) {
+    const hash = (article.title?.rendered + article.link).toLowerCase().replace(/\W/g,"");
+    if (hashes.has(hash)) return;
+    hashes.add(hash);
+
+    pushNews({
+        title: article.title?.rendered || "Sem título",
+        content: article.content?.rendered || "",
+        date: new Date(article.date || article.modified),
+        source: sourceName,
+        image: extractImage(article),
+        hash
+    });
+}
+
+/* === CARREGAR TODAS AS FONTES === */
+async function loadAllSources(){
+    loader.innerText = "Carregando fontes...";
+    const promises = sources.map(async s=>{
+        try{
+            const data = await fetchWithCorsFallback(s.url);
+            if(!Array.isArray(data)) throw new Error("Não retornou array.");
+            data.forEach(a=>renderSingleArticle(a, s.name));
+        } catch(e){
+            const d = document.createElement("div");
+            d.className="error";
+            d.innerText = `Erro ao carregar ${s.name}: ${e.message}`;
+            container.appendChild(d);
+        }
+    });
+    await Promise.allSettled(promises);
+    loader.innerText = "Últimas notícias carregadas.";
+}
+
+/* REFRESH MANUAL */
+function manualRefresh(){
+    document.getElementById("refresh-btn").innerText = "⏳ Atualizando...";
+    setTimeout(()=>{
+        news = [];
+        hashes.clear();
+        container.innerHTML = "";
+        loadAllSources();
+        document.getElementById("refresh-btn").innerText = "Atualizar";
+    }, 400);
+}
+
+/* AUTO-ATUALIZAÇÃO A CADA 60s */
+setInterval(loadAllSources, 60000);
+
+/* INICIAR */
+loadAllSources();
+</script>
+</body>
+</html>
