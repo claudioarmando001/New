@@ -1,321 +1,912 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt">
 <head>
-    <script>(function(s){s.dataset.zone='10314230',s.src='https://groleegni.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-    <meta name="monetag" content="0a569add681e1c64f949af059e91c89a">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Agregador de Notícias de Moçambique</title>
 
+<!-- SEO Automático -->
+<meta name="description" content="Agregador de notícias de Moçambique em tempo real. Notícias de O País, Time de Todos, Jornal Notícias e Carta de Moçambique.">
+<meta name="keywords" content="Moçambique, notícias, atualidades, O País, Time de Todos, Jornal Notícias, Carta de Moçambique">
+<meta name="author" content="Agregador de Notícias de Moçambique">
+<meta name="robots" content="index, follow">
+<meta name="language" content="Portuguese">
+<meta property="og:title" content="Agregador de Notícias de Moçambique">
+<meta property="og:description" content="Notícias de Moçambique em tempo real das principais fontes">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_PT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agregador de Notícias de Moçambique">
+<meta name="twitter:description" content="Notícias de Moçambique em tempo real">
+
+<link rel="canonical" href="https://noticias-mocambique.com">
+
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #f2f3f5;
-    margin: 0;
-}
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f3f5;
+        margin: 0;
+    }
 
-header {
-    background: #1a73e8;
-    color: white;
-    padding: 18px;
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-}
+    /* HEADER */
+    header {
+        background: #1a73e8;
+        color: white;
+        padding: 18px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        position: relative;
+    }
 
-/* ====== LISTA DE NOTÍCIAS ====== */
-#news-container {
-    max-width: 950px;
-    margin: auto;
-    padding: 10px;
-}
+    #refresh-btn {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: white;
+        color: #1a73e8;
+        border: none;
+        padding: 7px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0px 2px 4px rgba(0,0,0,0.25);
+        transition: 0.2s;
+    }
+    #refresh-btn:hover { background: #e6e6e6; }
 
-.card {
-    background: white;
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.08);
-    cursor: pointer;
-    transition: 0.2s;
-}
+    /* LISTA */
+    #news-container {
+        max-width: 950px;
+        margin: auto;
+        padding: 12px;
+    }
 
-.card:hover {
-    transform: scale(1.01);
-}
+    .card {
+        background: white;
+        border-radius: 12px;
+        padding: 12px;
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0px 2px 5px rgba(0,0,0,0.08);
+        cursor: pointer;
+        transition: 0.2s;
+        min-height: 90px;
+    }
+    .card:hover { transform: scale(1.01); }
 
-.card-text {
-    width: 70%;
-}
+    .card-text { width: 70%; }
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #111;
+        line-height: 1.3;
+    }
+    .card-meta {
+        margin-top: 6px;
+        color: #777;
+        font-size: 13px;
+    }
 
-.card-title {
-    font-size: 16px;
-    font-weight: bold;
-    color: #111;
-    line-height: 1.3;
-}
+    .card img {
+        width: 120px;
+        height: 85px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-left: 10px;
+        background: #ddd;
+    }
 
-.card-meta {
-    margin-top: 6px;
-    color: #777;
-    font-size: 13px;
-}
+    /* LOADER */
+    #load-more {
+        text-align:center;
+        padding:20px;
+        color:#666;
+    }
 
-.card img {
-    width: 120px;
-    height: 85px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-left: 10px;
-    background: #ddd;
-}
+    /* LOADER DE SCROLL INFINITO */
+    #infinite-loader {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+        display: none;
+    }
+    .loader-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #1a73e8;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-right: 10px;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 
-/* ========= MODAL ========= */
-#modal {
-    display:none;
-    position:fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background:rgba(0,0,0,0.6);
-    justify-content:center;
-    align-items:center;
-    padding: 20px;
-}
+    /* MODAL */
+    #modal {
+        display:none;
+        position:fixed;
+        top:0; left:0;
+        width:100%; height:100%;
+        background:rgba(0,0,0,0.6);
+        justify-content:center;
+        align-items:center;
+        padding:20px;
+        z-index: 9999;
+    }
+    #modal-content {
+        background:white;
+        width:100%;
+        max-width:800px;
+        padding:25px;
+        border-radius:10px;
+        max-height:90vh;
+        overflow-y:auto;
+    }
+    #modal-close {
+        float:right;
+        cursor:pointer;
+        font-size:20px;
+    }
+    #modal-body img {
+        max-width:100%;
+        border-radius:10px;
+        margin:10px 0;
+    }
 
-#modal-content {
-    background:white;
-    width:100%;
-    max-width:800px;
-    padding:25px;
-    border-radius:10px;
-    max-height:90vh;
-    overflow-y:auto;
-}
+    /* WHATSAPP */
+    #whatsapp-btn {
+        position: fixed;
+        bottom: 22px;
+        right: 22px;
+        background: #25d366;
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        font-size: 0;
+        box-shadow: 0px 3px 8px rgba(0,0,0,0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        text-decoration: none;
+        z-index: 99999;
+    }
+    #whatsapp-btn img { width: 30px; height: 30px; }
 
-#modal-close {
-    float:right;
-    cursor:pointer;
-    font-size:20px;
-}
+    /* CACHE STATUS */
+    #cache-status {
+        position: fixed;
+        top: 70px;
+        right: 20px;
+        background: #4caf50;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        z-index: 1000;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        display: none;
+    }
+    #cache-status.offline {
+        background: #ff9800;
+    }
 
-#modal-body img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 10px 0;
-    border-radius: 10px;
-}
+    .error {
+        padding: 16px;
+        text-align: center;
+        color: #b00020;
+        background: #fff;
+        border-radius: 8px;
+        margin-bottom: 12px;
+    }
 
-#modal-body a {
-    color: inherit;
-    pointer-events: none;
-    text-decoration: none;
-}
+    /* FILTROS */
+    .filters {
+        max-width: 950px;
+        margin: 20px auto 10px;
+        padding: 0 12px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .filter-btn {
+        background: white;
+        border: 1px solid #ddd;
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s;
+    }
+    .filter-btn:hover {
+        background: #f0f0f0;
+    }
+    .filter-btn.active {
+        background: #1a73e8;
+        color: white;
+        border-color: #1a73e8;
+    }
 
-#load-more {
-    text-align:center;
-    padding:20px;
-    color:#666;
-}
-
-/* ===== BOTÃO FLUTUANTE WHATSAPP REDONDO ===== */
-#whatsapp-btn {
-    position: fixed;
-    bottom: 22px;
-    right: 22px;
-    background: #25d366;
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    font-size: 0;
-    box-shadow: 0px 3px 8px rgba(0,0,0,0.25);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 9999;
-}
-
-#whatsapp-btn img {
-    width: 30px;
-    height: 30px;
-}
+    /* SEARCH */
+    .search-container {
+        max-width: 950px;
+        margin: 10px auto;
+        padding: 0 12px;
+    }
+    #search-input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
 </style>
 </head>
+
 <body>
-    <script>(function(s){s.dataset.zone='10314230',s.src='https://groleegni.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-    <meta name="monetag" content="0a569add681e1c64f949af059e91c89a">
 
-<header>📰 Notícias de Moçambique</header>
+<header>
+    📰 Notícias de Moçambique
+    <button id="refresh-btn" onclick="manualRefresh()">Atualizar</button>
+</header>
 
-<div id="news-container"></div>
-<div id="load-more">Carregando notícias...</div>
+<!-- Cache Status -->
+<div id="cache-status">🔄 Carregando...</div>
 
-<a id="whatsapp-btn" href="https://whatsapp.com/channel/0029VajvaaDCcW4indlczf2g" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+<!-- Filtros por Fonte -->
+<div class="filters">
+    <button class="filter-btn active" onclick="filterNews('all')">Todas</button>
+    <button class="filter-btn" onclick="filterNews('O País')">O País</button>
+    <button class="filter-btn" onclick="filterNews('Time de Todos')">Time de Todos</button>
+    <button class="filter-btn" onclick="filterNews('Jornal Notícias')">Jornal Notícias</button>
+    <button class="filter-btn" onclick="filterNews('Carta de Moçambique')">Carta de Moçambique</button>
+</div>
+
+<!-- Busca -->
+<div class="search-container">
+    <input type="text" id="search-input" placeholder="🔍 Buscar notícias..." onkeyup="searchNews()">
+</div>
+
+<div id="news-container">
+    <div id="load-more">Carregando fontes...</div>
+</div>
+
+<!-- Loader para scroll infinito -->
+<div id="infinite-loader">
+    <div class="loader-spinner"></div> Carregando mais notícias...
+</div>
+
+<!-- BOTÃO WHATSAPP -->
+<a id="whatsapp-btn" href="https://whatsapp.com/channel/0029VajvaaDCcW4indlczf2g" target="_blank" aria-label="Canal do WhatsApp">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
 </a>
 
+<!-- MODAL -->
 <div id="modal">
     <div id="modal-content">
-        <span id="modal-close">✖</span>
+        <span id="modal-close" aria-label="Fechar">✖</span>
         <div id="modal-body"></div>
     </div>
 </div>
 
 <script>
-/* ========= FEEDS ========= */
-const feeds = [
-    "https://www.jornalnoticias.co.mz/feed/",
-    "https://opais.co.mz/feed/",
-    "https://canal.co.mz/feed/",
-    "https://savana.co.mz/feed/",
-    "https://diariodemocambique.co.mz/feed/",
-    "https://jornalmz.com/feed/",
-    "https://mol.co.mz/feed/",
-    "https://aim.org.mz/feed/",
-    "https://clubofmozambique.com/feed/",
-    "https://zitamar.com/feed/",
-    "https://stop.co.mz/feed/",
-    "https://fimdesemana.co.mz/feed/",
-    "https://folhademaputo.co.mz/feed/",
-    "https://infromoz.co.mz/feed/",
-    "https://noticia.co.mz/feed/",
-    "https://portalmoznews.co.mz/feed/",
-    "https://radiomocambique.co.mz/feed/",
-    "https://tvm.co.mz/feed/",
-    "https://oautarca.co.mz/feed/",
-    "https://txopela.co.mz/feed/",
-    "https://desafio.co.mz/feed/",
-    "https://zambezeco.co.mz/feed/",
-    "https://tempo.co.mz/feed/",
-    "https://mi.co.mz/feed/",
-    "https://domingo.co.mz/feed/",
-    "https://timesdetodos.com/feed/",
-    "https://mznews.co.mz/feed/",
-    "https://correiodamanha.co.mz/feed/",
-    "https://noticiaslusofonas.co.mz/feed/"
-];
+/* ======== SISTEMA DE CACHE STORAGE ======== */
+const CACHE_KEYS = {
+    NEWS: 'moz_news_cache',
+    TIMESTAMP: 'moz_cache_timestamp',
+    SOURCES: 'moz_sources_cache',
+    SETTINGS: 'moz_settings'
+};
 
-/* ======= SISTEMA OTIMIZADO ======= */
-let news = [];
-let hashes = new Set();
+const CACHE_DURATION = 15 * 60 * 1000; // 15 minutos
 
-/* Exibir notícia imediatamente */
-function pushNews(n) {
-    news.push(n);
+class CacheManager {
+    constructor() {
+        this.isOnline = navigator.onLine;
+        this.setupOfflineDetection();
+    }
 
-    // ordenar sempre mais recente em cima
-    news.sort((a,b)=>b.pubDate - a.pubDate);
-
-    // limpar lista
-    const container = document.getElementById("news-container");
-    container.innerHTML = "";
-
-    // renderizar TODAS que já existem
-    news.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `
-            <div class="card-text">
-                <div class="card-title">${item.title}</div>
-                <div class="card-meta">${item.source} • ${timeAgo(item.pubDate)}</div>
-            </div>
-            <img src="${item.image}" loading="lazy">
-        `;
-        card.onclick = () => openModal(item);
-        container.appendChild(card);
-    });
-
-    document.getElementById("load-more").innerText = "Carregando...";
-}
-
-/* Extrair imagem */
-function extractImage(item){
-    if(item.enclosure?.link) return item.enclosure.link;
-    if(item.thumbnail) return item.thumbnail;
-    const m = item.description?.match(/<img.*?src=["'](.*?)["']/i);
-    return m ? m[1] : "https://via.placeholder.com/300x200?text=Sem+Imagem";
-}
-
-/* ===== CARREGAMENTO IMEDIATO ===== */
-async function fetchFeed(feed){
-    try {
-        const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`;
-        const json = await fetch(api).then(r => r.json());
-
-        if (!json?.items) return;
-
-        json.items.forEach(item => {
-            const hash = (item.title + item.link).toLowerCase().replace(/\W/g,"");
-            if (hashes.has(hash)) return;
-
-            hashes.add(hash);
-
-            pushNews({
-                title: item.title,
-                description: item.content || item.description || "",
-                link: item.link,
-                pubDate: new Date(item.pubDate),
-                source: json.feed.title,
-                image: extractImage(item),
-                hash
-            });
+    setupOfflineDetection() {
+        window.addEventListener('online', () => {
+            this.isOnline = true;
+            this.updateCacheStatus('✅ Online');
         });
+        
+        window.addEventListener('offline', () => {
+            this.isOnline = false;
+            this.updateCacheStatus('⚠️ Offline - Modo Cache');
+        });
+    }
 
-    } catch(e) {
-        console.log("Erro ao carregar feed:", feed);
+    updateCacheStatus(message) {
+        const status = document.getElementById('cache-status');
+        status.textContent = message;
+        status.style.display = 'block';
+        status.classList.toggle('offline', !this.isOnline);
+        
+        setTimeout(() => {
+            status.style.display = 'none';
+        }, 3000);
+    }
+
+    async getFromCache(key) {
+        try {
+            const cached = localStorage.getItem(key);
+            if (!cached) return null;
+            
+            return JSON.parse(cached);
+        } catch (error) {
+            console.error('Erro ao ler cache:', error);
+            return null;
+        }
+    }
+
+    async saveToCache(key, data) {
+        try {
+            localStorage.setItem(key, JSON.stringify(data));
+            return true;
+        } catch (error) {
+            console.error('Erro ao salvar cache:', error);
+            return false;
+        }
+    }
+
+    async getNewsCache() {
+        const cache = await this.getFromCache(CACHE_KEYS.NEWS);
+        const timestamp = await this.getFromCache(CACHE_KEYS.TIMESTAMP);
+        
+        if (!cache || !timestamp) return null;
+        
+        const now = Date.now();
+        const cacheAge = now - timestamp;
+        
+        if (cacheAge > CACHE_DURATION) {
+            return null; // Cache expirado
+        }
+        
+        return cache;
+    }
+
+    async saveNewsCache(newsData) {
+        await this.saveToCache(CACHE_KEYS.NEWS, newsData);
+        await this.saveToCache(CACHE_KEYS.TIMESTAMP, Date.now());
+    }
+
+    async getSourcesCache() {
+        return await this.getFromCache(CACHE_KEYS.SOURCES);
+    }
+
+    async saveSourcesCache(sourcesData) {
+        await this.saveToCache(CACHE_KEYS.SOURCES, sourcesData);
+    }
+
+    clearAllCache() {
+        Object.values(CACHE_KEYS).forEach(key => {
+            localStorage.removeItem(key);
+        });
+        this.updateCacheStatus('🗑️ Cache limpo');
     }
 }
 
-/* ===== DISPARAR TODOS FEEDS EM PARALELO ===== */
-function fetchAllFeeds() {
-    feeds.forEach(feed => fetchFeed(feed));
+/* ======== SEO E META TAGS DINÂMICAS ======== */
+class SEOManager {
+    constructor() {
+        this.defaultTitle = 'Agregador de Notícias de Moçambique';
+        this.defaultDescription = 'Notícias de Moçambique em tempo real das principais fontes';
+    }
+
+    updateMetaTags(newsItem) {
+        if (!newsItem) return;
+        
+        // Atualizar título da página
+        document.title = `${newsItem.title} | Notícias de Moçambique`;
+        
+        // Atualizar meta description
+        const description = newsItem.content?.replace(/<[^>]*>/g, '').substring(0, 160) || this.defaultDescription;
+        this.setMeta('description', description);
+        this.setMeta('og:description', description);
+        this.setMeta('twitter:description', description);
+        
+        // Atualizar meta title
+        this.setMeta('og:title', newsItem.title);
+        this.setMeta('twitter:title', newsItem.title);
+        
+        // Atualizar meta image
+        if (newsItem.image) {
+            this.setMeta('og:image', newsItem.image);
+            this.setMeta('twitter:image', newsItem.image);
+        }
+        
+        // Atualizar URL canônica para a notícia específica
+        this.setMeta('canonical', window.location.origin + window.location.pathname + '?news=' + encodeURIComponent(newsItem.hash));
+    }
+
+    resetMetaTags() {
+        document.title = this.defaultTitle;
+        
+        const defaultDesc = 'Agregador de notícias de Moçambique em tempo real. Notícias de O País, Time de Todos, Jornal Notícias e Carta de Moçambique.';
+        
+        this.setMeta('description', defaultDesc);
+        this.setMeta('og:description', defaultDesc);
+        this.setMeta('twitter:description', defaultDesc);
+        
+        this.setMeta('og:title', this.defaultTitle);
+        this.setMeta('twitter:title', this.defaultTitle);
+        
+        this.setMeta('og:image', '');
+        this.setMeta('twitter:image', '');
+        
+        this.setMeta('canonical', window.location.origin + window.location.pathname);
+    }
+
+    setMeta(name, content) {
+        let meta = document.querySelector(`meta[name="${name}"]`) || 
+                   document.querySelector(`meta[property="${name}"]`);
+        
+        if (!meta) {
+            meta = document.createElement('meta');
+            if (name.includes('og:')) {
+                meta.setAttribute('property', name);
+            } else {
+                meta.setAttribute('name', name);
+            }
+            document.head.appendChild(meta);
+        }
+        
+        meta.setAttribute('content', content);
+    }
+
+    generateStructuredData(newsList) {
+        const structuredData = {
+            "@context": "https://schema.org",
+            "@type": "NewsArticle",
+            "headline": "Últimas Notícias de Moçambique",
+            "description": this.defaultDescription,
+            "datePublished": new Date().toISOString(),
+            "dateModified": new Date().toISOString(),
+            "author": {
+                "@type": "Organization",
+                "name": "Agregador de Notícias de Moçambique"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Agregador de Notícias de Moçambique",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://noticias-mocambique.com/logo.png"
+                }
+            },
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": window.location.href
+            }
+        };
+
+        // Adicionar script de dados estruturados
+        let script = document.querySelector('script[type="application/ld+json"]');
+        if (!script) {
+            script = document.createElement('script');
+            script.type = 'application/ld+json';
+            document.head.appendChild(script);
+        }
+        script.textContent = JSON.stringify(structuredData);
+    }
 }
 
-/* Tempo atrás */
-function timeAgo(date){
-    const d = (Date.now() - date.getTime())/1000;
-    if(d<60) return "Agora";
-    if(d<3600) return Math.floor(d/60)+" min atrás";
-    if(d<86400) return Math.floor(d/3600)+" h atrás";
-    return Math.floor(d/86400)+" dias atrás";
+/* ======== FONTES ======== */
+const sources = [
+    { name: "O País", url: "https://www.opais.co.mz/wp-json/wp/v2/posts?per_page=8&_embed" },
+    { name: "Time de Todos",url: "https://timesdetodos.com/wp-json/wp/v2/posts?per_page=8&_embed" },
+    { name: "Jornal Notícias", url: "https://www.jornalnoticias.co.mz/wp-json/wp/v2/posts?per_page=8&_embed" },
+    { name: "Carta de Moçambique", url: "https://cartamz.com/wp-json/wp/v2/posts?per_page=8&_embed" }
+];
+
+// Inicializar managers
+const cacheManager = new CacheManager();
+const seoManager = new SEOManager();
+
+// Variáveis para scroll infinito
+let news = [];
+let filteredNews = [];
+let hashes = new Set();
+let currentPage = 1;
+const itemsPerPage = 10;
+let isLoading = false;
+let allNewsLoaded = false;
+let currentFilter = 'all';
+let currentSearch = '';
+
+const container = document.getElementById("news-container");
+const loader = document.getElementById("load-more");
+const infiniteLoader = document.getElementById("infinite-loader");
+
+/* === FETCH COM CACHE === */
+async function fetchWithCache(url, sourceName) {
+    // Tentar primeiro do cache
+    if (cacheManager.isOnline) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("HTTP " + response.status);
+            
+            const data = await response.json();
+            
+            // Salvar no cache
+            await cacheManager.saveSourcesCache({
+                [sourceName]: { data, timestamp: Date.now() }
+            });
+            
+            return data;
+        } catch (error) {
+            console.warn(`Fetch online falhou para ${sourceName}, tentando cache:`, error);
+        }
+    }
+    
+    // Se offline ou fetch falhou, usar cache
+    const cached = await cacheManager.getSourcesCache();
+    if (cached && cached[sourceName]) {
+        const cacheAge = Date.now() - cached[sourceName].timestamp;
+        if (cacheAge < CACHE_DURATION) {
+            cacheManager.updateCacheStatus('📱 Usando cache');
+            return cached[sourceName].data;
+        }
+    }
+    
+    throw new Error("Sem conexão e cache expirado");
 }
 
-/* Modal */
-function openModal(n){
-    const modalBody=document.getElementById("modal-body");
-    const temp=document.createElement("div");
-    temp.innerHTML=n.description;
+function sanitizeHTML(html) {
+    return String(html)
+        .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
+        .replace(/\son\w+=(".*?"|'.*?'|[^\s>]+)/gi, "");
+}
 
-    temp.querySelectorAll("a").forEach(a=>{
-        const span=document.createElement("span");
-        span.innerHTML=a.innerHTML;
-        a.replaceWith(span);
+function extractImage(article) {
+    try {
+        const fm = article._embedded?.["wp:featuredmedia"]?.[0];
+        if (fm?.source_url) return fm.source_url;
+    } catch(e){}
+    const html = article.content?.rendered || "";
+    const m = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+    return m ? m[1] : "https://via.placeholder.com/300x200?text=Sem+Imagem";
+}
+
+function formatDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleString("pt-PT");
+}
+
+/* === ADICIONAR NOTÍCIA === */
+function pushNews(item) {
+    if (!hashes.has(item.hash)) {
+        news.push(item);
+        hashes.add(item.hash);
+        news.sort((a,b)=>b.date - a.date);
+    }
+}
+
+/* === FILTRAR E BUSCAR NOTÍCIAS === */
+function filterNews(source) {
+    currentFilter = source;
+    currentPage = 1;
+    
+    // Atualizar botões ativos
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
     });
-
-    modalBody.innerHTML=`
-        <h2>${n.title}</h2>
-        <p><i>${n.source} — ${n.pubDate.toLocaleString()}</i></p>
-    `;
-    modalBody.appendChild(temp);
-    document.getElementById("modal").style.display="flex";
+    document.querySelector(`button[onclick="filterNews('${source}')"]`).classList.add('active');
+    
+    // Aplicar filtro
+    if (source === 'all') {
+        filteredNews = [...news];
+    } else {
+        filteredNews = news.filter(item => item.source === source);
+    }
+    
+    // Aplicar busca se houver
+    if (currentSearch) {
+        filteredNews = filteredNews.filter(item => 
+            item.title.toLowerCase().includes(currentSearch) ||
+            item.source.toLowerCase().includes(currentSearch)
+        );
+    }
+    
+    renderCurrentPage();
 }
 
-document.getElementById("modal-close").onclick=()=>{
-    document.getElementById("modal").style.display="none";
+function searchNews() {
+    const searchInput = document.getElementById('search-input');
+    currentSearch = searchInput.value.toLowerCase().trim();
+    currentPage = 1;
+    
+    // Aplicar filtro atual
+    if (currentFilter === 'all') {
+        filteredNews = [...news];
+    } else {
+        filteredNews = news.filter(item => item.source === currentFilter);
+    }
+    
+    // Aplicar busca
+    if (currentSearch) {
+        filteredNews = filteredNews.filter(item => 
+            item.title.toLowerCase().includes(currentSearch) ||
+            item.source.toLowerCase().includes(currentSearch)
+        );
+    }
+    
+    renderCurrentPage();
+}
+
+/* === RENDERIZAR PÁGINA ATUAL === */
+function renderCurrentPage() {
+    const startIndex = 0;
+    const endIndex = Math.min(filteredNews.length, currentPage * itemsPerPage);
+    
+    const currentNews = filteredNews.slice(startIndex, endIndex);
+    
+    if (currentPage === 1) {
+        container.innerHTML = "";
+    }
+    
+    if (currentNews.length === 0) {
+        container.innerHTML = '<div class="error">Nenhuma notícia encontrada.</div>';
+        return;
+    }
+    
+    currentNews.forEach(n => {
+        const existing = container.querySelector(`[data-hash="${n.hash}"]`);
+        if (!existing) {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.setAttribute("data-hash", n.hash);
+            card.innerHTML = `
+                <div class="card-text">
+                    <div class="card-title">${n.title}</div>
+                    <div class="card-meta">${n.source} • ${formatDate(n.date)}</div>
+                </div>
+                <img src="${n.image}" loading="lazy" alt="${n.title}">
+            `;
+            card.onclick = () => openModal(n);
+            container.appendChild(card);
+        }
+    });
+    
+    loader.innerText = `Mostrando ${Math.min(endIndex, filteredNews.length)} de ${filteredNews.length} notícias`;
+    
+    // Atualizar dados estruturados para SEO
+    seoManager.generateStructuredData(currentNews);
+}
+
+/* === MODAL === */
+function openModal(n){
+    const modalBody = document.getElementById("modal-body");
+    modalBody.innerHTML = `
+        <h1>${n.title}</h1>
+        <p><i>${n.source} — ${formatDate(n.date)}</i></p>
+        <img src="${n.image}" alt="${n.title}" style="max-width:100%;border-radius:10px;margin:20px 0;">
+        <div>${sanitizeHTML(n.content)}</div>
+    `;
+    document.getElementById("modal").style.display = "flex";
+    
+    // Atualizar SEO para esta notícia específica
+    seoManager.updateMetaTags(n);
+    
+    // Atualizar URL sem recarregar a página
+    history.pushState({}, '', `?news=${encodeURIComponent(n.hash)}`);
+}
+document.getElementById("modal-close").onclick = () => {
+    document.getElementById("modal").style.display = "none";
+    seoManager.resetMetaTags();
+    history.pushState({}, '', window.location.pathname);
 };
 
-/* Atualização contínua */
-setInterval(fetchAllFeeds, 60000);
+// Lidar com botão voltar do navegador
+window.addEventListener('popstate', () => {
+    const modal = document.getElementById("modal");
+    if (modal.style.display === "flex") {
+        modal.style.display = "none";
+        seoManager.resetMetaTags();
+    }
+});
 
-/* Iniciar */
-fetchAllFeeds();
+/* === PROCESSAR ARTIGO === */
+function processArticle(article, sourceName) {
+    const hash = (article.title?.rendered + article.link).toLowerCase().replace(/\W/g,"");
+    if (hashes.has(hash)) return null;
+
+    return {
+        title: article.title?.rendered || "Sem título",
+        content: article.content?.rendered || "",
+        date: new Date(article.date || article.modified),
+        source: sourceName,
+        image: extractImage(article),
+        hash,
+        url: article.link || `#${hash}`
+    };
+}
+
+/* === CARREGAR MAIS NOTÍCIAS === */
+async function loadMoreNews() {
+    if (isLoading || allNewsLoaded) return;
+    
+    isLoading = true;
+    infiniteLoader.style.display = "block";
+    
+    try {
+        await new Promise(resolve => setTimeout(resolve, 800));
+        
+        if (news.length >= 200) {
+            allNewsLoaded = true;
+            infiniteLoader.innerHTML = "Todas as notícias foram carregadas.";
+        } else {
+            currentPage++;
+            renderCurrentPage();
+        }
+        
+    } catch (error) {
+        console.error("Erro ao carregar mais notícias:", error);
+        infiniteLoader.innerHTML = "Erro ao carregar mais notícias.";
+    } finally {
+        isLoading = false;
+        setTimeout(() => {
+            infiniteLoader.style.display = "none";
+        }, 500);
+    }
+}
+
+/* === DETECTAR SCROLL PARA O FIM === */
+function setupInfiniteScroll() {
+    window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        
+        if (scrollTop + clientHeight >= scrollHeight - 100) {
+            loadMoreNews();
+        }
+    });
+}
+
+/* === CARREGAR TODAS AS FONTES === */
+async function loadAllSources(){
+    isLoading = true;
+    loader.innerText = "Carregando fontes...";
+    allNewsLoaded = false;
+    currentPage = 1;
+    
+    // Verificar cache primeiro
+    const cachedNews = await cacheManager.getNewsCache();
+    if (cachedNews && cachedNews.length > 0) {
+        cacheManager.updateCacheStatus('📱 Carregando do cache...');
+        news = cachedNews;
+        hashes = new Set(news.map(n => n.hash));
+        filteredNews = [...news];
+        renderCurrentPage();
+        isLoading = false;
+    }
+    
+    // Carregar novas notícias em segundo plano
+    const promises = sources.map(async s=>{
+        try{
+            const data = await fetchWithCache(s.url, s.name);
+            if(!Array.isArray(data)) throw new Error("Não retornou array.");
+            
+            data.forEach(a => {
+                const article = processArticle(a, s.name);
+                if (article) {
+                    pushNews(article);
+                }
+            });
+        } catch(e){
+            const d = document.createElement("div");
+            d.className="error";
+            d.innerText = `Erro ao carregar ${s.name}: ${e.message}`;
+            container.appendChild(d);
+        }
+    });
+    
+    await Promise.allSettled(promises);
+    
+    // Salvar no cache se conseguiu novas notícias
+    if (news.length > 0) {
+        await cacheManager.saveNewsCache(news);
+    }
+    
+    // Atualizar lista filtrada
+    filteredNews = [...news];
+    
+    // Renderizar
+    renderCurrentPage();
+    isLoading = false;
+    
+    // Configurar scroll infinito
+    setTimeout(() => {
+        setupInfiniteScroll();
+    }, 1000);
+    
+    cacheManager.updateCacheStatus('✅ Notícias atualizadas');
+}
+
+/* REFRESH MANUAL */
+async function manualRefresh(){
+    document.getElementById("refresh-btn").innerText = "⏳ Atualizando...";
+    
+    // Limpar cache antigo
+    cacheManager.clearAllCache();
+    
+    setTimeout(async ()=>{
+        news = [];
+        hashes.clear();
+        filteredNews = [];
+        currentPage = 1;
+        allNewsLoaded = false;
+        container.innerHTML = "";
+        await loadAllSources();
+        document.getElementById("refresh-btn").innerText = "Atualizar";
+    }, 400);
+}
+
+/* AUTO-ATUALIZAÇÃO */
+setInterval(() => {
+    if (!isLoading && cacheManager.isOnline) {
+        loadAllSources();
+    }
+}, 5 * 60 * 1000); // 5 minutos
+
+/* VERIFICAR NOTÍCIA NA URL */
+function checkUrlForNews() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const newsHash = urlParams.get('news');
+    
+    if (newsHash) {
+        const newsItem = news.find(n => n.hash === newsHash);
+        if (newsItem) {
+            setTimeout(() => openModal(newsItem), 1000);
+        }
+    }
+}
+
+/* INICIAR */
+window.addEventListener('DOMContentLoaded', async () => {
+    await loadAllSources();
+    checkUrlForNews();
+    
+    // Adicionar botão de limpar cache (para desenvolvimento)
+    const clearCacheBtn = document.createElement('button');
+    clearCacheBtn.textContent = '🧹';
+    clearCacheBtn.title = 'Limpar Cache';
+    clearCacheBtn.style.cssText = `
+        position: fixed;
+        bottom: 22px;
+        left: 22px;
+        background: #666;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        z-index: 99999;
+        font-size: 18px;
+    `;
+    clearCacheBtn.onclick = () => {
+        if (confirm('Limpar todo o cache?')) {
+            cacheManager.clearAllCache();
+            location.reload();
+        }
+    };
+    document.body.appendChild(clearCacheBtn);
+});
 </script>
-
 </body>
-</html>
+    </html>
