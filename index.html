@@ -1,6 +1,51 @@
 <!doctype html>
 <html lang="pt">
 <head>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    let popunderURL = "https://www.effectivegatecpm.com/qvdzdmrk6?key=c41207cda3bc64bcc9b3569afc89d708"; // Seu link Monetag
+    let lastPopTime = 0;
+    let minInterval = 7000; // Tempo mínimo entre popunders (7s)
+
+    function openPopunder() {
+        let now = new Date().getTime();
+        if (now - lastPopTime >= minInterval) {
+            let newWindow = window.open(popunderURL, "_blank");
+
+            if (newWindow) {
+                newWindow.blur();
+                window.focus();
+                lastPopTime = now;
+                console.log("Popunder aberto!");
+            } else {
+                console.log("Popunder bloqueado pelo navegador.");
+            }
+        } else {
+            console.log("Aguardando intervalo mínimo...");
+        }
+    }
+
+    function triggerPop() {
+        openPopunder(); // Popunder abre imediatamente
+    }
+
+    document.addEventListener("click", triggerPop);
+
+    document.addEventListener("mouseleave", function(event) {
+        if (event.clientY <= 0) {
+            triggerPop();
+        }
+    });
+
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            triggerPop();
+        }
+    });
+});
+                    </script>
+    
     <script
   type="text/javascript"
   src="https://pl28264866.effectivegatecpm.com/0b/82/d9/0b82d9beb4a351a608a692badac374cf.js"
