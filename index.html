@@ -294,7 +294,7 @@ header{
     bottom: 20px;
     right: 20px;
     background-color: #25d366;
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp_Logo_green.svg');
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 65%;
@@ -356,7 +356,7 @@ header{
 <body>
 <header>
 <button class="header-btn" id="menu-btn" onclick="openSidebar()">☰</button>
-📰 Notícias de Moçambique
+Notícias de Moçambique
 <button class="header-btn" id="refresh-btn" onclick="manualRefresh()">↻</button>
 </header>
 
@@ -412,6 +412,7 @@ let hashes = new Set(); // Para evitar duplicatas
 const BATCH_SIZE = 15; // Quantas notícias carregar por fonte
 let isLoadingMore = false; // Flag para evitar múltiplos carregamentos
 let allSourcesLoaded = false; // Se todas as fontes foram completamente carregadas
+let currentModalArticle = null; // Notícia atual na modal
 
 // ELEMENTOS DOM
 const container = document.getElementById("news-container");
@@ -505,30 +506,49 @@ function renderSingleNews(article) {
     `;
     c.onclick = () => openModal(article);
     
-    // Adiciona no topo (mais recente primeiro)
-    if (container.children.length > 0) {
-        container.insertBefore(c, container.children[0]);
-    } else {
+    // Encontra a posição correta para manter ordenação por data (mais recente primeiro)
+    let inserted = false;
+    const cards = container.querySelectorAll('.card');
+    
+    for (let i = 0; i < cards.length; i++) {
+        const cardDate = new Date(cards[i].dataset.date || 0);
+        const newDate = new Date(article.date);
+        
+        if (newDate > cardDate) {
+            container.insertBefore(c, cards[i]);
+            inserted = true;
+            break;
+        }
+    }
+    
+    // Se não encontrou posição (ou é a primeira notícia), adiciona no final
+    if (!inserted) {
         container.appendChild(c);
     }
+    
+    // Armazena a data como atributo para futuras ordenações
+    c.dataset.date = article.date;
 }
 
 /* ========== MODAL E COMPARTILHAMENTO ========== */
 
 function openModal(article) {
-    const shareText = `📰 ${article.title} | Via Notícias de Moçambique`;
-    const shareUrl = PLATFORM_URL;
+    currentModalArticle = article;
+    
+    // Cria um URL único para esta notícia na modal
+    const shareUrl = `${PLATFORM_URL}#${article.hash}`;
+    const shareText = `📰 ${article.title} | Notícias de Moçambique`;
     
     const modalContent = `
     <h2 style="margin-right:30px">${article.title}</h2>
-    <p><i>${article.source} • ${formatDate(article.date)}</i></p>
+    <p><i><strong>${article.source}</strong> • ${formatDate(article.date)}</i></p>
     ${article.image !== 'https://via.placeholder.com/300x200' ? 
         `<img src="${article.image}" style="width:100%;border-radius:10px;margin:15px 0" alt="${article.title}">` : ''
     }
-    <div>${article.content}</div>
+    <div style="line-height:1.6;font-size:15px;color:#333;">${article.content}</div>
     
     <div class="share-section">
-        <div class="share-title">Partilhar esta plataforma:</div>
+        <div class="share-title">Partilhar esta notícia:</div>
         <div class="share-buttons">
             <button class="share-btn facebook" onclick="shareOnFacebook('${encodeURIComponent(shareText)}', '${encodeURIComponent(shareUrl)}')">
                 <span>f</span> Facebook
@@ -546,12 +566,15 @@ function openModal(article) {
     </div>
     
     <div class="platform-info">
-        <p>💡 <strong>Nota:</strong> Partilhe a plataforma Notícias de Moçambique para que mais pessoas possam acompanhar as últimas notícias do país!</p>
+        <p>💡 <strong>Nota:</strong> Este link direciona diretamente para esta notícia na nossa plataforma!</p>
     </div>
     `;
     
     document.getElementById("modal-body").innerHTML = modalContent;
     document.getElementById("modal").style.display = "flex";
+    
+    // Rola para o topo da modal
+    document.getElementById("modal-content").scrollTop = 0;
 }
 
 function shareOnFacebook(title, url) {
@@ -593,11 +616,13 @@ function openWhatsAppChannel() {
 /* FECHAR MODAL */
 document.getElementById("modal-close").onclick = () => {
     document.getElementById("modal").style.display = "none";
+    currentModalArticle = null;
 };
 
 document.getElementById("modal").onclick = (e) => {
     if (e.target.id === 'modal') {
         document.getElementById("modal").style.display = "none";
+        currentModalArticle = null;
     }
 };
 
@@ -605,6 +630,8 @@ document.getElementById("modal").onclick = (e) => {
 
 // Processa artigos de uma fonte e renderiza imediatamente
 async function processSourceArticles(source, articles) {
+    const newArticles = [];
+    
     for (const article of articles) {
         const hash = (article.title.rendered + article.link).replace(/\W/g, "");
         
@@ -624,7 +651,14 @@ async function processSourceArticles(source, articles) {
             hash: hash
         };
         
-        // Adiciona às listas
+        newArticles.push(newsItem);
+    }
+    
+    // Ordena as novas notícias por data (mais recente primeiro)
+    newArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    // Adiciona às listas e renderiza cada uma
+    for (const newsItem of newArticles) {
         news.push(newsItem);
         filteredNews.push(newsItem);
         
@@ -700,21 +734,18 @@ async function loadAllSources() {
     // Aguarda todas as fontes terminarem o primeiro carregamento
     await Promise.allSettled(promises);
     
-    // Ordena todas as notícias por data (mais recente primeiro)
-    filteredNews.sort((a, b) => new Date(b.date) - new Date(a.date));
-    
-    // Reorganiza as notícias na tela por data
-    reorderNewsByDate();
+    // Reordena todas as notícias por data (mais recente primeiro)
+    reorderAllNewsByDate();
 }
 
-// Reorganiza as notícias na tela por data (mais recente primeiro)
-function reorderNewsByDate() {
-    // Remove todas as notícias do container
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
+// Reordena TODAS as notícias por data (mais recente primeiro)
+function reorderAllNewsByDate() {
+    // Ordena os arrays
+    news.sort((a, b) => new Date(b.date) - new Date(a.date));
+    filteredNews.sort((a, b) => new Date(b.date) - new Date(a.date));
     
-    // Adiciona novamente em ordem
+    // Limpa e re-renderiza em ordem
+    container.innerHTML = '';
     filteredNews.forEach(article => {
         renderSingleNews(article);
     });
@@ -765,6 +796,12 @@ function manualRefresh() {
     // Limpa o container
     container.innerHTML = '';
     
+    // Fecha modal se estiver aberta
+    if (currentModalArticle) {
+        document.getElementById("modal").style.display = "none";
+        currentModalArticle = null;
+    }
+    
     // Recarrega tudo
     loadAllSources();
 }
@@ -787,10 +824,28 @@ window.addEventListener("scroll", () => {
     }, 150);
 });
 
+/* ========== VERIFICAÇÃO DE HASH NA URL ========== */
+
+function checkUrlHash() {
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+        // Aguarda um momento para as notícias carregarem
+        setTimeout(() => {
+            const article = news.find(n => n.hash === hash);
+            if (article) {
+                openModal(article);
+            }
+        }, 1000);
+    }
+}
+
 /* ========== INICIALIZAÇÃO ========== */
 
 // Inicia o carregamento
 loadAllSources();
+
+// Verifica se há hash na URL após carregamento
+setTimeout(checkUrlHash, 1500);
 
 // Atualiza a cada 5 minutos se a página estiver visível
 setInterval(() => {
@@ -810,6 +865,7 @@ setInterval(() => {
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         document.getElementById("modal").style.display = "none";
+        currentModalArticle = null;
         closeSidebar();
     }
     
