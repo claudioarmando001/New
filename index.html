@@ -1,10 +1,6 @@
 <!doctype html>
 <html lang="pt">
 <head>
-    <script
-  type="text/javascript"
-  src="https://pl28264866.effectivegatecpm.com/0b/82/d9/0b82d9beb4a351a608a692badac374cf.js"
-></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Jornal Moçambique</title>
@@ -773,14 +769,76 @@ header{
     font-size: 14px;
     color: #555;
 }
+
+/* NOTÍCIAS RELACIONADAS - NOVO */
+.related-news-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.related-news-container {
+    display: grid;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.related-news-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px;
+    border-left: 4px solid #1a73e8;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.related-news-card:hover {
+    background: #e8f0fe;
+    transform: translateX(5px);
+}
+
+.related-news-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.related-news-text {
+    flex: 1;
+}
+
+.related-news-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+.related-news-meta {
+    font-size: 11px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.no-related-news {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-size: 14px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <script
-  type="text/javascript"
-  src="https://pl28264866.effectivegatecpm.com/0b/82/d9/0b82d9beb4a351a608a692badac374cf.js"
-></script>
 <header>
 <button class="header-btn" id="menu-btn" onclick="openSidebar()">☰</button>
 Jornal Moçambique
@@ -1382,6 +1440,79 @@ function renderSingleNews(article) {
     c.dataset.date = article.date;
 }
 
+/* ========== FUNÇÕES PARA NOTÍCIAS RELACIONADAS ========== */
+
+// Carrega notícias relacionadas para a modal
+function loadRelatedNews(currentArticle) {
+    const container = document.getElementById("related-news-container");
+    if (!container) return;
+    
+    // Limpa conteúdo anterior
+    container.innerHTML = '<div class="infinite-spinner"></div> Carregando notícias relacionadas...';
+    
+    // Encontra notícias relacionadas
+    const related = findRelatedArticles(currentArticle);
+    
+    // Pequeno atraso para efeito visual
+    setTimeout(() => {
+        displayRelatedArticles(related, container);
+    }, 500);
+}
+
+// Encontra notícias relacionadas
+function findRelatedArticles(article) {
+    const category = article.category;
+    const titleWords = article.title.toLowerCase().split(' ');
+    
+    return news.filter(n => {
+        // Não inclui a própria notícia
+        if (n.hash === article.hash) return false;
+        
+        // Prioridade 1: mesma categoria
+        if (n.category === category) return true;
+        
+        // Prioridade 2: títulos com palavras similares
+        const commonWords = titleWords.filter(word => 
+            word.length > 3 && n.title.toLowerCase().includes(word)
+        );
+        
+        return commonWords.length >= 2;
+    }).slice(0, 3); // Máximo 3 notícias
+}
+
+// Exibe notícias relacionadas no container
+function displayRelatedArticles(articles, container) {
+    if (articles.length === 0) {
+        container.innerHTML = `
+            <div class="no-related-news">
+                <i class="fas fa-newspaper" style="font-size: 24px; margin-bottom: 10px; color: #ccc;"></i><br>
+                Nenhuma notícia relacionada encontrada.
+            </div>
+        `;
+        return;
+    }
+    
+    let html = '';
+    articles.forEach(article => {
+        const category = article.category || determineCategory(article.title, article.content);
+        
+        html += `
+        <div class="related-news-card" onclick="openModal(${JSON.stringify(article).replace(/"/g, '&quot;')})">
+            <img src="${article.image}" class="related-news-img" alt="${article.title}" onerror="this.src='https://via.placeholder.com/60x60/1a73e8/ffffff?text=${encodeURIComponent(article.source.substring(0,2))}'">
+            <div class="related-news-text">
+                <div class="related-news-title">${article.title.substring(0, 60)}${article.title.length > 60 ? '...' : ''}</div>
+                <div class="related-news-meta">
+                    <span class="source-tag" style="font-size: 10px;">${article.source}</span>
+                    <span class="category-tag ${CATEGORIES[category].class}">${CATEGORIES[category].name}</span>
+                </div>
+            </div>
+        </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+}
+
 /* ========== MODAL E COMPARTILHAMENTO ========== */
 
 function openModal(article) {
@@ -1421,6 +1552,16 @@ function openModal(article) {
     <div class="platform-info">
         <p>💡 <strong>Nota:</strong> Este link direciona diretamente para esta notícia na nossa plataforma! Categoria: <span class="category-tag ${CATEGORIES[category].class}">${CATEGORIES[category].name}</span></p>
     </div>
+    
+    <!-- SECÇÃO DE NOTÍCIAS RELACIONADAS -->
+    <div class="related-news-section">
+        <h3 style="color: #1a73e8; margin-top: 30px; border-bottom: 2px solid #e8f0fe; padding-bottom: 10px;">
+            <i class="fas fa-newspaper"></i> Notícias Relacionadas
+        </h3>
+        <div class="related-news-container" id="related-news-container">
+            <!-- Notícias relacionadas serão carregadas aqui -->
+        </div>
+    </div>
     `;
     
     document.getElementById("modal-body").innerHTML = modalContent;
@@ -1428,6 +1569,11 @@ function openModal(article) {
     
     // Rola para o topo da modal
     document.getElementById("modal-content").scrollTop = 0;
+    
+    // CARREGA NOTÍCIAS RELACIONADAS
+    setTimeout(() => {
+        loadRelatedNews(article);
+    }, 300);
 }
 
 function shareOnFacebook(title, url) {
