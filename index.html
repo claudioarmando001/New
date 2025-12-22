@@ -867,6 +867,136 @@ header{
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <script>
+(function () {
+
+  /* ===== CONFIGURAÇÕES ===== */
+  const INTERVAL_TIME = 25000; // 25 segundos
+  const COUNTDOWN_TIME = 6;   // 6 segundos para fechar
+
+  /* ===== CSS ===== */
+  const style = document.createElement("style");
+  style.innerHTML = `
+    #ad-interstitial {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999999;
+    }
+    #ad-box {
+      width: 90%;
+      max-width: 320px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      position: relative;
+      text-align: center;
+    }
+    .ad-slot {
+      margin: 6px 0;
+    }
+    #ad-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 32px;
+      height: 32px;
+      background: red;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 14px;
+      cursor: pointer;
+      display: none;
+    }
+    #countdown {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 6px;
+    }
+  `;
+  document.head.appendChild(style);
+
+  /* ===== HTML ===== */
+  const container = document.createElement("div");
+  container.innerHTML = `
+    <div id="ad-interstitial">
+      <div id="ad-box">
+        <div id="countdown">Fechar em ${COUNTDOWN_TIME}s</div>
+        <button id="ad-close">X</button>
+
+        <div class="ad-slot" id="ad-top"></div>
+        <div class="ad-slot" id="ad-bottom"></div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(container);
+
+  /* ===== FUNÇÃO PARA INSERIR BANNER ===== */
+  function loadAd(slotId) {
+    const slot = document.getElementById(slotId);
+    slot.innerHTML = `
+      <script>
+        atOptions = {
+          'key' : 'b874026f0a0169ac1460a62fe704d08e',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
+      <\/script>
+      <script src="https://www.highperformanceformat.com/b874026f0a0169ac1460a62fe704d08e/invoke.js"><\/script>
+    `;
+  }
+
+  loadAd("ad-top");
+  loadAd("ad-bottom");
+
+  let timer;
+
+  function openInterstitial() {
+    const interstitial = document.getElementById("ad-interstitial");
+    if (interstitial.style.display === "flex") return;
+
+    interstitial.style.display = "flex";
+
+    let time = COUNTDOWN_TIME;
+    const countdown = document.getElementById("countdown");
+    const closeBtn = document.getElementById("ad-close");
+
+    closeBtn.style.display = "none";
+    countdown.textContent = `Fechar em ${time}s`;
+
+    timer = setInterval(() => {
+      time--;
+      countdown.textContent = `Fechar em ${time}s`;
+
+      if (time <= 0) {
+        clearInterval(timer);
+        countdown.textContent = "Você pode fechar";
+        closeBtn.style.display = "block";
+      }
+    }, 1000);
+  }
+
+  function closeInterstitial() {
+    document.getElementById("ad-interstitial").style.display = "none";
+    clearInterval(timer);
+  }
+
+  document.getElementById("ad-close").onclick = closeInterstitial;
+
+  /* ===== TIMER GLOBAL ===== */
+  setTimeout(() => {
+    openInterstitial();
+    setInterval(openInterstitial, INTERVAL_TIME);
+  }, INTERVAL_TIME);
+
+})();
+    </script>
 <header>
 <button class="header-btn" id="menu-btn" onclick="openSidebar()">☰</button>
 Jornal Moçambique
