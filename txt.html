@@ -1,49 +1,6 @@
 <!doctype html>
 <html lang="pt">
 <head>
-    <script>
-document.addEventListener("DOMContentLoaded", function() {
-    let popunderURL = "https://www.effectivegatecpm.com/qvdzdmrk6?key=c41207cda3bc64bcc9b3569afc89d708"; // Seu link Monetag
-    let lastPopTime = 0;
-    let minInterval = 5000; // Tempo mínimo entre popunders (5s)
-
-    function openPopunder() {
-        let now = new Date().getTime();
-        if (now - lastPopTime >= minInterval) {
-            let newWindow = window.open(popunderURL, "_blank");
-
-            if (newWindow) {
-                newWindow.blur();
-                window.focus();
-                lastPopTime = now;
-                console.log("Popunder aberto!");
-            } else {
-                console.log("Popunder bloqueado pelo navegador.");
-            }
-        } else {
-            console.log("Aguardando intervalo mínimo...");
-        }
-    }
-
-    function triggerPop() {
-        openPopunder(); // Popunder abre imediatamente
-    }
-
-    document.addEventListener("click", triggerPop);
-
-    document.addEventListener("mouseleave", function(event) {
-        if (event.clientY <= 0) {
-            triggerPop();
-        }
-    });
-
-    document.addEventListener("keydown", function(event) {
-        if (event.key === "Escape") {
-            triggerPop();
-        }
-    });
-});
-    </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Notícias CLD</title>
@@ -371,34 +328,62 @@ header{
     100% { transform: rotate(360deg); }
 }
 
-/* MODAL NOTÍCIA */
-#modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.6);
-    justify-content:center;
-    align-items:center;
-    z-index:10000;
+/* MODAL ESTILO PÁGINA CHEIA - NOVO */
+#modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff; /* Fundo branco como página */
+    z-index: 10000;
+    overflow: hidden;
 }
-#modal-content{
-    background:#fff;
-    max-width:800px;
-    width:90%;
-    padding:25px;
-    border-radius:12px;
-    max-height:90vh;
-    overflow:auto;
-    position:relative;
+
+#modal-content {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    background: #fff;
 }
-#modal-close{
-    position:absolute;
-    top:15px;
-    right:15px;
-    cursor:pointer;
-    font-size:22px;
-    color:#666;
-    z-index:1;
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e8f0fe;
+}
+
+.modal-back-btn {
+    background: #1a73e8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.modal-back-btn:hover {
+    background: #0d62d9;
+    transform: translateX(-3px);
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a73e8;
 }
 
 /* MODAL INFO (SOBRE E CONTATO) - MELHORADO */
@@ -813,7 +798,7 @@ header{
     color: #555;
 }
 
-/* NOTÍCIAS RELACIONADAS - NOVO */
+/* NOTÍCIAS RELACIONADAS */
 .related-news-section {
     margin-top: 30px;
     padding-top: 20px;
@@ -931,11 +916,16 @@ Notícias CLD
     Carregando mais notícias...
 </div>
 
-<!-- MODAL DETALHES NOTÍCIA -->
+<!-- MODAL DETALHES NOTÍCIA (NOVA VERSÃO) -->
 <div id="modal">
 <div id="modal-content">
-<span id="modal-close">✖</span>
-<div id="modal-body"></div>
+    <div class="modal-header">
+        <button class="modal-back-btn" onclick="closeModal()">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </button>
+        <div class="modal-title">Detalhes da Notícia</div>
+    </div>
+    <div id="modal-body"></div>
 </div>
 </div>
 
@@ -1062,6 +1052,19 @@ const sources = [
         isFetching: false
     }
 ];
+
+/* ========== DETECÇÃO BOTÃO VOLTAR TELEFONE ========== */
+
+// Histórico para controlar botão "voltar" do telefone
+let modalHistory = [];
+
+// Detecta botão "voltar" do navegador/telefone
+window.addEventListener('popstate', function(event) {
+    if (modalHistory.length > 0) {
+        modalHistory.pop();
+        closeModal();
+    }
+});
 
 /* ========== FUNÇÕES DE INTERFACE ========== */
 
@@ -1560,6 +1563,13 @@ function displayRelatedArticles(articles, container) {
 
 function openModal(article) {
     currentModalArticle = article;
+    
+    // Adiciona ao histórico para controle do botão "voltar"
+    modalHistory.push('modal');
+    
+    // Atualiza URL para permitir botão "voltar" do navegador
+    history.pushState({ modal: true }, '', `#${article.hash}`);
+    
     const category = article.category || determineCategory(article.title, article.content);
     
     // Cria um URL único para esta notícia na modal
@@ -1567,12 +1577,12 @@ function openModal(article) {
     const shareText = `📰 ${article.title} | Notícias de Moçambique`;
     
     const modalContent = `
-    <h2 style="margin-right:30px; color: #111;">${article.title}</h2>
-    <p style="color: #666;"><i><strong>${article.source}</strong> • <span class="category-tag ${CATEGORIES[category].class}">${CATEGORIES[category].name}</span> • ${formatDate(article.date)}</i></p>
+    <h2 style="margin-right:30px; color: #111; margin-top: 10px;">${article.title}</h2>
+    <p style="color: #666; margin-bottom: 20px;"><i><strong>${article.source}</strong> • <span class="category-tag ${CATEGORIES[category].class}">${CATEGORIES[category].name}</span> • ${formatDate(article.date)}</i></p>
     ${article.image !== 'https://via.placeholder.com/300x200' ? 
         `<img src="${article.image}" style="width:100%;border-radius:10px;margin:15px 0; max-height: 400px; object-fit: cover;" alt="${article.title}" onerror="this.style.display='none'">` : ''
     }
-    <div style="line-height:1.6;font-size:15px;color:#333;">${article.content}</div>
+    <div style="line-height:1.6;font-size:15px;color:#333; margin-top: 20px;">${article.content}</div>
     
     <div class="share-section">
         <div class="share-title">Partilhar esta notícia:</div>
@@ -1608,7 +1618,7 @@ function openModal(article) {
     `;
     
     document.getElementById("modal-body").innerHTML = modalContent;
-    document.getElementById("modal").style.display = "flex";
+    document.getElementById("modal").style.display = "block";
     
     // Rola para o topo da modal
     document.getElementById("modal-content").scrollTop = 0;
@@ -1617,6 +1627,15 @@ function openModal(article) {
     setTimeout(() => {
         loadRelatedNews(article);
     }, 300);
+}
+
+function closeModal() {
+    if (modalHistory.length > 0) {
+        modalHistory.pop();
+    }
+    
+    document.getElementById("modal").style.display = "none";
+    currentModalArticle = null;
 }
 
 function shareOnFacebook(title, url) {
@@ -1655,19 +1674,6 @@ function openWhatsAppChannel() {
     window.open(WHATSAPP_CHANNEL_URL, '_blank', 'noopener,noreferrer');
     closeInfoModal();
 }
-
-/* FECHAR MODAL */
-document.getElementById("modal-close").onclick = () => {
-    document.getElementById("modal").style.display = "none";
-    currentModalArticle = null;
-};
-
-document.getElementById("modal").onclick = (e) => {
-    if (e.target.id === 'modal') {
-        document.getElementById("modal").style.display = "none";
-        currentModalArticle = null;
-    }
-};
 
 /* ========== CARREGAMENTO DE NOTÍCIAS EM TEMPO REAL ========== */
 
@@ -1841,10 +1847,12 @@ function manualRefresh() {
     
     // Fecha modais se estiverem abertas
     if (currentModalArticle) {
-        document.getElementById("modal").style.display = "none";
-        currentModalArticle = null;
+        closeModal();
     }
     closeInfoModal();
+    
+    // Limpa histórico
+    modalHistory = [];
     
     // Recarrega tudo
     loadAllSources();
@@ -1908,8 +1916,7 @@ setInterval(() => {
 
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        document.getElementById("modal").style.display = "none";
-        currentModalArticle = null;
+        closeModal();
         closeInfoModal();
         closeSidebar();
     }
