@@ -2,48 +2,68 @@
 <html lang="pt">
 <head>
     <script>
-document.addEventListener("DOMContentLoaded", function() {
-    let popunderURL = "https://www.effectivegatecpm.com/qvdzdmrk6?key=c41207cda3bc64bcc9b3569afc89d708"; // Seu link Monetag
-    let lastPopTime = 0;
-    let minInterval = 30000; // Tempo mínimo entre popunders (30s)
+(function () {
+  const adLink = "https://www.effectivegatecpm.com/qvdzdmrk6?key=c41207cda3bc64bcc9b3569afc89d708";
+  const imageUrl = "https://claudionews.neocities.org/IMG-20251226-WA0124.jpg";
 
-    function openPopunder() {
-        let now = new Date().getTime();
-        if (now - lastPopTime >= minInterval) {
-            let newWindow = window.open(popunderURL, "_blank");
+  let delay = 30000; // 30s inicial
+  const maxDelay = 60000; // 60s máximo
+  let timer = null;
 
-            if (newWindow) {
-                newWindow.blur();
-                window.focus();
-                lastPopTime = now;
-                console.log("Popunder aberto!");
-            } else {
-                console.log("Popunder bloqueado pelo navegador.");
-            }
-        } else {
-            console.log("Aguardando intervalo mínimo...");
-        }
-    }
+  function createPopup() {
+    // Evita duplicar
+    if (document.getElementById("popupAd")) return;
 
-    function triggerPop() {
-        openPopunder(); // Popunder abre imediatamente
-    }
+    const overlay = document.createElement("div");
+    overlay.id = "popupAd";
+    overlay.style.cssText = `
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `;
 
-    document.addEventListener("click", triggerPop);
+    const img = document.createElement("img");
+    img.src = imageUrl;
+    img.style.cssText = `
+      max-width: 90%;
+      max-height: 90%;
+      cursor: pointer;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #000;
+    `;
 
-    document.addEventListener("mouseleave", function(event) {
-        if (event.clientY <= 0) {
-            triggerPop();
-        }
+    img.addEventListener("click", function () {
+      window.open(adLink, "_blank");
+
+      document.body.removeChild(overlay);
+
+      delay = Math.min(delay + 10000, maxDelay);
+      startTimer();
     });
 
-    document.addEventListener("keydown", function(event) {
-        if (event.key === "Escape") {
-            triggerPop();
-        }
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) {
+        document.body.removeChild(overlay);
+        startTimer();
+      }
     });
-});
-    </script>
+
+    overlay.appendChild(img);
+    document.body.appendChild(overlay);
+  }
+
+  function startTimer() {
+    clearTimeout(timer);
+    timer = setTimeout(createPopup, delay);
+  }
+
+  document.addEventListener("DOMContentLoaded", startTimer);
+})();
+        </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Notícias CLD</title>
