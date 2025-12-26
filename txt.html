@@ -6,29 +6,62 @@
   const adLink = "https://www.effectivegatecpm.com/qvdzdmrk6?key=c41207cda3bc64bcc9b3569afc89d708";
   const imageUrl = "https://claudionews.neocities.org/IMG-20251226-WA0124.jpg";
 
-  let delay = 30000; // 30s
-  const maxDelay = 60000; // 60s
-  let lastOpen = 0;
+  let delay = 30000; // 30s inicial
+  const maxDelay = 60000; // 60s máximo
+  let timer = null;
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function createPopup() {
+    // Evita duplicar
+    if (document.getElementById("popupAd")) return;
 
-    document.addEventListener("click", function (e) {
-      const target = e.target;
+    const overlay = document.createElement("div");
+    overlay.id = "popupAd";
+    overlay.style.cssText = `
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `;
 
-      // Só dispara se clicar na imagem específica
-      if (target.tagName === "IMG" && target.src === imageUrl) {
-        const now = Date.now();
+    const img = document.createElement("img");
+    img.src = imageUrl;
+    img.style.cssText = `
+      max-width: 90%;
+      max-height: 90%;
+      cursor: pointer;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #000;
+    `;
 
-        if (now - lastOpen >= delay) {
-          window.open(adLink, "_blank");
+    img.addEventListener("click", function () {
+      window.open(adLink, "_blank");
 
-          lastOpen = now;
-          delay = Math.min(delay + 10000, maxDelay);
-        }
+      document.body.removeChild(overlay);
+
+      delay = Math.min(delay + 10000, maxDelay);
+      startTimer();
+    });
+
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) {
+        document.body.removeChild(overlay);
+        startTimer();
       }
     });
 
-  });
+    overlay.appendChild(img);
+    document.body.appendChild(overlay);
+  }
+
+  function startTimer() {
+    clearTimeout(timer);
+    timer = setTimeout(createPopup, delay);
+  }
+
+  document.addEventListener("DOMContentLoaded", startTimer);
 })();
 </script>
 
