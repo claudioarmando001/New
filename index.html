@@ -6,16 +6,13 @@
   const adLink = "https://www.effectivegatecpm.com/qvdzdmrk6?key=c41207cda3bc64bcc9b3569afc89d708";
   const imageUrl = "https://claudionews.neocities.org/IMG-20251226-WA0124.jpg";
 
-  let delay = 30000; // 30s inicial
-  const maxDelay = 60000; // 60s máximo
+  let delay = 30000; // 30s
+  const maxDelay = 60000;
   let timer = null;
-  let cachedImage = null;
 
-  // 🔥 Pré-carrega a imagem assim que o site inicia
-  function preloadImage() {
-    cachedImage = new Image();
-    cachedImage.src = imageUrl;
-  }
+  // 🔥 PRÉ-CARREGAMENTO DA IMAGEM
+  const preloadedImg = new Image();
+  preloadedImg.src = imageUrl;
 
   function createPopup() {
     if (document.getElementById("popupAd")) return;
@@ -25,7 +22,7 @@
     overlay.style.cssText = `
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.75);
+      background: rgba(0,0,0,0.7);
       z-index: 999999;
       display: flex;
       align-items: center;
@@ -33,24 +30,23 @@
     `;
 
     const img = document.createElement("img");
-    img.src = cachedImage ? cachedImage.src : imageUrl;
+    img.src = preloadedImg.src; // usa imagem já carregada
     img.style.cssText = `
       max-width: 90%;
       max-height: 90%;
       cursor: pointer;
-      border-radius: 12px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.8);
+      border-radius: 10px;
+      box-shadow: 0 0 20px #000;
     `;
 
-    img.onclick = function () {
+    img.onclick = () => {
       window.open(adLink, "_blank");
-
       overlay.remove();
       delay = Math.min(delay + 10000, maxDelay);
       startTimer();
     };
 
-    overlay.onclick = function (e) {
+    overlay.onclick = (e) => {
       if (e.target === overlay) {
         overlay.remove();
         startTimer();
@@ -63,15 +59,20 @@
 
   function startTimer() {
     clearTimeout(timer);
-    timer = setTimeout(createPopup, delay);
+
+    // ⏱️ Timer preciso
+    const start = performance.now();
+
+    timer = setTimeout(() => {
+      const elapsed = performance.now() - start;
+      if (elapsed >= delay - 5) createPopup();
+      else startTimer();
+    }, delay);
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    preloadImage(); // cache imediato
-    startTimer();   // inicia contagem
-  });
+  document.addEventListener("DOMContentLoaded", startTimer);
 })();
-</script>
+      </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Notícias CLD</title>
