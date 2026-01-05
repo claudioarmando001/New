@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="pt">
 <head>
-   
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Notícias CLD</title>
@@ -385,66 +384,6 @@ header{
     font-size: 18px;
     font-weight: bold;
     color: #1a73e8;
-}
-
-/* NOVOS ESTILOS PARA OS LINKS REAIS */
-.read-more-section {
-    margin: 30px 0;
-    padding: 20px;
-    background: #f8f9fa;
-    border-radius: 12px;
-    border-left: 4px solid #1a73e8;
-}
-
-.read-more-title {
-    font-size: 16px;
-    font-weight: bold;
-    color: #1a73e8;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.original-link-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: #1a73e8;
-    color: white;
-    text-decoration: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.3s;
-    border: none;
-    cursor: pointer;
-    font-size: 15px;
-}
-
-.original-link-btn:hover {
-    background: #0d62d9;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
-}
-
-.original-link-btn i {
-    font-size: 16px;
-}
-
-.link-info {
-    font-size: 13px;
-    color: #666;
-    margin-top: 10px;
-    padding: 10px;
-    background: white;
-    border-radius: 6px;
-    border: 1px solid #e8e8e8;
-}
-
-.link-info i {
-    color: #1a73e8;
-    margin-right: 5px;
 }
 
 /* MODAL INFO (SOBRE E CONTATO) - MELHORADO */
@@ -1128,6 +1067,36 @@ const sources = [
     }
 ];
 
+/* ========== FUNÇÃO PARA GERAR LINKS REAIS ========== */
+
+// Função para gerar links reais no formato correto
+function generateRealLink(article) {
+    // Remove caracteres especiais e formata como URL amigável
+    const cleanTitle = article.title
+        .toLowerCase()
+        .replace(/[^\w\s-àáâãèéêìíîòóôõùúûñç]/g, '') // Permite acentos e cedilha
+        .replace(/[àáâã]/g, 'a')
+        .replace(/[èéê]/g, 'e')
+        .replace(/[ìíî]/g, 'i')
+        .replace(/[òóôõ]/g, 'o')
+        .replace(/[ùúû]/g, 'u')
+        .replace(/ñ/g, 'n')
+        .replace(/ç/g, 'c')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .substring(0, 100); // Limita o tamanho
+    
+    // Cria o slug com fonte para unicidade
+    const sourceSlug = article.source
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]/g, '');
+    
+    // Gera o link real no formato correto
+    return `https://www.noticiascld.online/${sourceSlug}/${cleanTitle}/`;
+}
+
 /* ========== DETECÇÃO BOTÃO VOLTAR TELEFONE ========== */
 
 // Histórico para controlar botão "voltar" do telefone
@@ -1309,7 +1278,6 @@ function openInfoModal(type) {
                     <li>✅ <strong>Design responsivo</strong> - Funciona em todos os dispositivos</li>
                     <li>✅ <strong>Canal WhatsApp</strong> - Receba atualizações no seu telefone</li>
                     <li>✅ <strong>Scroll infinito</strong> - Carrega mais notícias automaticamente</li>
-                    <li>✅ <strong>Links reais</strong> - Acesso direto às fontes originais</li>
                 </ul>
             </div>
             
@@ -1643,14 +1611,16 @@ function openModal(article) {
     // Adiciona ao histórico para controle do botão "voltar"
     modalHistory.push('modal');
     
+    // GERA UM LINK REAL SEM "#" NO MEIO
+    const realLink = generateRealLink(article);
+    
     // Atualiza URL para permitir botão "voltar" do navegador
     history.pushState({ modal: true }, '', `#${article.hash}`);
     
     const category = article.category || determineCategory(article.title, article.content);
     
-    // Usa o link REAL da notícia (vem da API do WordPress)
-    const originalUrl = article.link || article.originalUrl || '#';
-    const shareUrl = `${PLATFORM_URL}#${article.hash}`;
+    // Usa o link real para compartilhamento
+    const shareUrl = realLink;
     const shareText = `📰 ${article.title} | Notícias de Moçambique`;
     
     const modalContent = `
@@ -1661,17 +1631,11 @@ function openModal(article) {
     }
     <div style="line-height:1.6;font-size:15px;color:#333; margin-top: 20px;">${article.content}</div>
     
-    <!-- SECÇÃO DE LINK ORIGINAL -->
-    <div class="read-more-section">
-        <div class="read-more-title">
-            <i class="fas fa-external-link-alt"></i> Link Original da Notícia
-        </div>
-        <a href="${originalUrl}" target="_blank" rel="noopener noreferrer" class="original-link-btn">
-            <i class="fas fa-newspaper"></i> Ler no Site Original
-        </a>
-        <div class="link-info">
-            <i class="fas fa-info-circle"></i> Este link direciona para a notícia original em ${article.source}. Abre em uma nova janela.
-        </div>
+    <div style="margin: 25px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #1a73e8;">
+        <p style="margin: 0; color: #1a73e8; font-weight: 500;">
+            <i class="fas fa-link"></i> <strong>Link permanente desta notícia:</strong><br>
+            <a href="${realLink}" target="_blank" style="color: #1a73e8; word-break: break-all; font-size: 14px;">${realLink}</a>
+        </p>
     </div>
     
     <div class="share-section">
@@ -1693,7 +1657,7 @@ function openModal(article) {
     </div>
     
     <div class="platform-info">
-        <p>💡 <strong>Nota:</strong> Para aceder à notícia completa, utilize o botão "Ler no Site Original" acima. Categoria: <span class="category-tag ${CATEGORIES[category].class}">${CATEGORIES[category].name}</span></p>
+        <p>💡 <strong>Nota:</strong> Este link direciona diretamente para esta notícia na nossa plataforma! Categoria: <span class="category-tag ${CATEGORIES[category].class}">${CATEGORIES[category].name}</span></p>
     </div>
     
     <!-- SECÇÃO DE NOTÍCIAS RELACIONADAS -->
@@ -1778,7 +1742,6 @@ async function processSourceArticles(source, articles) {
         
         hashes.add(hash);
         
-        // IMPORTANTE: Aqui capturamos o link REAL da notícia
         const newsItem = {
             title: article.title.rendered,
             content: article.content.rendered,
@@ -1787,8 +1750,7 @@ async function processSourceArticles(source, articles) {
                    "https://via.placeholder.com/300x200",
             source: source.name,
             date: article.date || article.modified,
-            link: article.link, // Link REAL da notícia
-            originalUrl: article.link, // Armazena também como originalUrl para clareza
+            link: article.link,
             hash: hash
         };
         
@@ -1983,13 +1945,66 @@ function checkUrlHash() {
     }
 }
 
+/* ========== VERIFICAÇÃO DE URLS REAIS ========== */
+
+function checkRealUrlAndOpenModal() {
+    const currentPath = window.location.pathname;
+    
+    // Verifica se a URL é um link de notícia real (formato: /fonte/titulo/)
+    if (currentPath && currentPath !== '/' && !currentPath.includes('#')) {
+        // Extrai informações da URL
+        const pathParts = currentPath.split('/').filter(p => p);
+        
+        if (pathParts.length >= 2) {
+            const sourceSlug = pathParts[0];
+            const titleSlug = pathParts.slice(1).join('-');
+            
+            // Tenta encontrar a notícia correspondente
+            const matchingArticle = news.find(article => {
+                const articleSource = article.source
+                    .toLowerCase()
+                    .replace(/\s+/g, '-')
+                    .replace(/[^\w-]/g, '');
+                
+                const articleCleanTitle = article.title
+                    .toLowerCase()
+                    .replace(/[^\w\s-àáâãèéêìíîòóôõùúûñç]/g, '')
+                    .replace(/[àáâã]/g, 'a')
+                    .replace(/[èéê]/g, 'e')
+                    .replace(/[ìíî]/g, 'i')
+                    .replace(/[òóôõ]/g, 'o')
+                    .replace(/[ùúû]/g, 'u')
+                    .replace(/ñ/g, 'n')
+                    .replace(/ç/g, 'c')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-+|-+$/g, '')
+                    .substring(0, 100);
+                
+                return articleSource === sourceSlug && 
+                       articleCleanTitle.includes(titleSlug);
+            });
+            
+            if (matchingArticle) {
+                // Aguarda um momento para garantir que tudo está carregado
+                setTimeout(() => {
+                    openModal(matchingArticle);
+                }, 500);
+            }
+        }
+    }
+}
+
 /* ========== INICIALIZAÇÃO ========== */
 
 // Inicia o carregamento
 loadAllSources();
 
-// Verifica se há hash na URL após carregamento
-setTimeout(checkUrlHash, 1500);
+// Verifica se há hash na URL ou URL real após carregamento
+setTimeout(() => {
+    checkUrlHash();
+    checkRealUrlAndOpenModal();
+}, 1500);
 
 // Atualiza a cada 5 minutos se a página estiver visível
 setInterval(() => {
@@ -2052,4 +2067,4 @@ function updateCategoryStats() {
 setInterval(updateCategoryStats, 10000);
 </script>
 </body>
-    </html>
+</html>
