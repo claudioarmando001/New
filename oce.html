@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunlight Oceana Club - Beira</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset e configurações gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-blue: #0a3d62;
+            --secondary-blue: #1e90ff;
+            --light-blue: #87ceeb;
+            --sand: #f6d7b0;
+            --gold: #daa520;
+            --red-accent: #b22222;
+            --white: #ffffff;
+            --dark: #333333;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 3px;
+            background: var(--gold);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+        
+        .btn:hover {
+            background: var(--primary-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .btn-call {
+            background: var(--red-accent);
+        }
+        
+        .btn-call:hover {
+            background: #8b0000;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px var(--shadow);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        
+        .logo i {
+            color: var(--gold);
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+        
+        .logo span {
+            color: var(--red-accent);
+        }
+        
+        .chinese-detail {
+            font-family: 'Arial', sans-serif;
+            margin-left: 5px;
+            color: var(--red-accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            bottom: 0;
+            left: 0;
+            transition: var(--transition);
+        }
+        
+        nav ul li a:hover:after,
+        nav ul li a.active:after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(10, 61, 98, 0.7), rgba(10, 61, 98, 0.5)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            color: var(--white);
+            margin-bottom: 30px;
+            font-size: 3.5rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+        }
+        
+        .hero .btn {
+            font-size: 1.2rem;
+            padding: 15px 40px;
+        }
+        
+        /* Sobre */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Avaliações */
+        .ratings {
+            background: linear-gradient(135deg, #f6d7b0 0%, #f9f3e9 100%);
+            padding: 60px 0;
+        }
+        
+        .rating-overall {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .rating-score {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+        
+        .rating-stars {
+            color: var(--gold);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .rating-source {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+            position: relative;
+        }
+        
+        .testimonial:before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--light-blue);
+            font-family: Georgia, serif;
+            opacity: 0.3;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        /* Menu */
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .category-btn {
+            padding: 10px 25px;
+            background: var(--white);
+            border: 2px solid var(--light-blue);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .category-btn.active,
+        .category-btn:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            border-color: var(--primary-blue);
+        }
+        
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .menu-item {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px var(--shadow);
+        }
+        
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .menu-item-content {
+            padding: 20px;
+        }
+        
+        .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .menu-item-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .menu-item-price {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .menu-item-desc {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* Galeria */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            height: 250px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Posts em Destaque */
+        .featured-posts {
+            background: linear-gradient(135deg, var(--light-blue) 0%, #e6f7ff 100%);
+            padding: 60px 0;
+        }
+        
+        .posts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .post {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .post-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .post:hover .post-image img {
+            transform: scale(1.05);
+        }
+        
+        .post-content {
+            padding: 20px;
+        }
+        
+        .post-date {
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .post-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Ambiente */
+        .environment-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .environment-item {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .environment-icon {
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        
+        /* Localização */
+        .location-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .location-info {
+            text-align: center;
+            max-width: 700px;
+        }
+        
+        .location-map {
+            width: 100%;
+            height: 400px;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            color: var(--white);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--gold);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .social-icons a:hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Modal de Chamada */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: var(--white);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            padding: 40px;
+            position: relative;
+            text-align: center;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .close-modal:hover {
+            color: var(--dark);
+        }
+        
+        .modal h2 {
+            margin-bottom: 30px;
+        }
+        
+        .call-info {
+            margin: 30px 0;
+        }
+        
+        .call-number {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+        
+        .call-note {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .environment-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--white);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 50px;
+                transition: var(--transition);
+            }
+            
+            nav ul.active {
+                left: 0;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .posts-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .call-number {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-umbrella-beach"></i>
+                Sunlight <span>Oceana</span> Club<span class="chinese-detail">海</span>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul id="mainMenu">
+                    <li><a href="#home" class="active">Início</a></li>
+                    <li><a href="#about">Sobre</a></li>
+                    <li><a href="#ratings">Avaliações</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#gallery">Galeria</a></li>
+                    <li><a href="#environment">Ambiente</a></li>
+                    <li><a href="#location">Localização</a></li>
+                    <li><a href="#contact">Contactos</a></li>
+                    <li><a href="#" id="adminAccess" style="color: var(--red-accent); font-weight: bold;">
+                        <i class="fas fa-lock"></i> Admin
+                    </a></li>
+                </ul>
+            </nav>
+        </div>
+        </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1 id="mainPhrase">Sabores do mar com um toque oriental, no coração da Beira</h1>
+            <p id="heroSubtitle">Um restaurante à beira-mar que mistura a riqueza dos frutos do mar moçambicanos com a tradição culinária chinesa.</p>
+            <button class="btn btn-call" id="reserveBtn">
+                <i class="fas fa-phone-alt"></i> Reservar Mesa
+            </button>
+        </div>
+    </section>
+
+    <!-- Sobre -->
+    <section id="about">
+        <div class="container">
+            <h2>Sobre o Restaurante</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Nossa História</h3>
+                    <p id="aboutText">Localizado na Avenida Mateus Sansão Muthemba, na cidade costeira da Beira, o Sunlight Oceana Club é um ponto de encontro popular entre moradores e visitantes que procuram boa comida, ambiente descontraído e uma vista privilegiada com brisa marítima.</p>
+                    <p>Há mais de 15 anos, oferecemos uma experiência gastronómica única que combina os melhores frutos do mar frescos com influências da culinária chinesa, criando pratos que celebram a fusão entre duas culturas ricas em sabores.</p>
+                    <p>O nosso espaço externo com vista para o Índico é perfeito para refeições ao pôr-do-sol ou encontros sociais ao final da tarde, proporcionando momentos inesquecíveis à beira-mar.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Interior do restaurante Oceana">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Avaliações -->
+    <section id="ratings" class="ratings">
+        <div class="container">
+            <h2>Avaliações e Comentários</h2>
+            
+            <div class="rating-overall">
+                <div class="rating-score">3.9</div>
+                <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <div class="rating-source">Classificação baseada em 1.000+ avaliações online</div>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "Excelente localização com vista para o mar. Os frutos do mar são sempre frescos e bem preparados. O serviço é atencioso e o ambiente é perfeito para um jantar à beira-mar."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente">
+                        <div>
+                            <strong>João Carlos</strong>
+                            <div style="color: var(--gold); font-size: 0.9rem;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "Cardápio extenso e variado que agrada a todos os gostos. Adorei a fusão de sabores moçambicanos e chineses. Os preços são justos para a qualidade oferecida."
+     </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente">
+                        <div>
+                            <strong>Maria Fernanda</strong>
+                            <div style="color: var(--gold); font-size: 0.9rem;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "O terraço com vista para o oceano é o ponto alto! Ambiente animado nos fins de semana, perfeito para reunir amigos. Os cocktails são muito bem feitos."
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Cliente">
+                        <div>
+                            <strong>Pedro Santos</strong>
+                            <div style="color: var(--gold); font-size: 0.9rem;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu -->
+    <section id="menu" style="background-color: #f5f9ff;">
+        <div class="container">
+            <h2>Nosso Menu</h2>
+            
+            <div class="menu-categories">
+                <button class="category-btn active" data-category="all">Todos</button>
+                <button class="category-btn" data-category="seafood">Frutos do Mar</button>
+                <button class="category-btn" data-category="mozambican">Pratos Moçambicanos</button>
+                <button class="category-btn" data-category="chinese">Influência Chinesa</button>
+                <button class="category-btn" data-category="drinks">Bebidas & Cocktails</button>
+            </div>
+            
+            <div class="menu-items" id="menuItems">
+                <!-- Itens do menu carregados via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeria -->
+    <section id="gallery">
+        <div class="container">
+            <h2>Galeria</h2>
+            <div class="gallery-container" id="galleryContainer">
+                <!-- Imagens carregadas via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Posts em Destaque -->
+    <section class="featured-posts" id="featured">
+        <div class="container">
+            <h2>Destaques & Novidades</h2>
+            <div class="posts-container" id="postsContainer">
+                <!-- Posts carregados via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Ambiente -->
+    <section id="environment">
+        <div class="container">
+            <h2>Ambiente & Experiência</h2>
+            <div class="environment-content">
+                <div class="environment-item">
+                    <div class="environment-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="environment-text">
+                        <h3>Encontros Sociais</h3>
+                        <p>O Oceana é o local ideal para reunir amigos e familiares. Com nosso espaço ao ar livre e vista para o mar, cada encontro se torna especial. Ambiente perfeito para celebrações e reuniões informais.</p>
+                    </div>
+                </div>
+                
+                <div class="environment-item">
+                    <div class="environment-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <div class="environment-text">
+                        <h3>Pôr-do-Sol à Beira-Mar</h3>
+                        <p>Desfrute de um pôr-do-sol deslumbrante no nosso terraço com vista direta para o Oceano Índico. A combinação de boa comida, brisa marítima e o espetáculo do pôr-do-sol cria momentos inesquecíveis.</p>
+                    </div>
+                </div>
+     <div class="environment-item">
+                    <div class="environment-icon">
+                        <i class="fas fa-glass-cheers"></i>
+                    </div>
+                    <div class="environment-text">
+                        <h3>Fins de Semana Animados</h3>
+                        <p>Aos sábados e domingos, oferecemos um brunch especial com pratos da casa e drinks temáticos. Venha aproveitar o fim de semana com estilo em um ambiente descontraído e acolhedor!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Localização -->
+    <section id="location">
+        <div class="container">
+            <h2>Localização</h2>
+            <div class="location-content">
+                <div class="location-info">
+                    <h3>Visite-nos</h3>
+                    <p><i class="fas fa-map-marker-alt" style="color: var(--red-accent); margin-right: 10px;"></i> <strong id="address">Avenida Mateus Sansão Muthemba, Beira, Moçambique</strong></p>
+                    <p>Estamos localizados na orla marítima da Beira, com vista direta para o Oceano Índico. Um local de fácil acesso e com estacionamento disponível.</p>
+                </div>
+                
+                <div class="location-map">
+                    <p>📍 Mapa: Sunlight Oceana Club - Beira</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Sunlight Oceana Club</h3>
+                    <p>Sabores do mar com um toque oriental, no coração da Beira. Uma experiência gastronómica única que celebra a fusão das culturas moçambicana e chinesa.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-tripadvisor"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contactos</h3>
+                    <ul>
+                        <li><i class="fas fa-phone" style="margin-right: 10px;"></i> <span id="phone">+258 84 123 4567</span></li>
+                        <li><i class="fas fa-envelope" style="margin-right: 10px;"></i> <span id="email">info@oceana.co.mz</span></li>
+                        <li><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> <span id="footerAddress">Av. Mateus Sansão Muthemba, Beira</span></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Horário</h3>
+                    <ul id="hoursList">
+                        <!-- Horários carregados via JavaScript -->
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Sunlight Oceana Club - Beira. Todos os direitos reservados. | Desenvolvido com paixão pelo Oceano Índico.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de Chamada para Reserva -->
+    <div class="modal" id="callModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2>Reservar Mesa</h2>
+            <p>Para fazer uma reserva, ligue diretamente para o nosso restaurante:</p>
+            
+            <div class="call-info">
+                <div class="call-number" id="callNumber">+258 84 123 4567</div>
+                <p>Nossa equipe terá prazer em atender sua reserva e responder a todas as suas perguntas.</p>
+            </div>
+            
+            <button class="btn btn-call" id="callBtn">
+                <i class="fas fa-phone-alt"></i> Ligar Agora
+            </button>
+            
+            <p class="call-note">
+                <i class="fas fa-info-circle"></i> Horário de atendimento para reservas: Segunda a Domingo, das 10h às 22h.
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal de Acesso Admin -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeAdminModal">&times;</span>
+            <h2>Acesso Administrador</h2>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label for="pinInput">PIN de Acesso</label>
+                <input type="password" id="pinInput" placeholder="Digite o PIN" maxlength="4" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
+                <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">Para acessar o painel de administração, digite o PIN secreto.</p>
+            </div>
+            <button class="btn" id="submitPin" style="width: 100%; margin-top: 20px;">Acessar Painel</button>
+            <p id="pinError" style="color: red; margin-top: 15px; display: none;">PIN incorreto. Tente novamente.</p>
+        </div>
+    </div>
+
+    <script>
+        // Dados iniciais (serão sobrescritos pelos dados do localStorage se existirem)
+        const initialData = {
+            mainPhrase: "Sabores do mar com um toque oriental, no coração da Beira",
+            heroSubtitle: "Um restaurante à beira-mar que mistura a riqueza dos frutos do mar moçambicanos com a tradição culinária chinesa.",
+            aboutText: "Localizado na Avenida Mateus Sansão Muthemba, na cidade costeira da Beira, o Sunlight Oceana Club é um ponto de encontro popular entre moradores e visitantes que procuram boa comida, ambiente descontraído e uma vista privilegiada com brisa marítima.",
+            address: "Avenida Mateus Sansão Muthemba, Beira, Moçambique",
+            phone: "+258 84 123 4567",
+            email: "info@oceana.co.mz",
+            hours: [
+                { day: "Segunda - Quinta", time: "11:00 - 22:00" },
+                { day: "Sexta - Sábado", time: "11:00 - 00:00" },
+                { day: "Domingo", time: "11:00 - 20:00" }
+            ],
+            menuItems: [
+                { id: 1, name: "Camarão Grelhado à Moda do Chefe", description: "Camarões frescos grelhados com especiarias especiais e limão.", price: "850 MZN", category: "seafood", image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+                { id: 2, name: "Peixe à Moda da Beira", description: "Peixe do dia grelhado com molho de coco e arroz de coco.", price: "750 MZN", category: "mozambican", image: "https://images.unsplash.com/photo-1470116945706-e6bf5d5a53ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+                { id: 3, name: "Frango com Amendoim", description: "Frango estufado com molho de amendoim e legumes.", price: "650 MZN", category: "mozambican", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+                { id: 4, name: "Lagosta com Gengibre", description: "Lagosta fresca salteada com gengibre, alho e cebolinha.", price: "1200 MZN", category: "chinese", image: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+                { id: 5, name: "Rolinhos Primavera", description: "Tradicionais rolinhos primavera com molho agridoce.", price: "350 MZN", category: "chinese", image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+                { id: 6, name: "Polvo Grelhado", description: "Polvo grelhado com azeite, alho e ervas aromáticas.", price: "950 MZN", category: "seafood", image: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+                { id: 7, name: "Caipirinha de Maracujá", description: "Coquetel refrescante com cachaça, maracujá e limão.", price: "250 MZN", category: "drinks", image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+                { id: 8, name: "Mojito Tropical", description: "Mojito especial com hortelã, limão e frutas tropicais.", price: "280 MZN", category: "drinks", image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" }
+            ],
+            galleryImages: [
+                "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                "https://images.unsplash.com/photo-1578474846511-04ba529f0b88?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                "https://images.unsplash.com/photo-1578474846511-04ba529f0b88?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            ],
+            posts: [
+                { id: 1, title: "Promoção Especial de Verão", content: "Aproveite nossos pratos de frutos do mar com 15% de desconto durante todo o mês de Dezembro. Aproveite o verão na Beira com sabores especiais!", date: "01 Dez 2023", image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", featured: true },
+                { id: 2, title: "Novo: Menu de Brunch aos Domingos", content: "Todos os domingos das 10h às 14h, desfrute do nosso brunch especial com pratos exclusivos e drinks incluídos. Venha em família!", date: "15 Nov 2023", image: "https://images.unsplash.com/photo-1551218808-94e220e084d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", featured: true },
+                { id: 3, title: "Espaço para Eventos Privados", content: "Agora disponível: aluguel do nosso espaço para eventos privados, celebrações e reuniões corporativas. Capacidade para até 100 pessoas.", date: "10 Nov 2023", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", featured: true }
+            ]
+        };
+
+        // Carregar dados do localStorage ou usar dados iniciais
+        function loadData() {
+            const savedData = localStorage.getItem('oceanaData');
+            return savedData ? JSON.parse(savedData) : initialData;
+        }
+
+        // Salvar dados no localStorage
+        function saveData(data) {
+            localStorage.setItem('oceanaData', JSON.stringify(data));
+        }
+
+        // Inicializar dados
+        let appData = loadData();
+
+        // DOM Elements
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainMenu = document.getElementById('mainMenu');
+        const menuItemsContainer = document.getElementById('menuItems');
+        const galleryContainer = document.getElementById('galleryContainer');
+        const postsContainer = document.getElementById('postsContainer');
+        const hoursList = document.getElementById('hoursList');
+        const reserveBtn = document.getElementById('reserveBtn');
+        const callModal = document.getElementById('callModal');
+        const closeModal = document.getElementById('closeModal');
+        const callBtn = document.getElementById('callBtn');
+        const callNumber = document.getElementById('callNumber');
+        const adminAccess = document.getElementById('adminAccess');
+        const adminModal = document.getElementById('adminModal');
+        const closeAdminModal = document.getElementById('closeAdminModal');
+        const submitPin = document.getElementById('submitPin');
+        const pinInput = document.getElementById('pinInput');
+        const pinError = document.getElementById('pinError');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+
+        // Atualizar conteúdo do site com os dados
+        function updateSiteContent() {
+            // Atualizar textos
+            document.getElementById('mainPhrase').textContent = appData.mainPhrase;
+            document.getElementById('heroSubtitle').textContent = appData.heroSubtitle;
+            document.getElementById('aboutText').textContent = appData.aboutText;
+            document.getElementById('address').textContent = appData.address;
+            document.getElementById('footerAddress').textContent = appData.address;
+            document.getElementById('phone').textContent = appData.phone;
+            document.getElementById('email').textContent = appData.email;
+            document.getElementById('callNumber').textContent = appData.phone;
+            
+            // Atualizar horários
+            hoursList.innerHTML = '';
+            appData.hours.forEach(hour => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${hour.day}:</strong> ${hour.time}`;
+                hoursList.appendChild(li);
+            });
+            
+            // Atualizar menu
+            renderMenuItems('all');
+            
+            // Atualizar galeria
+            renderGallery();
+            
+            // Atualizar posts
+            renderPosts();
+        }
+   // Renderizar itens do menu
+        function renderMenuItems(category) {
+            menuItemsContainer.innerHTML = '';
+            
+            const filteredItems = category === 'all' 
+                ? appData.menuItems 
+                : appData.menuItems.filter(item => item.category === category);
+            
+            filteredItems.forEach(item => {
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item';
+                menuItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <div class="menu-item-name">${item.name}</div>
+                            <div class="menu-item-price">${item.price}</div>
+                        </div>
+                        <p class="menu-item-desc">${item.description}</p>
+                    </div>
+                `;
+                menuItemsContainer.appendChild(menuItem);
+            });
+        }
+
+        // Renderizar galeria
+        function renderGallery() {
+            galleryContainer.innerHTML = '';
+            
+            appData.galleryImages.forEach(imageUrl => {
+                // Verificar se é uma URL de dados (imagem local)
+                const isDataUrl = imageUrl.startsWith('data:image');
+                const src = isDataUrl ? imageUrl : (imageUrl || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');
+                
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.innerHTML = `<img src="${src}" alt="Imagem do restaurante">`;
+                galleryContainer.appendChild(galleryItem);
+            });
+        }
+
+        // Renderizar posts
+        function renderPosts() {
+            postsContainer.innerHTML = '';
+            
+            // Filtrar apenas posts destacados
+            const featuredPosts = appData.posts.filter(post => post.featured);
+            
+            featuredPosts.forEach(post => {
+                // Verificar se é uma URL de dados (imagem local)
+                const isDataUrl = post.image.startsWith('data:image');
+                const src = isDataUrl ? post.image : (post.image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');
+                
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.innerHTML = `
+                    <div class="post-image">
+                        <img src="${src}" alt="${post.title}">
+                    </div>
+                    <div class="post-content">
+                        <div class="post-date">${post.date}</div>
+                        <h3 class="post-title">${post.title}</h3>
+                        <p>${post.content}</p>
+                    </div>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+        }
+
+        // Event Listeners
+        mobileMenuBtn.addEventListener('click', () => {
+            mainMenu.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Fechar menu mobile ao clicar em um link
+        document.querySelectorAll('#mainMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainMenu.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Sistema de reservas via chamada telefônica
+        reserveBtn.addEventListener('click', () => {
+            callModal.style.display = 'flex';
+        });
+
+        closeModal.addEventListener('click', () => {
+            callModal.style.display = 'none';
+        });
+
+        // Botão para ligar
+        callBtn.addEventListener('click', () => {
+            const phoneNumber = appData.phone.replace(/\D/g, '');
+            // Em um dispositivo real, isso abriria o discador
+            alert(`Ligando para: ${appData.phone}\n\nEm um dispositivo móvel, esta ação abriria o discador telefônico.`);
+            // Para web, apenas mostra a mensagem
+        });
+
+        // Fechar modal ao clicar fora
+        window.addEventListener('click', (e) => {
+            if (e.target === callModal) {
+                callModal.style.display = 'none';
+            }
+            if (e.target === adminModal) {
+                adminModal.style.display = 'none';
+                pinError.style.display = 'none';
+                pinInput.value = '';
+            }
+        });
+
+        // Sistema de acesso admin
+        adminAccess.addEventListener('click', (e) => {
+            e.preventDefault();
+            adminModal.style.display = 'flex';
+        });
+
+        closeAdminModal.addEventListener('click', () => {
+            adminModal.style.display = 'none';
+            pinError.style.display = 'none';
+            pinInput.value = '';
+        });
+
+        submitPin.addEventListener('click', () => {
+            const pin = pinInput.value;
+            if (pin === '8999') {
+                // Redirecionar para o painel de administração
+                window.open('ad.html', '_blank');
+                adminModal.style.display = 'none';
+                pinInput.value = '';
+            } else {
+                pinError.style.display = 'block';
+            }
+        });
+
+        // Permitir enviar o PIN com Enter
+        pinInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                submitPin.click();
+            }
+        });
+
+        // Filtro de categorias do menu
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remover classe active de todos os botões
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                // Adicionar classe active ao botão clicado
+                btn.classList.add('active');
+                // Filtrar itens do menu
+                renderMenuItems(btn.dataset.category);
+            });
+        });
+
+        // Scroll suave para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if(this.getAttribute('href') === '#') return;
+                
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Inicializar o site
+        updateSiteContent();
+        
+        // Exibir mensagem de boas-vindas
+        setTimeout(() => {
+            console.log('Bem-vindo ao Sunlight Oceana Club! Site carregado com sucesso.');
+        }, 500);
+    </script>
+</body>
+</html>
