@@ -1,0 +1,2261 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Sunlight Oceana Club</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset e configurações gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-blue: #0a3d62;
+            --secondary-blue: #1e90ff;
+            --light-blue: #87ceeb;
+            --sand: #f6d7b0;
+            --gold: #daa520;
+            --red-accent: #b22222;
+            --white: #ffffff;
+            --dark: #333333;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--medium-gray);
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px var(--shadow);
+        }
+        
+        .btn-secondary {
+            background: var(--light-blue);
+            color: var(--dark);
+        }
+        
+        .btn-danger {
+            background: var(--red-accent);
+        }
+        
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 0.9rem;
+        }
+        
+        /* Sistema de Login */
+        .login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+        }
+        
+        .login-container {
+            background: var(--white);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .login-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .login-logo i {
+            color: var(--gold);
+        }
+        
+        .login-logo span {
+            color: var(--red-accent);
+        }
+        
+        .login-container h1 {
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-blue);
+            box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.1);
+        }
+        
+        .error-message {
+            color: var(--red-accent);
+            margin-top: 10px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        /* Painel Principal */
+        .admin-panel {
+            display: none;
+        }
+        
+        /* Header do Painel */
+        .admin-header {
+            background: var(--white);
+            box-shadow: 0 2px 10px var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .admin-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .logout-btn {
+            background: var(--red-accent);
+        }
+        
+        /* Layout do Painel */
+        .admin-layout {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 30px 0;
+            flex-shrink: 0;
+        }
+        
+        .sidebar-nav ul {
+            list-style: none;
+        }
+        
+        .sidebar-nav li {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
+            color: rgba(255, 255, 255, 0.8);
+            transition: var(--transition);
+        }
+        
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border-left: 4px solid var(--gold);
+        }
+        
+        .sidebar-nav i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Conteúdo Principal */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background: var(--light-gray);
+        }
+        
+        /* Seções do Painel */
+        .admin-section {
+            display: none;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .admin-section.active {
+            display: block;
+        }
+        
+        /* Dashboard */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-left: 5px solid var(--gold);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--light-blue);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+        }
+        
+        .stat-info h3 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        
+        .recent-activity {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .activity-list {
+            list-style: none;
+        }
+        
+        .activity-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--medium-gray);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .activity-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+        }
+        
+        /* Gestão de Conteúdo */
+        .content-form {
+            background: var(--light-gray);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        /* Gestão do Menu */
+        .menu-management {
+            margin-top: 30px;
+        }
+        
+        .menu-items-list {
+            margin-top: 30px;
+        }
+        
+        .menu-item-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--light-gray);
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .menu-item-info {
+            flex: 1;
+        }
+        
+        .menu-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Gestão da Galeria - Upload de Imagens */
+        .upload-area {
+            border: 2px dashed var(--medium-gray);
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .upload-area:hover {
+            border-color: var(--secondary-blue);
+            background: rgba(30, 144, 255, 0.05);
+        }
+        
+        .upload-area.dragover {
+            border-color: var(--gold);
+            background: rgba(218, 165, 32, 0.1);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--secondary-blue);
+            margin-bottom: 15px;
+        }
+        
+        .upload-text {
+            margin-bottom: 15px;
+        }
+        
+        .upload-hint {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .image-preview {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        
+        .upload-button {
+            background: var(--secondary-blue);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 15px;
+        }
+        
+        .upload-button:hover {
+            background: var(--primary-blue);
+        }
+        
+        /* Gestão da Galeria */
+        .gallery-management {
+            margin-top: 30px;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 150px;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .gallery-item-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+        }
+        
+        /* Gestão de Posts */
+        .posts-management {
+            margin-top: 30px;
+        }
+        
+        .post-item {
+            background: var(--light-gray);
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .post-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .post-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .post-featured {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .featured-badge {
+            background: var(--gold);
+            color: var(--white);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        /* Configurações */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .settings-card {
+            background: var(--light-gray);
+            padding: 25px;
+            border-radius: 10px;
+        }
+        
+        .color-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: var(--transition);
+        }
+        
+        .color-option.active {
+            border-color: var(--dark);
+            transform: scale(1.1);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--gold);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+        
+        /* Mensagens de Sucesso/Erro */
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .admin-layout {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 0;
+            }
+            
+            .sidebar-nav ul {
+                display: flex;
+                overflow-x: auto;
+                padding: 0 20px;
+            }
+            
+            .sidebar-nav li {
+                margin-bottom: 0;
+                flex-shrink: 0;
+            }
+            
+            .sidebar-nav a {
+                padding: 15px;
+                border-left: none;
+                border-bottom: 4px solid transparent;
+            }
+            
+            .sidebar-nav a:hover,
+            .sidebar-nav a.active {
+                border-left: none;
+                border-bottom: 4px solid var(--gold);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .admin-header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .menu-item-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .menu-item-actions {
+                align-self: flex-end;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+        
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .main-content {
+                padding: 20px 15px;
+            }
+            
+            .admin-section {
+                padding: 20px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .login-container {
+                padding: 30px 20px;
+                margin: 0 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-container">
+            <div class="login-logo">
+                <i class="fas fa-umbrella-beach"></i>
+                <span>Oceana</span> Admin
+            </div>
+            <h1>Painel Administrativo</h1>
+            <p style="margin-bottom: 30px; color: #666;">Digite o PIN para acessar o sistema de gestão</p>
+            
+            <div class="form-group">
+                <label for="loginPin">PIN de Acesso</label>
+                <input type="password" id="loginPin" placeholder="Digite o PIN de 4 dígitos" maxlength="4">
+            </div>
+            
+            <button class="btn" id="loginBtn" style="width: 100%;">Acessar Painel</button>
+            
+            <p id="loginError" class="error-message">PIN incorreto. Tente novamente.</p>
+            
+            <p style="margin-top: 30px; font-size: 0.9rem; color: #999;">
+                <i class="fas fa-info-circle"></i> Este painel permite gerenciar todo o conteúdo do site do restaurante.
+            </p>
+        </div>
+    </div>
+
+    <!-- Painel Administrativo -->
+    <div class="admin-panel" id="adminPanel">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="container admin-header-content">
+                <h1>
+                    <i class="fas fa-cogs"></i>
+                    Painel Administrativo
+                </h1>
+                
+                <div class="admin-actions">
+                    <button class="btn btn-secondary" id="viewSiteBtn">
+                        <i class="fas fa-eye"></i> Ver Site
+                    </button>
+           <button class="btn logout-btn" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Layout Principal -->
+        <div class="admin-layout">
+            <!-- Sidebar -->
+            <nav class="sidebar">
+                <ul class="sidebar-nav">
+                    <li><a href="#dashboard" class="active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a></li>
+                    <li><a href="#content" data-section="content">
+                        <i class="fas fa-edit"></i> Conteúdo do Site
+                    </a></li>
+                    <li><a href="#menu" data-section="menu">
+                        <i class="fas fa-utensils"></i> Gestão do Menu
+                    </a></li>
+                    <li><a href="#gallery" data-section="gallery">
+                        <i class="fas fa-images"></i> Galeria
+                    </a></li>
+                    <li><a href="#posts" data-section="posts">
+                        <i class="fas fa-newspaper"></i> Postagens
+                    </a></li>
+                    <li><a href="#settings" data-section="settings">
+                        <i class="fas fa-palette"></i> Aparência
+                    </a></li>
+                </ul>
+            </nav>
+
+            <!-- Conteúdo Principal -->
+            <main class="main-content">
+                <!-- Mensagens -->
+                <div id="successMessage" class="message success">
+                    <i class="fas fa-check-circle"></i> Alterações salvas com sucesso!
+                </div>
+                
+                <div id="errorMessage" class="message error">
+                    <i class="fas fa-exclamation-circle"></i> Ocorreu um erro ao salvar as alterações.
+                </div>
+
+                <!-- Seção: Dashboard -->
+                <section id="dashboard" class="admin-section active">
+                    <h2>Dashboard</h2>
+                    <p>Bem-vindo ao painel de administração do Sunlight Oceana Club. Aqui você pode gerenciar todo o conteúdo do site.</p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Itens no Menu</h3>
+                                <div class="stat-number" id="menuItemsCount">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Fotos na Galeria</h3>
+                                <div class="stat-number" id="galleryItemsCount">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-newspaper"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Postagens Ativas</h3>
+                                <div class="stat-number" id="postsCount">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Postagens em Destaque</h3>
+                                <div class="stat-number" id="featuredPostsCount">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-activity">
+                        <h3>Últimas Alterações</h3>
+                        <ul class="activity-list" id="activityList">
+                            <!-- Atividades serão adicionadas via JavaScript -->
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Seção: Conteúdo do Site -->
+                <section id="content" class="admin-section">
+                    <h2>Conteúdo do Site</h2>
+                    <p>Edite os textos principais do site que aparecem para os visitantes.</p>
+                    
+                    <div class="content-form">
+                        <div class="form-group">
+                            <label for="mainPhrase">Frase Principal (Hero)</label>
+                            <textarea id="mainPhrase" rows="2" placeholder="Digite a frase principal do site"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="heroSubtitle">Subtítulo do Hero</label>
+                            <textarea id="heroSubtitle" rows="2" placeholder="Digite o subtítulo do hero section"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="aboutText">Texto "Sobre o Restaurante"</label>
+                            <textarea id="aboutText" rows="5" placeholder="Digite o texto sobre o restaurante"></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="address">Endereço</label>
+                                <input type="text" id="address" placeholder="Endereço completo">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Telefone</label>
+                                <input type="text" id="phone" placeholder="Número de telefone">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="Endereço de email">
+                            </div>
+                        </div>
+                        
+                        <h3 style="margin-top: 30px;">Horário de Funcionamento</h3>
+                        
+                        <div id="hoursContainer">
+                            <!-- Horários serão adicionados via JavaScript -->
+                        </div>
+                        
+                        <button class="btn" id="addHourBtn">
+                            <i class="fas fa-plus"></i> Adicionar Horário
+                        </button>
+                        
+                        <div style="text-align: right; margin-top: 30px;">
+                            <button class="btn" id="saveContentBtn">Salvar Alterações</button>
+                        </div>
+                    </div>
+                </section>
+   <!-- Seção: Gestão do Menu -->
+                <section id="menu" class="admin-section">
+                    <h2>Gestão do Menu</h2>
+                    <p>Adicione, edite ou remova itens do menu do restaurante.</p>
+                    
+                    <div class="content-form">
+                        <h3>Adicionar/Editar Item</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="itemName">Nome do Prato</label>
+                                <input type="text" id="itemName" placeholder="Nome do prato">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="itemPrice">Preço</label>
+                                <input type="text" id="itemPrice" placeholder="Ex: 850 MZN">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="itemCategory">Categoria</label>
+                                <select id="itemCategory">
+                                    <option value="seafood">Frutos do Mar</option>
+                                    <option value="mozambican">Pratos Moçambicanos</option>
+                                    <option value="chinese">Influência Chinesa</option>
+                                    <option value="drinks">Bebidas & Cocktails</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="itemImage">Imagem do Prato</label>
+                                <div style="display: flex; gap: 15px; align-items: center;">
+                                    <input type="file" id="itemImageFile" accept="image/*" style="flex: 1;">
+                                    <button type="button" class="btn btn-small" id="uploadItemImageBtn">
+                                        <i class="fas fa-upload"></i> Upload
+                                    </button>
+                                </div>
+                                <input type="hidden" id="itemImage" placeholder="URL da imagem do prato">
+                                <div id="itemImagePreview" style="margin-top: 10px;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="itemDescription">Descrição</label>
+                            <textarea id="itemDescription" rows="3" placeholder="Descrição do prato"></textarea>
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px; margin-top: 20px;">
+                            <button class="btn" id="saveItemBtn">
+                                <i class="fas fa-save"></i> Salvar Item
+                            </button>
+                            
+                            <button class="btn btn-secondary" id="newItemBtn">
+                                <i class="fas fa-plus"></i> Novo Item
+                            </button>
+                            
+                            <button class="btn btn-danger" id="cancelEditBtn" style="display: none;">
+                                <i class="fas fa-times"></i> Cancelar Edição
+                            </button>
+                        </div>
+                        
+                        <input type="hidden" id="editingItemId" value="">
+                    </div>
+                    
+                    <div class="menu-management">
+                        <h3>Itens do Menu</h3>
+                        <p>Lista de todos os itens atualmente no menu. Clique em "Editar" para modificar um item ou "Remover" para excluí-lo.</p>
+                        
+                        <div class="menu-items-list" id="menuItemsList">
+                            <!-- Itens do menu serão listados aqui -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Seção: Galeria -->
+                <section id="gallery" class="admin-section">
+                    <h2>Gestão da Galeria</h2>
+                    <p>Adicione ou remova imagens da galeria do site.</p>
+                    
+                    <div class="content-form">
+                        <h3>Adicionar Imagens</h3>
+                        
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="upload-text">
+                                <h4>Arraste e solte imagens aqui</h4>
+                                <p>ou</p>
+                            </div>
+                            <label for="galleryUpload" class="upload-button">
+                                <i class="fas fa-folder-open"></i> Selecionar Imagens
+                            </label>
+                            <input type="file" id="galleryUpload" multiple accept="image/*" style="display: none;">
+                            <p class="upload-hint">Formatos suportados: JPG, PNG, GIF. Tamanho máximo: 5MB por imagem.</p>
+                        </div>
+                        
+                        <div id="uploadPreview" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 20px;"></div>
+                        
+                        <div style="text-align: right; margin-top: 20px;">
+                            <button class="btn" id="addImagesBtn" style="display: none;">
+                                <i class="fas fa-plus"></i> Adicionar à Galeria
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-management">
+                        <h3>Imagens na Galeria</h3>
+                        <p>Arraste para reordenar as imagens. A primeira imagem será a mais destacada.</p>
+                        
+                        <div class="gallery-grid" id="galleryGrid">
+                            <!-- Imagens da galeria serão listadas aqui -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Seção: Postagens -->
+                <section id="posts" class="admin-section">
+                    <h2>Gestão de Postagens</h2>
+                    <p>Crie e gerencie postagens promocionais que aparecem na seção "Destaques & Novidades".</p>
+                    
+                    <div class="content-form">
+                        <h3>Criar/Editar Postagem</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="postTitle">Título da Postagem</label>
+                                <input type="text" id="postTitle" placeholder="Título da postagem">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="postDate">Data</label>
+                                <input type="text" id="postDate" placeholder="Ex: 15 Nov 2023">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="postImage">Imagem da Postagem</label>
+                                <div style="display: flex; gap: 15px; align-items: center;">
+                                    <input type="file" id="postImageFile" accept="image/*" style="flex: 1;">
+                                    <button type="button" class="btn btn-small" id="uploadPostImageBtn">
+                                        <i class="fas fa-upload"></i> Upload
+                                    </button>
+                                </div>
+                                <input type="hidden" id="postImage" placeholder="URL da imagem da postagem">
+                                <div id="postImagePreview" style="margin-top: 10px;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="postContent">Conteúdo</label>
+                            <textarea id="postContent" rows="4" placeholder="Conteúdo da postagem"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="postFeatured" checked>
+                                Destacar esta postagem no site
+                            </label>
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px; margin-top: 20px;">
+                            <button class="btn" id="savePostBtn">
+                                <i class="fas fa-save"></i> Salvar Postagem
+                            </button>
+                            
+                            <button class="btn btn-secondary" id="newPostBtn">
+                                <i class="fas fa-plus"></i> Nova Postagem
+                            </button>
+    <button class="btn btn-danger" id="cancelPostEditBtn" style="display: none;">
+                                <i class="fas fa-times"></i> Cancelar Edição
+                            </button>
+                        </div>
+                        
+                        <input type="hidden" id="editingPostId" value="">
+                    </div>
+                    
+                    <div class="posts-management">
+                        <h3>Postagens Existentes</h3>
+                        <p>Lista de todas as postagens. Use o botão "Destacar" para definir quais aparecem na página inicial.</p>
+                        
+                        <div id="postsList">
+                            <!-- Postagens serão listadas aqui -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Seção: Aparência -->
+                <section id="settings" class="admin-section">
+                    <h2>Aparência do Site</h2>
+                    <p>Personalize as cores e elementos visuais do site.</p>
+                    
+                    <div class="settings-grid">
+                        <div class="settings-card">
+                            <h3>Cores Principais</h3>
+                            <p>Selecione a paleta de cores do site:</p>
+                            
+                            <div class="color-options">
+                                <div class="color-option active" style="background: #0a3d62;" data-color="#0a3d62"></div>
+                                <div class="color-option" style="background: #1e3a8a;" data-color="#1e3a8a"></div>
+                                <div class="color-option" style="background: #0f766e;" data-color="#0f766e"></div>
+                                <div class="color-option" style="background: #7c2d12;" data-color="#7c2d12"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3>Detalhes Chineses</h3>
+                            <p>Ative ou desative os elementos visuais chineses no site:</p>
+                            
+                            <label style="display: flex; align-items: center; gap: 15px; margin-top: 15px; cursor: pointer;">
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="chineseElements" checked>
+                                    <span class="toggle-slider"></span>
+                                </div>
+                                <span>Exibir elementos chineses</span>
+                            </label>
+                            
+                            <p style="font-size: 0.9rem; color: #666; margin-top: 15px;">
+                                <i class="fas fa-info-circle"></i> Quando ativado, ícones e detalhes chineses serão exibidos no site.
+                            </p>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3>Exportar/Importar Dados</h3>
+                            <p>Faça backup ou restaure os dados do site:</p>
+                            
+                            <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+                                <button class="btn btn-secondary" id="exportDataBtn">
+                                    <i class="fas fa-download"></i> Exportar Dados
+                                </button>
+                                
+                                <button class="btn btn-secondary" id="importDataBtn">
+                                    <i class="fas fa-upload"></i> Importar Dados
+                                </button>
+                                
+                                <button class="btn btn-danger" id="resetDataBtn">
+                                    <i class="fas fa-redo"></i> Restaurar Padrão
+                                </button>
+                            </div>
+                            
+                            <p style="font-size: 0.9rem; color: #666; margin-top: 15px;">
+                                <i class="fas fa-exclamation-triangle"></i> A restauração apagará todos os dados atuais.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: right; margin-top: 30px;">
+                        <button class="btn" id="saveSettingsBtn">Salvar Configurações</button>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // PIN de acesso
+        const ADMIN_PIN = "8999";
+        
+        // Elementos do DOM
+        const loginScreen = document.getElementById('loginScreen');
+        const adminPanel = document.getElementById('adminPanel');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginPin = document.getElementById('loginPin');
+        const loginError = document.getElementById('loginError');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const viewSiteBtn = document.getElementById('viewSiteBtn');
+        const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+        const adminSections = document.querySelectorAll('.admin-section');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        // Variáveis para upload de imagens
+        let galleryImagesToAdd = [];
+        let itemImageDataUrl = '';
+        let postImageDataUrl = '';
+        
+        // Carregar dados do localStorage
+        function loadData() {
+            const savedData = localStorage.getItem('oceanaData');
+            if (savedData) {
+                return JSON.parse(savedData);
+            } else {
+                // Se não houver dados, carregar do site principal
+                try {
+                    const siteData = JSON.parse(localStorage.getItem('oceanaData')) || getDefaultData();
+                    return siteData;
+                } catch {
+                    return getDefaultData();
+                }
+            }
+        }
+        
+        // Dados padrão
+        function getDefaultData() {
+            return {
+                mainPhrase: "Sabores do mar com um toque oriental, no coração da Beira",
+                heroSubtitle: "Um restaurante à beira-mar que mistura a riqueza dos frutos do mar moçambicanos com a tradição culinária chinesa.",
+                aboutText: "Localizado na Avenida Mateus Sansão Muthemba, na cidade costeira da Beira, o Sunlight Oceana Club é um ponto de encontro popular entre moradores e visitantes que procuram boa comida, ambiente descontraído e uma vista privilegiada com brisa marítima.",
+                address: "Avenida Mateus Sansão Muthemba, Beira, Moçambique",
+                phone: "+258 84 123 4567",
+                email: "info@oceana.co.mz",
+                hours: [
+                    { day: "Segunda - Quinta", time: "11:00 - 22:00" },
+                    { day: "Sexta - Sábado", time: "11:00 - 00:00" },
+                    { day: "Domingo", time: "11:00 - 20:00" }
+                ],
+                menuItems: [],
+                galleryImages: [],
+                posts: [],
+                settings: {
+                    primaryColor: "#0a3d62",
+                    chineseElements: true
+                }
+            };
+        }
+   // Salvar dados no localStorage
+        function saveData(data) {
+            localStorage.setItem('oceanaData', JSON.stringify(data));
+            // Registrar atividade
+            addActivity("Dados salvos no sistema");
+        }
+        
+        // Inicializar dados
+        let appData = loadData();
+        
+        // Atualizar estatísticas no dashboard
+        function updateStats() {
+            document.getElementById('menuItemsCount').textContent = appData.menuItems.length;
+            document.getElementById('galleryItemsCount').textContent = appData.galleryImages.length;
+            document.getElementById('postsCount').textContent = appData.posts.length;
+            document.getElementById('featuredPostsCount').textContent = appData.posts.filter(post => post.featured).length;
+        }
+        
+        // Adicionar atividade ao log
+        function addActivity(description) {
+            const activityList = document.getElementById('activityList');
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+            const dateString = now.toLocaleDateString('pt-PT');
+            
+            const activityItem = document.createElement('li');
+            activityItem.innerHTML = `
+                <div class="activity-icon">
+                    <i class="fas fa-save"></i>
+                </div>
+                <div>
+                    <p>${description}</p>
+                    <small>${dateString} às ${timeString}</small>
+                </div>
+            `;
+            
+            // Adicionar no início da lista
+            if (activityList.firstChild) {
+                activityList.insertBefore(activityItem, activityList.firstChild);
+            } else {
+                activityList.appendChild(activityItem);
+            }
+            
+            // Manter apenas as últimas 5 atividades
+            const items = activityList.querySelectorAll('li');
+            if (items.length > 5) {
+                activityList.removeChild(items[items.length - 1]);
+            }
+        }
+        
+        // Mostrar mensagem de sucesso
+        function showSuccess(message = "Alterações salvas com sucesso!") {
+            successMessage.querySelector('i').nextSibling.textContent = ` ${message}`;
+            successMessage.style.display = 'block';
+            
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Mostrar mensagem de erro
+        function showError(message = "Ocorreu um erro ao salvar as alterações.") {
+            errorMessage.querySelector('i').nextSibling.textContent = ` ${message}`;
+            errorMessage.style.display = 'block';
+            
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Converter arquivo para Data URL
+        function fileToDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.onerror = (e) => reject(e);
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        // Sistema de Login
+        loginBtn.addEventListener('click', () => {
+            const pin = loginPin.value;
+            
+            if (pin === ADMIN_PIN) {
+                // Login bem-sucedido
+                loginScreen.style.display = 'none';
+                adminPanel.style.display = 'block';
+                
+                // Carregar dados no painel
+                loadAdminData();
+                updateStats();
+                
+                // Adicionar atividade
+                addActivity("Administrador fez login no sistema");
+            } else {
+                // Login falhou
+                loginError.style.display = 'block';
+                loginPin.value = '';
+                loginPin.focus();
+            }
+        });
+        
+        // Permitir login com Enter
+        loginPin.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                loginBtn.click();
+            }
+        });
+        
+        // Logout
+        logoutBtn.addEventListener('click', () => {
+            if (confirm('Tem certeza que deseja sair do painel administrativo?')) {
+                adminPanel.style.display = 'none';
+                loginScreen.style.display = 'flex';
+                loginPin.value = '';
+                loginError.style.display = 'none';
+            }
+        });
+        
+        // Ver site
+        viewSiteBtn.addEventListener('click', () => {
+            window.open('oce.html', '_blank');
+        });
+        
+        // Navegação entre seções
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Remover classe active de todos os links
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+                
+                // Adicionar classe active ao link clicado
+                link.classList.add('active');
+                
+                // Obter a seção alvo
+                const targetSection = link.getAttribute('data-section');
+                
+                // Ocultar todas as seções
+                adminSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Mostrar a seção alvo
+                document.getElementById(targetSection).classList.add('active');
+            });
+        });
+        
+        // Carregar dados no painel administrativo
+        function loadAdminData() {
+            // Carregar dados de conteúdo
+            document.getElementById('mainPhrase').value = appData.mainPhrase;
+            document.getElementById('heroSubtitle').value = appData.heroSubtitle;
+            document.getElementById('aboutText').value = appData.aboutText;
+            document.getElementById('address').value = appData.address;
+            document.getElementById('phone').value = appData.phone;
+            document.getElementById('email').value = appData.email;
+            
+            // Carregar horários
+            loadHours();
+            
+            // Carregar itens do menu
+            loadMenuItems();
+            
+            // Carregar galeria
+            loadGallery();
+            
+            // Carregar postagens
+            loadPosts();
+            
+            // Carregar configurações
+            loadSettings();
+        }
+        
+        // Carregar horários
+        function loadHours() {
+            const hoursContainer = document.getElementById('hoursContainer');
+            hoursContainer.innerHTML = '';
+            
+            appData.hours.forEach((hour, index) => {
+                const hourRow = document.createElement('div');
+                hourRow.className = 'form-row';
+                hourRow.innerHTML = `
+                    <div class="form-group">
+                        <label>Dias</label>
+                        <input type="text" class="hour-day" value="${hour.day}" placeholder="Ex: Segunda - Sexta">
+                    </div>
+                    <div class="form-group">
+                        <label>Horário</label>
+                        <input type="text" class="hour-time" value="${hour.time}" placeholder="Ex: 11:00 - 22:00">
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button class="btn btn-danger btn-small remove-hour-btn" data-index="${index}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                hoursContainer.appendChild(hourRow);
+            });
+            
+            // Adicionar eventos aos botões de remover
+            document.querySelectorAll('.remove-hour-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    appData.hours.splice(index, 1);
+                    loadHours();
+                });
+            });
+        }
+      // Adicionar novo horário
+        document.getElementById('addHourBtn').addEventListener('click', () => {
+            appData.hours.push({ day: "", time: "" });
+            loadHours();
+        });
+        
+        // Salvar conteúdo
+        document.getElementById('saveContentBtn').addEventListener('click', () => {
+            // Atualizar dados de conteúdo
+            appData.mainPhrase = document.getElementById('mainPhrase').value;
+            appData.heroSubtitle = document.getElementById('heroSubtitle').value;
+            appData.aboutText = document.getElementById('aboutText').value;
+            appData.address = document.getElementById('address').value;
+            appData.phone = document.getElementById('phone').value;
+            appData.email = document.getElementById('email').value;
+            
+            // Atualizar horários
+            const dayInputs = document.querySelectorAll('.hour-day');
+            const timeInputs = document.querySelectorAll('.hour-time');
+            
+            appData.hours = [];
+            for (let i = 0; i < dayInputs.length; i++) {
+                appData.hours.push({
+                    day: dayInputs[i].value,
+                    time: timeInputs[i].value
+                });
+            }
+            
+            // Salvar dados
+            saveData(appData);
+            showSuccess("Conteúdo do site atualizado com sucesso!");
+            updateStats();
+        });
+        
+        // Carregar itens do menu
+        function loadMenuItems() {
+            const menuItemsList = document.getElementById('menuItemsList');
+            menuItemsList.innerHTML = '';
+            
+            if (appData.menuItems.length === 0) {
+                menuItemsList.innerHTML = '<p style="text-align: center; color: #666; padding: 30px;">Nenhum item no menu. Adicione o primeiro item acima.</p>';
+                return;
+            }
+            
+            appData.menuItems.forEach((item, index) => {
+                const categoryNames = {
+                    seafood: "Frutos do Mar",
+                    mozambican: "Pratos Moçambicanos",
+                    chinese: "Influência Chinesa",
+                    drinks: "Bebidas & Cocktails"
+                };
+                
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item-row';
+                menuItem.innerHTML = `
+                    <div class="menu-item-info">
+                        <h4>${item.name}</h4>
+                        <p>${item.description}</p>
+                        <div style="display: flex; gap: 15px; margin-top: 5px;">
+                            <span><strong>Preço:</strong> ${item.price}</span>
+                            <span><strong>Categoria:</strong> ${categoryNames[item.category] || item.category}</span>
+                        </div>
+                    </div>
+                    <div class="menu-item-actions">
+                        <button class="btn btn-small edit-item-btn" data-index="${index}">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                        <button class="btn btn-small btn-danger remove-item-btn" data-index="${index}">
+                            <i class="fas fa-trash"></i> Remover
+                        </button>
+                    </div>
+                `;
+                
+                menuItemsList.appendChild(menuItem);
+            });
+            
+            // Adicionar eventos aos botões
+            document.querySelectorAll('.edit-item-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    editMenuItem(index);
+                });
+            });
+            
+            document.querySelectorAll('.remove-item-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    if (confirm('Tem certeza que deseja remover este item do menu?')) {
+                        appData.menuItems.splice(index, 1);
+                        loadMenuItems();
+                        saveData(appData);
+                        showSuccess("Item removido do menu!");
+                        updateStats();
+                    }
+                });
+            });
+        }
+        
+        // Upload de imagem para item do menu
+        document.getElementById('uploadItemImageBtn').addEventListener('click', () => {
+            const fileInput = document.getElementById('itemImageFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Por favor, selecione uma imagem primeiro.');
+                return;
+            }
+            
+            if (!file.type.startsWith('image/')) {
+                alert('Por favor, selecione um arquivo de imagem válido.');
+                return;
+            }
+            
+            if (file.size > 5 * 1024 * 1024) {
+                alert('A imagem é muito grande. Tamanho máximo: 5MB.');
+                return;
+            }
+            
+            fileToDataURL(file).then(dataUrl => {
+                itemImageDataUrl = dataUrl;
+                
+                // Mostrar pré-visualização
+                const preview = document.getElementById('itemImagePreview');
+                preview.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <img src="${dataUrl}" alt="Pré-visualização" style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px;">
+                        <div>
+                            <p style="margin-bottom: 5px;"><strong>Imagem carregada com sucesso!</strong></p>
+                            <p style="font-size: 0.9rem; color: #666;">${file.name} (${(file.size / 1024).toFixed(1)} KB)</p>
+                        </div>
+                    </div>
+                `;
+                
+                showSuccess("Imagem carregada com sucesso!");
+            }).catch(error => {
+                console.error('Erro ao carregar imagem:', error);
+                showError("Erro ao carregar imagem. Tente novamente.");
+            });
+        });
+        
+        // Editar item do menu
+        function editMenuItem(index) {
+            const item = appData.menuItems[index];
+            
+            document.getElementById('itemName').value = item.name;
+            document.getElementById('itemPrice').value = item.price;
+            document.getElementById('itemCategory').value = item.category;
+            document.getElementById('itemImage').value = item.image;
+            document.getElementById('itemDescription').value = item.description;
+            document.getElementById('editingItemId').value = index;
+            
+            // Se a imagem for uma Data URL, mostrar pré-visualização
+            if (item.image.startsWith('data:image')) {
+                const preview = document.getElementById('itemImagePreview');
+                preview.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <img src="${item.image}" alt="Pré-visualização" style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px;">
+                        <div>
+                            <p style="margin-bottom: 5px;"><strong>Imagem atual</strong></p>
+                            <p style="font-size: 0.9rem; color: #666;">Imagem do dispositivo</p>
+                        </div>
+                    </div>
+                `;
+                itemImageDataUrl = item.image;
+            } else {
+                document.getElementById('itemImagePreview').innerHTML = '';
+                itemImageDataUrl = '';
+            }
+            
+            // Alterar texto do botão
+            document.getElementById('saveItemBtn').innerHTML = '<i class="fas fa-save"></i> Atualizar Item';
+            
+            // Mostrar botão de cancelar
+            document.getElementById('cancelEditBtn').style.display = 'inline-block';
+            
+            // Scroll para o formulário
+            document.getElementById('itemName').focus();
+        }
+        
+        // Novo item do menu
+        document.getElementById('newItemBtn').addEventListener('click', () => {
+            resetMenuItemForm();
+        });
+        
+        // Cancelar edição de item
+        document.getElementById('cancelEditBtn').addEventListener('click', () => {
+            resetMenuItemForm();
+        });
+        
+        // Resetar formulário de item
+        function resetMenuItemForm() {
+            document.getElementById('itemName').value = '';
+            document.getElementById('itemPrice').value = '';
+            document.getElementById('itemCategory').value = 'seafood';
+            document.getElementById('itemImage').value = '';
+            document.getElementById('itemImageFile').value = '';
+            document.getElementById('itemDescription').value = '';
+            document.getElementById('editingItemId').value = '';
+            document.getElementById('itemImagePreview').innerHTML = '';
+            itemImageDataUrl = '';
+            
+            document.getElementById('saveItemBtn').innerHTML = '<i class="fas fa-save"></i> Salvar Item';
+            document.getElementById('cancelEditBtn').style.display = 'none';
+        }
+        
+        // Salvar item do menu
+        document.getElementById('saveItemBtn').addEventListener('click', () => {
+            const itemName = document.getElementById('itemName').value.trim();
+            const itemPrice = document.getElementById('itemPrice').value.trim();
+            const itemCategory = document.getElementById('itemCategory').value;
+            const itemDescription = document.getElementById('itemDescription').value.trim();
+            const editingId = document.getElementById('editingItemId').value;
+            
+            // Validar campos obrigatórios
+            if (!itemName || !itemPrice || !itemDescription) {
+                showError("Por favor, preencha todos os campos obrigatórios.");
+                return;
+            }
+            
+            // Usar a imagem carregada ou uma imagem padrão
+            const itemImage = itemImageDataUrl || 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
+            
+            const newItem = {
+                id: editingId === '' ? Date.now() : appData.menuItems[parseInt(editingId)].id,
+                name: itemName,
+                price: itemPrice,
+                category: itemCategory,
+                image: itemImage,
+                description: itemDescription
+            };
+            
+            if (editingId === '') {
+                // Adicionar novo item
+                appData.menuItems.push(newItem);
+                showSuccess("Item adicionado ao menu com sucesso!");
+            } else {
+                // Atualizar item existente
+                const index = parseInt(editingId);
+                appData.menuItems[index] = newItem;
+                showSuccess("Item atualizado com sucesso!");
+            }
+            
+            // Salvar dados
+            saveData(appData);
+            
+            // Atualizar lista
+            loadMenuItems();
+            
+            // Resetar formulário
+            resetMenuItemForm();
+            
+            // Atualizar estatísticas
+            updateStats();
+        });
+        
+        // Sistema de upload para galeria
+        const uploadArea = document.getElementById('uploadArea');
+        const galleryUpload = document.getElementById('galleryUpload');
+        const uploadPreview = document.getElementById('uploadPreview');
+        const addImagesBtn = document.getElementById('addImagesBtn');
+        
+        // Drag and drop para upload de imagens
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            uploadArea.classList.add('dragover');
+        }
+        
+        function unhighlight() {
+            uploadArea.classList.remove('dragover');
+        }
+        
+        // Lidar com drop de arquivos
+        uploadArea.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+        
+        // Lidar com seleção de arquivos
+        galleryUpload.addEventListener('change', function() {
+            handleFiles(this.files);
+        });
+// Função para processar arquivos
+        function handleFiles(files) {
+            galleryImagesToAdd = [];
+            uploadPreview.innerHTML = '';
+            
+            const validFiles = Array.from(files).filter(file => {
+                return file.type.startsWith('image/') && file.size <= 5 * 1024 * 1024;
+            });
+            
+            if (validFiles.length === 0) {
+                showError("Nenhuma imagem válida encontrada. Certifique-se de que são arquivos de imagem (JPG, PNG, GIF) e que cada um tenha no máximo 5MB.");
+                addImagesBtn.style.display = 'none';
+                return;
+            }
+            
+            // Processar cada arquivo
+            validFiles.forEach((file, index) => {
+                fileToDataURL(file).then(dataUrl => {
+                    galleryImagesToAdd.push(dataUrl);
+                    
+                    // Adicionar pré-visualização
+                    const preview = document.createElement('div');
+                    preview.innerHTML = `
+                        <img src="${dataUrl}" alt="Pré-visualização ${index + 1}" class="image-preview">
+                        <div style="text-align: center; font-size: 0.9rem;">${file.name}</div>
+                    `;
+                    uploadPreview.appendChild(preview);
+                    
+                    // Mostrar botão de adicionar
+                    if (galleryImagesToAdd.length > 0) {
+                        addImagesBtn.style.display = 'inline-block';
+                        addImagesBtn.innerHTML = `<i class="fas fa-plus"></i> Adicionar ${galleryImagesToAdd.length} Imagem(ns) à Galeria`;
+                    }
+                }).catch(error => {
+                    console.error('Erro ao processar imagem:', error);
+                });
+            });
+            
+            if (validFiles.length < files.length) {
+                showError(`Algumas imagens foram ignoradas. Apenas ${validFiles.length} de ${files.length} arquivos são válidos.`);
+            }
+        }
+        
+        // Adicionar imagens à galeria
+        addImagesBtn.addEventListener('click', () => {
+            appData.galleryImages.push(...galleryImagesToAdd);
+            saveData(appData);
+            loadGallery();
+            galleryImagesToAdd = [];
+            uploadPreview.innerHTML = '';
+            addImagesBtn.style.display = 'none';
+            galleryUpload.value = '';
+            showSuccess(`${galleryImagesToAdd.length} imagens adicionadas à galeria!`);
+            updateStats();
+        });
+        
+        // Carregar galeria
+        function loadGallery() {
+            const galleryGrid = document.getElementById('galleryGrid');
+            galleryGrid.innerHTML = '';
+            
+            if (appData.galleryImages.length === 0) {
+                galleryGrid.innerHTML = '<p style="text-align: center; color: #666; grid-column: 1 / -1; padding: 30px;">Nenhuma imagem na galeria. Adicione a primeira imagem acima.</p>';
+                return;
+            }
+            
+            appData.galleryImages.forEach((imageUrl, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.setAttribute('data-index', index);
+                galleryItem.innerHTML = `
+                    <img src="${imageUrl}" alt="Imagem da galeria ${index + 1}">
+                    <div class="gallery-item-actions">
+                        <button class="btn btn-small btn-danger remove-image-btn" data-index="${index}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                galleryGrid.appendChild(galleryItem);
+            });
+            
+            // Adicionar eventos aos botões de remover
+            document.querySelectorAll('.remove-image-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    if (confirm('Tem certeza que deseja remover esta imagem da galeria?')) {
+                        appData.galleryImages.splice(index, 1);
+                        loadGallery();
+                        saveData(appData);
+                        showSuccess("Imagem removida da galeria!");
+                        updateStats();
+                    }
+                });
+            });
+            
+            // Tornar a galeria arrastável para reordenar
+            makeGallerySortable();
+        }
+        
+        // Tornar a galeria arrastável
+        function makeGallerySortable() {
+            const galleryGrid = document.getElementById('galleryGrid');
+            let draggedItem = null;
+            
+            galleryGrid.querySelectorAll('.gallery-item').forEach(item => {
+                item.setAttribute('draggable', 'true');
+                
+                item.addEventListener('dragstart', function() {
+                    draggedItem = this;
+                    setTimeout(() => {
+                        this.style.display = 'none';
+                    }, 0);
+                });
+                
+                item.addEventListener('dragend', function() {
+                    setTimeout(() => {
+                        this.style.display = 'block';
+                        draggedItem = null;
+                        
+                        // Atualizar ordem no array
+                        const newOrder = [];
+                        galleryGrid.querySelectorAll('.gallery-item').forEach((item, index) => {
+                            const oldIndex = parseInt(item.getAttribute('data-index'));
+                            newOrder.push(appData.galleryImages[oldIndex]);
+                        });
+                        
+                        appData.galleryImages = newOrder;
+                        saveData(appData);
+                        showSuccess("Ordem da galeria atualizada!");
+                        
+                        // Reatribuir índices
+                        galleryGrid.querySelectorAll('.gallery-item').forEach((item, index) => {
+                            item.setAttribute('data-index', index);
+                            item.querySelector('.remove-image-btn').setAttribute('data-index', index);
+                        });
+                    }, 0);
+                });
+                
+                item.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                });
+                
+                item.addEventListener('dragenter', function(e) {
+                    e.preventDefault();
+                    this.style.border = '2px dashed var(--gold)';
+                });
+                
+                item.addEventListener('dragleave', function() {
+                    this.style.border = 'none';
+                });
+                
+                item.addEventListener('drop', function() {
+                    this.style.border = 'none';
+                    if (draggedItem !== this) {
+                        const allItems = Array.from(galleryGrid.querySelectorAll('.gallery-item'));
+                        const draggedIndex = allItems.indexOf(draggedItem);
+                        const targetIndex = allItems.indexOf(this);
+                        
+                        if (draggedIndex < targetIndex) {
+                            this.after(draggedItem);
+                        } else {
+                            this.before(draggedItem);
+                        }
+                    }
+                });
+            });
+        }
+    // Upload de imagem para postagem
+        document.getElementById('uploadPostImageBtn').addEventListener('click', () => {
+            const fileInput = document.getElementById('postImageFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Por favor, selecione uma imagem primeiro.');
+                return;
+            }
+            
+            if (!file.type.startsWith('image/')) {
+                alert('Por favor, selecione um arquivo de imagem válido.');
+                return;
+            }
+            
+            if (file.size > 5 * 1024 * 1024) {
+                alert('A imagem é muito grande. Tamanho máximo: 5MB.');
+                return;
+            }
+            
+            fileToDataURL(file).then(dataUrl => {
+                postImageDataUrl = dataUrl;
+                
+                // Mostrar pré-visualização
+                const preview = document.getElementById('postImagePreview');
+                preview.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <img src="${dataUrl}" alt="Pré-visualização" style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px;">
+                        <div>
+                            <p style="margin-bottom: 5px;"><strong>Imagem carregada com sucesso!</strong></p>
+                            <p style="font-size: 0.9rem; color: #666;">${file.name} (${(file.size / 1024).toFixed(1)} KB)</p>
+                        </div>
+                    </div>
+                `;
+                
+                showSuccess("Imagem carregada com sucesso!");
+            }).catch(error => {
+                console.error('Erro ao carregar imagem:', error);
+                showError("Erro ao carregar imagem. Tente novamente.");
+            });
+        });
+        
+        // Carregar postagens
+        function loadPosts() {
+            const postsList = document.getElementById('postsList');
+            postsList.innerHTML = '';
+            
+            if (appData.posts.length === 0) {
+                postsList.innerHTML = '<p style="text-align: center; color: #666; padding: 30px;">Nenhuma postagem criada. Crie a primeira postagem acima.</p>';
+                return;
+            }
+            
+            // Ordenar por ID (mais recentes primeiro)
+            const sortedPosts = [...appData.posts].sort((a, b) => b.id - a.id);
+            
+            sortedPosts.forEach((post, index) => {
+                const originalIndex = appData.posts.findIndex(p => p.id === post.id);
+                const postItem = document.createElement('div');
+                postItem.className = 'post-item';
+                postItem.innerHTML = `
+                    <div class="post-info">
+                        <h4>${post.title}</h4>
+                        <p>${post.content.substring(0, 100)}${post.content.length > 100 ? '...' : ''}</p>
+                        <div class="post-date">${post.date}</div>
+                    </div>
+                    <div class="post-actions" style="display: flex; align-items: center; gap: 15px;">
+                        <div class="post-featured">
+                            ${post.featured ? '<span class="featured-badge">DESTAQUE</span>' : ''}
+                            <button class="btn btn-small toggle-featured-btn" data-index="${originalIndex}">
+                                ${post.featured ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>'}
+                                ${post.featured ? 'Remover Destaque' : 'Destacar'}
+                            </button>
+                        </div>
+                        <button class="btn btn-small edit-post-btn" data-index="${originalIndex}">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                        <button class="btn btn-small btn-danger remove-post-btn" data-index="${originalIndex}">
+                            <i class="fas fa-trash"></i> Remover
+                        </button>
+                    </div>
+                `;
+                
+                postsList.appendChild(postItem);
+            });
+            
+            // Adicionar eventos aos botões
+            document.querySelectorAll('.edit-post-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    editPost(index);
+                });
+            });
+            
+            document.querySelectorAll('.remove-post-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    if (confirm('Tem certeza que deseja remover esta postagem?')) {
+                        appData.posts.splice(index, 1);
+                        loadPosts();
+                        saveData(appData);
+                        showSuccess("Postagem removida!");
+                        updateStats();
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.toggle-featured-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    togglePostFeatured(index);
+                });
+            });
+        }
+        
+        // Editar postagem
+        function editPost(index) {
+            const post = appData.posts[index];
+            
+            document.getElementById('postTitle').value = post.title;
+            document.getElementById('postDate').value = post.date;
+            document.getElementById('postImage').value = post.image;
+            document.getElementById('postContent').value = post.content;
+            document.getElementById('postFeatured').checked = post.featured;
+            document.getElementById('editingPostId').value = index;
+            
+            // Se a imagem for uma Data URL, mostrar pré-visualização
+            if (post.image.startsWith('data:image')) {
+                const preview = document.getElementById('postImagePreview');
+                preview.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <img src="${post.image}" alt="Pré-visualização" style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px;">
+                        <div>
+                            <p style="margin-bottom: 5px;"><strong>Imagem atual</strong></p>
+                            <p style="font-size: 0.9rem; color: #666;">Imagem do dispositivo</p>
+                        </div>
+                    </div>
+                `;
+                postImageDataUrl = post.image;
+            } else {
+                document.getElementById('postImagePreview').innerHTML = '';
+                postImageDataUrl = '';
+            }
+            
+            // Alterar texto do botão
+            document.getElementById('savePostBtn').innerHTML = '<i class="fas fa-save"></i> Atualizar Postagem';
+            
+            // Mostrar botão de cancelar
+            document.getElementById('cancelPostEditBtn').style.display = 'inline-block';
+            
+            // Scroll para o formulário
+            document.getElementById('postTitle').focus();
+        }
+        
+        // Alternar destaque da postagem
+        function togglePostFeatured(index) {
+            appData.posts[index].featured = !appData.posts[index].featured;
+            saveData(appData);
+            loadPosts();
+            showSuccess(appData.posts[index].featured ? "Postagem destacada!" : "Postagem removida dos destaques!");
+            updateStats();
+        }
+        
+        // Nova postagem
+        document.getElementById('newPostBtn').addEventListener('click', () => {
+            resetPostForm();
+        });
+        
+        // Cancelar edição de postagem
+        document.getElementById('cancelPostEditBtn').addEventListener('click', () => {
+            resetPostForm();
+        });
+        
+        // Resetar formulário de postagem
+        function resetPostForm() {
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postDate').value = new Date().toLocaleDateString('pt-PT', { day: 'numeric', month: 'short', year: 'numeric' });
+            document.getElementById('postImage').value = '';
+            document.getElementById('postImageFile').value = '';
+            document.getElementById('postContent').value = '';
+            document.getElementById('postFeatured').checked = true;
+            document.getElementById('editingPostId').value = '';
+            document.getElementById('postImagePreview').innerHTML = '';
+            postImageDataUrl = '';
+            
+            document.getElementById('savePostBtn').innerHTML = '<i class="fas fa-save"></i> Salvar Postagem';
+            document.getElementById('cancelPostEditBtn').style.display = 'none';
+        }
+  // Salvar postagem
+        document.getElementById('savePostBtn').addEventListener('click', () => {
+            const postTitle = document.getElementById('postTitle').value.trim();
+            const postDate = document.getElementById('postDate').value.trim();
+            const postContent = document.getElementById('postContent').value.trim();
+            const postFeatured = document.getElementById('postFeatured').checked;
+            const editingId = document.getElementById('editingPostId').value;
+            
+            // Validar campos obrigatórios
+            if (!postTitle || !postContent) {
+                showError("Por favor, preencha todos os campos obrigatórios.");
+                return;
+            }
+            
+            // Usar a imagem carregada ou uma imagem padrão
+            const postImage = postImageDataUrl || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
+            
+            const newPost = {
+                id: editingId === '' ? Date.now() : appData.posts[parseInt(editingId)].id,
+                title: postTitle,
+                date: postDate || new Date().toLocaleDateString('pt-PT', { day: 'numeric', month: 'short', year: 'numeric' }),
+                image: postImage,
+                content: postContent,
+                featured: postFeatured
+            };
+            
+            if (editingId === '') {
+                // Adicionar nova postagem
+                appData.posts.push(newPost);
+                showSuccess("Postagem criada com sucesso!");
+            } else {
+                // Atualizar postagem existente
+                const index = parseInt(editingId);
+                appData.posts[index] = newPost;
+                showSuccess("Postagem atualizada com sucesso!");
+            }
+            
+            // Salvar dados
+            saveData(appData);
+            
+            // Atualizar lista
+            loadPosts();
+            
+            // Resetar formulário
+            resetPostForm();
+            
+            // Atualizar estatísticas
+            updateStats();
+        });
+        
+        // Carregar configurações
+        function loadSettings() {
+            // Configurações de cor
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-color') === appData.settings.primaryColor) {
+                    option.classList.add('active');
+                }
+                
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    appData.settings.primaryColor = this.getAttribute('data-color');
+                });
+            });
+            
+            // Elementos chineses
+            document.getElementById('chineseElements').checked = appData.settings.chineseElements || true;
+        }
+        
+        // Salvar configurações
+        document.getElementById('saveSettingsBtn').addEventListener('click', () => {
+            // Cor primária já foi atualizada nos event listeners
+            appData.settings.chineseElements = document.getElementById('chineseElements').checked;
+            
+            saveData(appData);
+            showSuccess("Configurações de aparência salvas!");
+        });
+        
+        // Exportar dados
+        document.getElementById('exportDataBtn').addEventListener('click', () => {
+            const dataStr = JSON.stringify(appData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `oceana-backup-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showSuccess("Dados exportados com sucesso!");
+            addActivity("Dados do site exportados");
+        });
+        
+        // Importar dados
+        document.getElementById('importDataBtn').addEventListener('click', () => {
+            // Criar input de arquivo
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = '.json';
+            
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const importedData = JSON.parse(e.target.result);
+                        
+                        // Validar estrutura básica
+                        if (!importedData.menuItems || !importedData.galleryImages || !importedData.posts) {
+                            throw new Error("Arquivo inválido");
+                        }
+                        
+                        if (confirm('Importar estes dados? Isso substituirá todos os dados atuais.')) {
+                            appData = importedData;
+                            saveData(appData);
+                            loadAdminData();
+                            updateStats();
+                            showSuccess("Dados importados com sucesso!");
+                            addActivity("Dados do site importados de backup");
+                        }
+                    } catch (error) {
+                        showError("Erro ao importar dados. O arquivo pode estar corrompido ou em formato inválido.");
+                    }
+                };
+                
+                reader.readAsText(file);
+            });
+            
+            fileInput.click();
+        });
+        
+        // Restaurar dados padrão
+        document.getElementById('resetDataBtn').addEventListener('click', () => {
+            if (confirm('ATENÇÃO: Esta ação irá restaurar todos os dados para os valores padrão e apagar todas as suas alterações. Tem certeza?')) {
+                appData = getDefaultData();
+                saveData(appData);
+                loadAdminData();
+                updateStats();
+                showSuccess("Dados restaurados para os valores padrão!");
+                addActivity("Dados do site restaurados para padrão");
+            }
+        });
+        
+        // Inicializar
+        console.log("Painel administrativo do Sunlight Oceana Club carregado.");
+        console.log("PIN de acesso: 8999");
+        
+        // Adicionar algumas atividades iniciais
+        setTimeout(() => {
+            if (appData.menuItems.length > 0) {
+                addActivity(`Sistema carregado com ${appData.menuItems.length} itens no menu`);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
