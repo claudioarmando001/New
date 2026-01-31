@@ -815,3 +815,1058 @@
         }
     </style>
 </head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-umbrella-beach"></i>
+                Sunlight <span>Oceana</span> Club<span class="chinese-detail">海</span>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul id="mainMenu">
+                    <li><a href="#home" class="active" data-i18n="nav.home">Início</a></li>
+                    <li><a href="#about" data-i18n="nav.about">Sobre</a></li>
+                    <li><a href="#ratings" data-i18n="nav.ratings">Avaliações</a></li>
+                    <li><a href="#menu" data-i18n="nav.menu">Menu</a></li>
+                    <li><a href="#gallery" data-i18n="nav.gallery">Galeria</a></li>
+                    <li><a href="#environment" data-i18n="nav.environment">Ambiente</a></li>
+                    <li><a href="#location" data-i18n="nav.location">Localização</a></li>
+                    <li><a href="#contact" data-i18n="nav.contact">Contactos</a></li>
+                    <li>
+                        <div class="language-selector">
+                            <button class="language-btn" id="languageBtn">
+                                <i class="fas fa-globe"></i>
+                                <span id="currentLanguage">PT</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="language-dropdown" id="languageDropdown">
+                                <div class="language-option active" data-lang="pt">
+                                    <i class="fas fa-language"></i> Português
+                                </div>
+                                <div class="language-option" data-lang="en">
+                                    <i class="fas fa-language"></i> English
+                                </div>
+                                <div class="language-option" data-lang="fr">
+                                    <i class="fas fa-language"></i> Français
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#" id="adminAccess" style="color: var(--red-accent); font-weight: bold;">
+                        <i class="fas fa-lock"></i> <span data-i18n="nav.admin">Admin</span>
+                    </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1 id="mainPhrase" data-i18n="hero.mainPhrase">Sabores do mar com um toque oriental, no coração da Beira</h1>
+            <p id="heroSubtitle" data-i18n="hero.subtitle">Um restaurante à beira-mar que mistura a riqueza dos frutos do mar moçambicanos com a tradição culinária chinesa.</p>
+            <button class="btn btn-call" id="reserveBtn">
+                <i class="fas fa-phone-alt"></i> <span data-i18n="hero.reserveButton">Reservar Mesa</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Sobre -->
+    <section id="about">
+        <div class="container">
+            <h2 data-i18n="about.title">Sobre o Restaurante</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3 id="aboutTitle" data-i18n="about.subtitle">Nossa História</h3>
+                    <p id="aboutText" data-i18n="about.text1">Localizado na Avenida Mateus Sansão Muthemba, na cidade costeira da Beira, o Sunlight Oceana Club é um ponto de encontro popular entre moradores e visitantes que procuram boa comida, ambiente descontraído e uma vista privilegiada com brisa marítima.</p>
+                    <p id="aboutText2" data-i18n="about.text2">Há mais de 15 anos, oferecemos uma experiência gastronómica única que combina os melhores frutos do mar frescos com influências da culinária chinesa, criando pratos que celebram a fusão entre duas culturas ricas em sabores.</p>
+                    <p id="aboutText3" data-i18n="about.text3">O nosso espaço externo com vista para o Índico é perfeito para refeições ao pôr-do-sol ou encontros sociais ao final da tarde, proporcionando momentos inesquecíveis à beira-mar.</p>
+                </div>
+                <div class="about-image">
+                    <img id="aboutImage" src="" alt="Interior do restaurante Oceana">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Avaliações -->
+    <section id="ratings" class="ratings">
+        <div class="container">
+            <h2 id="ratingsTitle" data-i18n="ratings.title">Avaliações e Comentários</h2>
+            
+            <div class="rating-overall">
+                <div class="rating-score" id="ratingScore">3.9</div>
+                <div class="rating-stars" id="ratingStars">
+                    <!-- Estrelas geradas por JavaScript -->
+                </div>
+                <div class="rating-source" id="ratingSource" data-i18n="ratings.source">Classificação baseada em 1.000+ avaliações online</div>
+            </div>
+            
+            <div class="testimonials-grid" id="testimonialsGrid">
+                <!-- Testemunhos carregados via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu -->
+    <section id="menu" style="background-color: #f5f9ff;">
+        <div class="container">
+            <h2 id="menuTitle" data-i18n="menu.title">Nosso Menu</h2>
+            
+            <div class="menu-categories">
+                <button class="category-btn active" data-category="all" data-i18n="menu.all">Todos</button>
+                <button class="category-btn" data-category="seafood" data-i18n="menu.seafood">Frutos do Mar</button>
+                <button class="category-btn" data-category="mozambican" data-i18n="menu.mozambican">Pratos Moçambicanos</button>
+                <button class="category-btn" data-category="chinese" data-i18n="menu.chinese">Influência Chinesa</button>
+                <button class="category-btn" data-category="drinks" data-i18n="menu.drinks">Bebidas & Cocktails</button>
+            </div>
+            
+            <div class="menu-items" id="menuItems">
+                <!-- Itens do menu carregados via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeria -->
+    <section id="gallery">
+        <div class="container">
+            <h2 id="galleryTitle" data-i18n="gallery.title">Galeria</h2>
+            <div class="gallery-container" id="galleryContainer">
+                <!-- Imagens carregadas via JavaScript -->
+            </div>
+        </div>
+    </section>
+  <!-- Posts em Destaque -->
+    <section class="featured-posts" id="featured">
+        <div class="container">
+            <h2 id="postsTitle" data-i18n="posts.title">Destaques & Novidades</h2>
+            <div class="posts-container" id="postsContainer">
+                <!-- Posts carregados via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Ambiente -->
+    <section id="environment">
+        <div class="container">
+            <h2 id="environmentTitle" data-i18n="environment.title">Ambiente & Experiência</h2>
+            <div class="environment-content" id="environmentContent">
+                <!-- Itens de ambiente carregados via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Localização -->
+    <section id="location">
+        <div class="container">
+            <h2 id="locationTitle" data-i18n="location.title">Localização</h2>
+            <div class="location-content">
+                <div class="location-info">
+                    <h3 id="visitTitle" data-i18n="location.visit">Visite-nos</h3>
+                    <p><i class="fas fa-map-marker-alt" style="color: var(--red-accent); margin-right: 10px;"></i> <strong id="address" data-i18n="location.address">Avenida Mateus Sansão Muthemba, Beira, Moçambique</strong></p>
+                    <p id="locationDescription" data-i18n="location.description">Estamos localizados na orla marítima da Beira, com vista direta para o Oceano Índico. Um local de fácil acesso e com estacionamento disponível.</p>
+                </div>
+                
+                <div class="location-map">
+                    <p data-i18n="location.map">📍 Mapa: Sunlight Oceana Club - Beira</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Sunlight Oceana Club</h3>
+                    <p id="footerDescription" data-i18n="footer.description">Sabores do mar com um toque oriental, no coração da Beira. Uma experiência gastronómica única que celebra a fusão das culturas moçambicana e chinesa.</p>
+                    <div class="social-icons">
+                        <a href="#" id="facebookLink"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" id="instagramLink"><i class="fab fa-instagram"></i></a>
+                        <a href="#" id="twitterLink"><i class="fab fa-twitter"></i></a>
+                        <a href="#" id="tripadvisorLink"><i class="fab fa-tripadvisor"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 data-i18n="footer.contacts">Contactos</h3>
+                    <ul>
+                        <li><i class="fas fa-phone" style="margin-right: 10px;"></i> <span id="phone">+258 84 123 4567</span></li>
+                        <li><i class="fas fa-envelope" style="margin-right: 10px;"></i> <span id="email">info@oceana.co.mz</span></li>
+                        <li><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> <span id="footerAddress" data-i18n="footer.address">Av. Mateus Sansão Muthemba, Beira</span></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 data-i18n="footer.hours">Horário</h3>
+                    <ul id="hoursList">
+                        <!-- Horários carregados via JavaScript -->
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p id="copyrightText" data-i18n="footer.copyright">&copy; 2023 Sunlight Oceana Club - Beira. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de Chamada para Reserva -->
+    <div class="modal" id="callModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2 data-i18n="modal.reserve">Reservar Mesa</h2>
+            <p data-i18n="modal.callToReserve">Para fazer uma reserva, ligue diretamente para o nosso restaurante:</p>
+            
+            <div class="call-info">
+                <div class="call-number" id="callNumber">+258 84 123 4567</div>
+                <p data-i18n="modal.callDescription">Nossa equipe terá prazer em atender sua reserva e responder a todas as suas perguntas.</p>
+            </div>
+            
+            <button class="btn btn-call" id="callBtn">
+                <i class="fas fa-phone-alt"></i> <span data-i18n="modal.callNow">Ligar Agora</span>
+            </button>
+            
+            <p class="call-note">
+                <i class="fas fa-info-circle"></i> <span data-i18n="modal.callNote">Horário de atendimento para reservas: Segunda a Domingo, das 10h às 22h.</span>
+            </p>
+        </div>
+    </div>
+  <!-- Modal de Acesso Admin -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeAdminModal">&times;</span>
+            <h2 data-i18n="admin.access">Acesso Administrador</h2>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label for="pinInput" data-i18n="admin.pinLabel">PIN de Acesso</label>
+                <input type="password" id="pinInput" placeholder="Digite o PIN" maxlength="4" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
+                <p style="margin-top: 10px; font-size: 0.9rem; color: #666;" data-i18n="admin.pinDescription">Para acessar o painel de administração, digite o PIN secreto.</p>
+            </div>
+            <button class="btn" id="submitPin" style="width: 100%; margin-top: 20px;" data-i18n="admin.accessButton">Acessar Painel</button>
+            <p id="pinError" style="color: red; margin-top: 15px; display: none;" data-i18n="admin.pinError">PIN incorreto. Tente novamente.</p>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de multilíngue
+        const translations = {
+            pt: {
+                // Navegação
+                "nav.home": "Início",
+                "nav.about": "Sobre",
+                "nav.ratings": "Avaliações",
+                "nav.menu": "Menu",
+                "nav.gallery": "Galeria",
+                "nav.environment": "Ambiente",
+                "nav.location": "Localização",
+                "nav.contact": "Contactos",
+                "nav.admin": "Admin",
+                
+                // Hero Section
+                "hero.mainPhrase": "Sabores do mar com um toque oriental, no coração da Beira",
+                "hero.subtitle": "Um restaurante à beira-mar que mistura a riqueza dos frutos do mar moçambicanos com a tradição culinária chinesa.",
+                "hero.reserveButton": "Reservar Mesa",
+                
+                // Sobre
+                "about.title": "Sobre o Restaurante",
+                "about.subtitle": "Nossa História",
+                "about.text1": "Localizado na Avenida Mateus Sansão Muthemba, na cidade costeira da Beira, o Sunlight Oceana Club é um ponto de encontro popular entre moradores e visitantes que procuram boa comida, ambiente descontraído e uma vista privilegiada com brisa marítima.",
+                "about.text2": "Há mais de 15 anos, oferecemos uma experiência gastronómica única que combina os melhores frutos do mar frescos com influências da culinária chinesa, criando pratos que celebram a fusão entre duas culturas ricas em sabores.",
+                "about.text3": "O nosso espaço externo com vista para o Índico é perfeito para refeições ao pôr-do-sol ou encontros sociais ao final da tarde, proporcionando momentos inesquecíveis à beira-mar.",
+                
+                // Avaliações
+                "ratings.title": "Avaliações e Comentários",
+                "ratings.source": "Classificação baseada em 1.000+ avaliações online",
+                
+                // Menu
+                "menu.title": "Nosso Menu",
+                "menu.all": "Todos",
+                "menu.seafood": "Frutos do Mar",
+                "menu.mozambican": "Pratos Moçambicanos",
+                "menu.chinese": "Influência Chinesa",
+                "menu.drinks": "Bebidas & Cocktails",
+                
+                // Galeria
+                "gallery.title": "Galeria",
+                
+                // Posts
+                "posts.title": "Destaques & Novidades",
+                
+                // Ambiente
+                "environment.title": "Ambiente & Experiência",
+                
+                // Localização
+                "location.title": "Localização",
+                "location.visit": "Visite-nos",
+                "location.address": "Avenida Mateus Sansão Muthemba, Beira, Moçambique",
+                "location.description": "Estamos localizados na orla marítima da Beira, com vista direta para o Oceano Índico. Um local de fácil acesso e com estacionamento disponível.",
+                "location.map": "📍 Mapa: Sunlight Oceana Club - Beira",
+                
+                // Footer
+                "footer.description": "Sabores do mar com um toque oriental, no coração da Beira. Uma experiência gastronómica única que celebra a fusão das culturas moçambicana e chinesa.",
+                "footer.contacts": "Contactos",
+                "footer.address": "Av. Mateus Sansão Muthemba, Beira",
+                "footer.hours": "Horário",
+                "footer.copyright": "© 2023 Sunlight Oceana Club - Beira. Todos os direitos reservados.",
+                
+                // Modal
+                "modal.reserve": "Reservar Mesa",
+                "modal.callToReserve": "Para fazer uma reserva, ligue diretamente para o nosso restaurante:",
+                "modal.callDescription": "Nossa equipe terá prazer em atender sua reserva e responder a todas as suas perguntas.",
+                "modal.callNow": "Ligar Agora",
+                "modal.callNote": "Horário de atendimento para reservas: Segunda a Domingo, das 10h às 22h.",
+   // Admin
+                "admin.access": "Acesso Administrador",
+                "admin.pinLabel": "PIN de Acesso",
+                "admin.pinDescription": "Para acessar o painel de administração, digite o PIN secreto.",
+                "admin.accessButton": "Acessar Painel",
+                "admin.pinError": "PIN incorreto. Tente novamente."
+            },
+            
+            en: {
+                // Navigation
+                "nav.home": "Home",
+                "nav.about": "About",
+                "nav.ratings": "Ratings",
+                "nav.menu": "Menu",
+                "nav.gallery": "Gallery",
+                "nav.environment": "Environment",
+                "nav.location": "Location",
+                "nav.contact": "Contacts",
+                "nav.admin": "Admin",
+                
+                // Hero Section
+                "hero.mainPhrase": "Sea flavors with an oriental touch, in the heart of Beira",
+                "hero.subtitle": "A seaside restaurant that blends the richness of Mozambican seafood with Chinese culinary tradition.",
+                "hero.reserveButton": "Reserve Table",
+                
+                // About
+                "about.title": "About the Restaurant",
+                "about.subtitle": "Our Story",
+                "about.text1": "Located on Avenida Mateus Sansão Muthemba in the coastal city of Beira, Sunlight Oceana Club is a popular meeting point for residents and visitors looking for good food, relaxed atmosphere and a privileged view with sea breeze.",
+                "about.text2": "For over 15 years, we have offered a unique gastronomic experience that combines the best fresh seafood with influences from Chinese cuisine, creating dishes that celebrate the fusion of two cultures rich in flavors.",
+                "about.text3": "Our outdoor space with Indian Ocean view is perfect for sunset meals or social gatherings in the late afternoon, providing unforgettable moments by the sea.",
+                
+                // Ratings
+                "ratings.title": "Ratings & Reviews",
+                "ratings.source": "Rating based on 1,000+ online reviews",
+                
+                // Menu
+                "menu.title": "Our Menu",
+                "menu.all": "All",
+                "menu.seafood": "Seafood",
+                "menu.mozambican": "Mozambican Dishes",
+                "menu.chinese": "Chinese Influence",
+                "menu.drinks": "Drinks & Cocktails",
+                
+                // Gallery
+                "gallery.title": "Gallery",
+                
+                // Posts
+                "posts.title": "Highlights & News",
+                
+                // Environment
+                "environment.title": "Environment & Experience",
+                
+                // Location
+                "location.title": "Location",
+                "location.visit": "Visit Us",
+                "location.address": "Avenida Mateus Sansão Muthemba, Beira, Mozambique",
+                "location.description": "We are located on the seafront of Beira, with direct view of the Indian Ocean. An easily accessible location with parking available.",
+                "location.map": "📍 Map: Sunlight Oceana Club - Beira",
+                
+                // Footer
+                "footer.description": "Sea flavors with an oriental touch, in the heart of Beira. A unique gastronomic experience that celebrates the fusion of Mozambican and Chinese cultures.",
+                "footer.contacts": "Contacts",
+                "footer.address": "Av. Mateus Sansão Muthemba, Beira",
+                "footer.hours": "Opening Hours",
+                "footer.copyright": "© 2023 Sunlight Oceana Club - Beira. All rights reserved.",
+                
+                // Modal
+                "modal.reserve": "Reserve Table",
+                "modal.callToReserve": "To make a reservation, call our restaurant directly:",
+                "modal.callDescription": "Our team will be happy to take your reservation and answer all your questions.",
+                "modal.callNow": "Call Now",
+                "modal.callNote": "Reservation hours: Monday to Sunday, 10am to 10pm.",
+                
+                // Admin
+                "admin.access": "Administrator Access",
+                "admin.pinLabel": "Access PIN",
+                "admin.pinDescription": "To access the administration panel, enter the secret PIN.",
+                "admin.accessButton": "Access Panel",
+                "admin.pinError": "Incorrect PIN. Try again."
+            },
+            
+            fr: {
+                // Navigation
+                "nav.home": "Accueil",
+                "nav.about": "À Propos",
+                "nav.ratings": "Avis",
+                "nav.menu": "Menu",
+                "nav.gallery": "Galerie",
+                "nav.environment": "Environnement",
+                "nav.location": "Localisation",
+                "nav.contact": "Contacts",
+                "nav.admin": "Admin",
+                
+                // Hero Section
+                "hero.mainPhrase": "Saveurs de la mer avec une touche orientale, au cœur de Beira",
+                "hero.subtitle": "Un restaurant en bord de mer qui mêle la richesse des fruits de mer mozambicains à la tradition culinaire chinoise.",
+                "hero.reserveButton": "Réserver une Table",
+                
+                // About
+                "about.title": "À Propos du Restaurant",
+                "about.subtitle": "Notre Histoire",
+                "about.text1": "Situé sur l'Avenida Mateus Sansão Muthemba dans la ville côtière de Beira, le Sunlight Oceana Club est un point de rencontre populaire pour les résidents et les visiteurs à la recherche de bonne nourriture, d'ambiance décontractée et d'une vue privilégiée avec brise marine.",
+                "about.text2": "Depuis plus de 15 ans, nous offrons une expérience gastronomique unique qui combine les meilleurs fruits de mer frais avec des influences de la cuisine chinoise, créant des plats qui célèbrent la fusion de deux cultures riches en saveurs.",
+                "about.text3": "Notre espace extérieur avec vue sur l'océan Indien est parfait pour les repas au coucher du soleil ou les rencontres sociales en fin d'après-midi, offrant des moments inoubliables au bord de la mer.",
+                
+                // Ratings
+                "ratings.title": "Avis et Commentaires",
+                "ratings.source": "Note basée sur plus de 1 000 avis en ligne",
+                
+                // Menu
+                "menu.title": "Notre Menu",
+                "menu.all": "Tous",
+                "menu.seafood": "Fruits de Mer",
+                "menu.mozambican": "Plats Mozambicains",
+                "menu.chinese": "Influence Chinoise",
+                "menu.drinks": "Boissons & Cocktails",
+                
+                // Gallery
+                "gallery.title": "Galerie",
+                
+                // Posts
+                "posts.title": "À la Une & Actualités",
+                
+                // Environment
+                "environment.title": "Environnement & Expérience",
+                
+                // Location
+                "location.title": "Localisation",
+                "location.visit": "Visitez-Nous",
+                "location.address": "Avenida Mateus Sansão Muthemba, Beira, Mozambique",
+                "location.description": "Nous sommes situés en bord de mer à Beira, avec vue directe sur l'océan Indien. Un emplacement facilement accessible avec parking disponible.",
+                "location.map": "📍 Carte : Sunlight Oceana Club - Beira",
+                
+                // Footer
+                "footer.description": "Saveurs de la mer avec une touche orientale, au cœur de Beira. Une expérience gastronomique unique qui célèbre la fusion des cultures mozambicaine et chinoise.",
+                "footer.contacts": "Contacts",
+                "footer.address": "Av. Mateus Sansão Muthemba, Beira",
+                "footer.hours": "Horaires",
+                "footer.copyright": "© 2023 Sunlight Oceana Club - Beira. Tous droits réservés.",
+                
+                // Modal
+                "modal.reserve": "Réserver une Table",
+                "modal.callToReserve": "Pour faire une réservation, appelez directement notre restaurant :",
+                "modal.callDescription": "Notre équipe se fera un plaisir de prendre votre réservation et de répondre à toutes vos questions.",
+                "modal.callNow": "Appeler Maintenant",
+                "modal.callNote": "Heures de réservation : Lundi à Dimanche, de 10h à 22h.",
+     // Admin
+                "admin.access": "Accès Administrateur",
+                "admin.pinLabel": "PIN d'Accès",
+                "admin.pinDescription": "Pour accéder au panneau d'administration, entrez le PIN secret.",
+                "admin.accessButton": "Accéder au Panneau",
+                "admin.pinError": "PIN incorrect. Réessayez."
+            }
+        };
+
+        // Dados iniciais (serão sobrescritos pelos dados do localStorage se existirem)
+        const initialData = {
+            // Hero Section
+            mainPhrase: "Sabores do mar com um toque oriental, no coração da Beira",
+            heroSubtitle: "Um restaurante à beira-mar que mistura a riqueza dos frutos do mar moçambicanos com a tradição culinária chinesa.",
+            
+            // Sobre
+            aboutTitle: "Nossa História",
+            aboutText: "Localizado na Avenida Mateus Sansão Muthemba, na cidade costeira da Beira, o Sunlight Oceana Club é um ponto de encontro popular entre moradores e visitantes que procuram boa comida, ambiente descontraído e uma vista privilegiada com brisa marítima.",
+            aboutText2: "Há mais de 15 anos, oferecemos uma experiência gastronómica única que combina os melhores frutos do mar frescos com influências da culinária chinesa, criando pratos que celebram a fusão entre duas culturas ricas em sabores.",
+            aboutText3: "O nosso espaço externo com vista para o Índico é perfeito para refeições ao pôr-do-sol ou encontros sociais ao final da tarde, proporcionando momentos inesquecíveis à beira-mar.",
+            aboutImage: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+            
+            // Avaliações
+            ratingsTitle: "Avaliações e Comentários",
+            ratingScore: "3.9",
+            ratingSource: "Classificação baseada em 1.000+ avaliações online",
+            testimonials: [
+                {
+                    id: 1,
+                    text: {
+                        pt: "Excelente localização com vista para o mar. Os frutos do mar são sempre frescos e bem preparados. O serviço é atencioso e o ambiente é perfeito para um jantar à beira-mar.",
+                        en: "Excellent location with sea view. The seafood is always fresh and well prepared. The service is attentive and the atmosphere is perfect for a seaside dinner.",
+                        fr: "Excellent emplacement avec vue sur la mer. Les fruits de mer sont toujours frais et bien préparés. Le service est attentif et l'ambiance est parfaite pour un dîner en bord de mer."
+                    },
+                    author: "João Carlos",
+                    rating: 5,
+                    authorImage: "https://randomuser.me/api/portraits/men/32.jpg"
+                },
+                {
+                    id: 2,
+                    text: {
+                        pt: "Cardápio extenso e variado que agrada a todos os gostos. Adorei a fusão de sabores moçambicanos e chineses. Os preços são justos para a qualidade oferecida.",
+                        en: "Extensive and varied menu that pleases all tastes. I loved the fusion of Mozambican and Chinese flavors. The prices are fair for the quality offered.",
+                        fr: "Menu vaste et varié qui plaît à tous les goûts. J'ai adoré la fusion des saveurs mozambicaines et chinoises. Les prix sont justes pour la qualité offerte."
+                    },
+                    author: "Maria Fernanda",
+                    rating: 4,
+                    authorImage: "https://randomuser.me/api/portraits/women/44.jpg"
+                }
+            ],
+            
+            // Menu
+            menuTitle: "Nosso Menu",
+            menuItems: [],
+            
+            // Galeria
+            galleryTitle: "Galeria",
+            galleryImages: [],
+            
+            // Posts
+            postsTitle: "Destaques & Novidades",
+            posts: [],
+            
+            // Ambiente
+            environmentTitle: "Ambiente & Experiência",
+            environmentItems: [
+                { 
+                    id: 1, 
+                    title: {
+                        pt: "Encontros Sociais",
+                        en: "Social Gatherings",
+                        fr: "Rencontres Sociales"
+                    },
+                    description: {
+                        pt: "O Oceana é o local ideal para reunir amigos e familiares. Com nosso espaço ao ar livre e vista para o mar, cada encontro se torna especial. Ambiente perfeito para celebrações e reuniões informais.",
+                        en: "Oceana is the ideal place to gather friends and family. With our outdoor space and sea view, every meeting becomes special. Perfect environment for celebrations and informal meetings.",
+                        fr: "Oceana est l'endroit idéal pour réunir amis et famille. Avec notre espace extérieur et vue sur la mer, chaque rencontre devient spéciale. Environnement parfait pour les célébrations et réunions informelles."
+                    },
+                    icon: "users" 
+                },
+                { 
+                    id: 2, 
+                    title: {
+                        pt: "Pôr-do-Sol à Beira-Mar",
+                        en: "Sunset by the Sea",
+                        fr: "Coucher de Soleil au Bord de la Mer"
+                    },
+                    description: {
+                        pt: "Desfrute de um pôr-do-sol deslumbrante no nosso terraço com vista direta para o Oceano Índico. A combinação de boa comida, brisa marítima e o espetáculo do pôr-do-sol cria momentos inesquecíveis.",
+                        en: "Enjoy a stunning sunset on our terrace with direct view of the Indian Ocean. The combination of good food, sea breeze and the sunset spectacle creates unforgettable moments.",
+                        fr: "Profitez d'un coucher de soleil magnifique sur notre terrasse avec vue directe sur l'océan Indien. La combinaison de bonne nourriture, brise marine et spectacle du coucher de soleil crée des moments inoubliables."
+                    },
+                    icon: "sun" 
+                }
+            ],
+            
+            // Localização
+            locationTitle: "Localização",
+            visitTitle: "Visite-nos",
+            address: "Avenida Mateus Sansão Muthemba, Beira, Moçambique",
+            locationDescription: "Estamos localizados na orla marítima da Beira, com vista direta para o Oceano Índico. Um local de fácil acesso e com estacionamento disponível.",
+    // Contactos
+            phone: "+258 84 123 4567",
+            email: "info@oceana.co.mz",
+            footerAddress: "Av. Mateus Sansão Muthemba, Beira",
+            footerDescription: "Sabores do mar com um toque oriental, no coração da Beira. Uma experiência gastronómica única que celebra a fusão das culturas moçambicana e chinesa.",
+            copyrightText: "© 2023 Sunlight Oceana Club - Beira. Todos os direitos reservados.",
+            
+            // Horários
+            hours: [
+                { id: 1, day: "Segunda - Quinta", time: "11:00 - 22:00" },
+                { id: 2, day: "Sexta - Sábado", time: "11:00 - 00:00" },
+                { id: 3, day: "Domingo", time: "11:00 - 20:00" }
+            ],
+            
+            // Redes Sociais
+            socialLinks: {
+                facebook: "#",
+                instagram: "#",
+                twitter: "#",
+                tripadvisor: "#"
+            },
+            
+            // Configurações
+            settings: {
+                primaryColor: "#0a3d62",
+                chineseElements: true
+            }
+        };
+
+        // Carregar dados do localStorage ou usar dados iniciais
+        function loadData() {
+            const savedData = localStorage.getItem('oceanaData');
+            if (savedData) {
+                const parsedData = JSON.parse(savedData);
+                // Garantir compatibilidade com dados antigos
+                return migrateData(parsedData);
+            }
+            return initialData;
+        }
+
+        // Migrar dados antigos para novo formato
+        function migrateData(data) {
+            // Se os testemunhos não tiverem formato multilíngue, converter
+            if (data.testimonials && data.testimonials.length > 0) {
+                if (typeof data.testimonials[0].text === 'string') {
+                    data.testimonials = data.testimonials.map(testimonial => ({
+                        ...testimonial,
+                        text: {
+                            pt: testimonial.text,
+                            en: testimonial.text,
+                            fr: testimonial.text
+                        }
+                    }));
+                }
+            }
+            
+            // Se os itens de ambiente não tiverem formato multilíngue, converter
+            if (data.environmentItems && data.environmentItems.length > 0) {
+                if (typeof data.environmentItems[0].title === 'string') {
+                    data.environmentItems = data.environmentItems.map(item => ({
+                        ...item,
+                        title: {
+                            pt: item.title,
+                            en: item.title,
+                            fr: item.title
+                        },
+                        description: {
+                            pt: item.description,
+                            en: item.description,
+                            fr: item.description
+                        }
+                    }));
+                }
+            }
+            
+            return data;
+        }
+
+        // Salvar dados no localStorage
+        function saveData(data) {
+            localStorage.setItem('oceanaData', JSON.stringify(data));
+        }
+
+        // Inicializar dados
+        let appData = loadData();
+        let currentLanguage = 'pt';
+
+        // DOM Elements
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainMenu = document.getElementById('mainMenu');
+        const menuItemsContainer = document.getElementById('menuItems');
+        const galleryContainer = document.getElementById('galleryContainer');
+        const postsContainer = document.getElementById('postsContainer');
+        const testimonialsGrid = document.getElementById('testimonialsGrid');
+        const environmentContent = document.getElementById('environmentContent');
+        const hoursList = document.getElementById('hoursList');
+        const reserveBtn = document.getElementById('reserveBtn');
+        const callModal = document.getElementById('callModal');
+        const closeModal = document.getElementById('closeModal');
+        const callBtn = document.getElementById('callBtn');
+        const callNumber = document.getElementById('callNumber');
+        const adminAccess = document.getElementById('adminAccess');
+        const adminModal = document.getElementById('adminModal');
+        const closeAdminModal = document.getElementById('closeAdminModal');
+        const submitPin = document.getElementById('submitPin');
+        const pinInput = document.getElementById('pinInput');
+        const pinError = document.getElementById('pinError');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const languageBtn = document.getElementById('languageBtn');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const currentLanguageSpan = document.getElementById('currentLanguage');
+        const languageOptions = document.querySelectorAll('.language-option');
+
+        // Atualizar todas as traduções na página
+        function updateTranslations() {
+            // Atualizar elementos com data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[currentLanguage][key];
+                    } else {
+                        element.textContent = translations[currentLanguage][key];
+                    }
+                }
+            });
+            
+            // Atualizar conteúdo dinâmico
+            updateDynamicContent();
+        }
+
+        // Atualizar conteúdo dinâmico (não estático)
+        function updateDynamicContent() {
+            // Atualizar testemunhos
+            renderTestimonials();
+            
+            // Atualizar itens de ambiente
+            renderEnvironmentItems();
+            
+            // Atualizar itens do menu
+            renderMenuItems('all');
+            
+            // Atualizar posts
+            renderPosts();
+        }
+
+        // Atualizar conteúdo do site com os dados
+        function updateSiteContent() {
+            // Atualizar Hero Section
+            document.getElementById('mainPhrase').textContent = appData.mainPhrase;
+            document.getElementById('heroSubtitle').textContent = appData.heroSubtitle;
+            
+            // Atualizar Sobre
+            document.getElementById('aboutTitle').textContent = appData.aboutTitle;
+            document.getElementById('aboutText').textContent = appData.aboutText;
+            document.getElementById('aboutText2').textContent = appData.aboutText2;
+            document.getElementById('aboutText3').textContent = appData.aboutText3;
+            document.getElementById('aboutImage').src = appData.aboutImage;
+            
+            // Atualizar Avaliações
+            document.getElementById('ratingScore').textContent = appData.ratingScore;
+            
+            // Gerar estrelas para avaliação
+            const ratingStars = document.getElementById('ratingStars');
+            ratingStars.innerHTML = '';
+            const score = parseFloat(appData.ratingScore);
+            const fullStars = Math.floor(score);
+            const hasHalfStar = score % 1 >= 0.5;
+            
+            for (let i = 0; i < 5; i++) {
+                const star = document.createElement('i');
+                if (i < fullStars) {
+                    star.className = 'fas fa-star';
+                } else if (i === fullStars && hasHalfStar) {
+                    star.className = 'fas fa-star-half-alt';
+                } else {
+                    star.className = 'far fa-star';
+                }
+                ratingStars.appendChild(star);
+            }
+            
+            // Atualizar testemunhos
+            renderTestimonials();
+            
+            // Atualizar Galeria
+            renderGallery();
+            
+            // Atualizar Contactos
+            document.getElementById('phone').textContent = appData.phone;
+            document.getElementById('email').textContent = appData.email;
+            document.getElementById('callNumber').textContent = appData.phone;
+            
+            // Atualizar Horários
+            renderHours();
+            
+            // Atualizar Redes Sociais
+            document.getElementById('facebookLink').href = appData.socialLinks.facebook;
+            document.getElementById('instagramLink').href = appData.socialLinks.instagram;
+            document.getElementById('twitterLink').href = appData.socialLinks.twitter;
+            document.getElementById('tripadvisorLink').href = appData.socialLinks.tripadvisor;
+        }
+
+        // Renderizar testemunhos
+        function renderTestimonials() {
+            testimonialsGrid.innerHTML = '';
+            
+            appData.testimonials.forEach(testimonial => {
+                const testimonialElement = document.createElement('div');
+                testimonialElement.className = 'testimonial';
+                testimonialElement.innerHTML = `
+                    <div class="testimonial-text">${testimonial.text[currentLanguage] || testimonial.text.pt}</div>
+                    <div class="testimonial-author">
+                        <img src="${testimonial.authorImage}" alt="${testimonial.author}">
+                        <div>
+                            <strong>${testimonial.author}</strong>
+                            <div style="color: var(--gold); font-size: 0.9rem;">
+                                ${generateStars(testimonial.rating)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                testimonialsGrid.appendChild(testimonialElement);
+            });
+        }
+
+        // Gerar estrelas para testemunhos
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 0; i < 5; i++) {
+                if (i < rating) {
+                    stars += '<i class="fas fa-star"></i>';
+                } else {
+                    stars += '<i class="far fa-star"></i>';
+                }
+            }
+            return stars;
+        }
+
+        // Renderizar itens do menu
+        function renderMenuItems(category) {
+            menuItemsContainer.innerHTML = '';
+            
+            const filteredItems = category === 'all' 
+                ? appData.menuItems 
+                : appData.menuItems.filter(item => item.category === category);
+            
+            filteredItems.forEach(item => {
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item';
+                menuItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="menu-item-content">
+                        <div class="menu-item-header">
+                            <div class="menu-item-name">${item.name}</div>
+                            <div class="menu-item-price">${item.price}</div>
+                        </div>
+                        <p class="menu-item-desc">${item.description}</p>
+                    </div>
+                `;
+                menuItemsContainer.appendChild(menuItem);
+            });
+        }
+    // Renderizar galeria
+        function renderGallery() {
+            galleryContainer.innerHTML = '';
+            
+            appData.galleryImages.forEach(imageUrl => {
+                const isDataUrl = imageUrl.startsWith('data:image');
+                const src = isDataUrl ? imageUrl : (imageUrl || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');
+                
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.innerHTML = `<img src="${src}" alt="Imagem do restaurante">`;
+                galleryContainer.appendChild(galleryItem);
+            });
+        }
+
+        // Renderizar posts
+        function renderPosts() {
+            postsContainer.innerHTML = '';
+            
+            const featuredPosts = appData.posts.filter(post => post.featured);
+            
+            featuredPosts.forEach(post => {
+                const isDataUrl = post.image.startsWith('data:image');
+                const src = isDataUrl ? post.image : (post.image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');
+                
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.innerHTML = `
+                    <div class="post-image">
+                        <img src="${src}" alt="${post.title}">
+                    </div>
+                    <div class="post-content">
+                        <div class="post-date">${post.date}</div>
+                        <h3 class="post-title">${post.title}</h3>
+                        <p>${post.content}</p>
+                    </div>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+        }
+
+        // Renderizar itens de ambiente
+        function renderEnvironmentItems() {
+            environmentContent.innerHTML = '';
+            
+            appData.environmentItems.forEach(item => {
+                const environmentItem = document.createElement('div');
+                environmentItem.className = 'environment-item';
+                environmentItem.innerHTML = `
+                    <div class="environment-icon">
+                        <i class="fas fa-${item.icon}"></i>
+                    </div>
+                    <div class="environment-text">
+                        <h3>${item.title[currentLanguage] || item.title.pt}</h3>
+                        <p>${item.description[currentLanguage] || item.description.pt}</p>
+                    </div>
+                `;
+                environmentContent.appendChild(environmentItem);
+            });
+        }
+
+        // Renderizar horários
+        function renderHours() {
+            hoursList.innerHTML = '';
+            appData.hours.forEach(hour => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${hour.day}:</strong> ${hour.time}`;
+                hoursList.appendChild(li);
+            });
+        }
+
+        // Sistema de seleção de língua
+        languageBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('show');
+        });
+
+        languageOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const lang = option.getAttribute('data-lang');
+                changeLanguage(lang);
+                languageDropdown.classList.remove('show');
+            });
+        });
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            currentLanguageSpan.textContent = lang.toUpperCase();
+            
+            // Atualizar classes active
+            languageOptions.forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-lang') === lang) {
+                    option.classList.add('active');
+                }
+            });
+            
+            // Atualizar traduções
+            updateTranslations();
+            
+            // Salvar preferência
+            localStorage.setItem('oceanaLanguage', lang);
+        }
+
+        // Fechar dropdown ao clicar fora
+        document.addEventListener('click', (e) => {
+            if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
+                languageDropdown.classList.remove('show');
+            }
+        });
+
+        // Event Listeners
+        mobileMenuBtn.addEventListener('click', () => {
+            mainMenu.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Fechar menu mobile ao clicar em um link
+        document.querySelectorAll('#mainMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainMenu.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Sistema de reservas via chamada telefônica
+        reserveBtn.addEventListener('click', () => {
+            callModal.style.display = 'flex';
+        });
+
+        closeModal.addEventListener('click', () => {
+            callModal.style.display = 'none';
+        });
+
+        // Botão para ligar
+        callBtn.addEventListener('click', () => {
+            const phoneNumber = appData.phone.replace(/\D/g, '');
+            alert(`${translations[currentLanguage].modal.callNow}: ${appData.phone}\n\n${translations[currentLanguage].modal.callDescription}`);
+        });
+
+        // Fechar modal ao clicar fora
+        window.addEventListener('click', (e) => {
+            if (e.target === callModal) {
+                callModal.style.display = 'none';
+            }
+            if (e.target === adminModal) {
+                adminModal.style.display = 'none';
+                pinError.style.display = 'none';
+                pinInput.value = '';
+            }
+        });
+
+        // Sistema de acesso admin
+        adminAccess.addEventListener('click', (e) => {
+            e.preventDefault();
+            adminModal.style.display = 'flex';
+        });
+
+        closeAdminModal.addEventListener('click', () => {
+            adminModal.style.display = 'none';
+            pinError.style.display = 'none';
+            pinInput.value = '';
+        });
+
+        submitPin.addEventListener('click', () => {
+            const pin = pinInput.value;
+            if (pin === '8999') {
+                window.open('ad.html', '_blank');
+                adminModal.style.display = 'none';
+                pinInput.value = '';
+            } else {
+                pinError.style.display = 'block';
+            }
+        });
+
+        // Permitir enviar o PIN com Enter
+        pinInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                submitPin.click();
+            }
+        });
+
+        // Filtro de categorias do menu
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderMenuItems(btn.dataset.category);
+            });
+        });
+
+        // Scroll suave para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if(this.getAttribute('href') === '#') return;
+                
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Inicializar o site
+        function initSite() {
+            // Carregar língua salva
+            const savedLanguage = localStorage.getItem('oceanaLanguage');
+            if (savedLanguage && translations[savedLanguage]) {
+                changeLanguage(savedLanguage);
+            } else {
+                updateTranslations();
+            }
+            
+            // Atualizar conteúdo do site
+            updateSiteContent();
+            
+            console.log('Site Sunlight Oceana Club carregado com sucesso!');
+        }
+
+        // Inicializar quando o DOM estiver pronto
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initSite);
+        } else {
+            initSite();
+        }
+    </script>
+</body>
+</html>
