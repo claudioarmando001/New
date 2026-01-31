@@ -549,3 +549,1308 @@
         }
     </style>
 </head>
+<body>
+    <!-- Tela de Login -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-container">
+            <div class="login-logo">
+                <i class="fas fa-umbrella-beach"></i>
+                <span>Oceana</span> Admin
+            </div>
+            <h1>Painel Administrativo</h1>
+            <p style="margin-bottom: 30px; color: #666;">Digite o PIN para acessar o sistema de gestão</p>
+            
+            <div class="form-group">
+                <label for="loginPin">PIN de Acesso</label>
+                <input type="password" id="loginPin" placeholder="Digite o PIN de 4 dígitos" maxlength="4">
+            </div>
+            
+            <button class="btn" id="loginBtn" style="width: 100%;">Acessar Painel</button>
+            
+            <p id="loginError" class="error-message">PIN incorreto. Tente novamente.</p>
+            
+            <p style="margin-top: 30px; font-size: 0.9rem; color: #999;">
+                <i class="fas fa-info-circle"></i> Este painel permite gerenciar todo o conteúdo do site do restaurante.
+            </p>
+        </div>
+    </div>
+
+    <!-- Painel Administrativo -->
+    <div class="admin-panel" id="adminPanel">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="container admin-header-content">
+                <h1>
+                    <i class="fas fa-cogs"></i>
+                    Painel Administrativo
+                </h1>
+                
+                <div class="admin-actions">
+                    <button class="btn btn-secondary" id="viewSiteBtn">
+                        <i class="fas fa-eye"></i> Ver Site
+                    </button>
+                    <button class="btn logout-btn" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Layout Principal -->
+        <div class="admin-layout">
+            <!-- Sidebar -->
+            <nav class="sidebar">
+                <ul class="sidebar-nav">
+                    <li><a href="#dashboard" class="active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a></li>
+                    <li><a href="#hero" data-section="hero">
+                        <i class="fas fa-home"></i> Hero Section
+                    </a></li>
+                    <li><a href="#about" data-section="about">
+                        <i class="fas fa-info-circle"></i> Sobre
+                    </a></li>
+                    <li><a href="#ratings" data-section="ratings">
+                        <i class="fas fa-star"></i> Avaliações
+                    </a></li>
+                    <li><a href="#menu" data-section="menu">
+                        <i class="fas fa-utensils"></i> Menu
+                    </a></li>
+                    <li><a href="#gallery" data-section="gallery">
+                        <i class="fas fa-images"></i> Galeria
+                    </a></li>
+                    <li><a href="#posts" data-section="posts">
+                        <i class="fas fa-newspaper"></i> Postagens
+                    </a></li>
+                    <li><a href="#environment" data-section="environment">
+                        <i class="fas fa-tree"></i> Ambiente
+                    </a></li>
+                    <li><a href="#contact" data-section="contact">
+                        <i class="fas fa-address-book"></i> Contactos
+                    </a></li>
+                </ul>
+            </nav>
+
+            <!-- Conteúdo Principal -->
+            <main class="main-content">
+                <!-- Mensagens -->
+                <div id="successMessage" class="message success">
+                    <i class="fas fa-check-circle"></i> Alterações salvas com sucesso!
+                </div>
+                
+                <div id="errorMessage" class="message error">
+                    <i class="fas fa-exclamation-circle"></i> Ocorreu um erro ao salvar as alterações.
+                </div>
+
+                <!-- Dashboard -->
+                <section id="dashboard" class="admin-section active">
+                    <h2>Dashboard</h2>
+                    <p>Bem-vindo ao painel de administração do Sunlight Oceana Club.</p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Itens no Menu</h3>
+                                <div class="stat-number" id="menuItemsCount">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Fotos na Galeria</h3>
+                                <div class="stat-number" id="galleryItemsCount">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-newspaper"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Postagens Ativas</h3>
+                                <div class="stat-number" id="postsCount">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Testemunhos</h3>
+                                <div class="stat-number" id="testimonialsCount">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-activity">
+                        <h3>Últimas Alterações</h3>
+                        <ul class="activity-list" id="activityList">
+                            <!-- Atividades serão adicionadas via JavaScript -->
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Hero Section -->
+                <section id="hero" class="admin-section">
+                    <h2>Hero Section</h2>
+                    <div class="content-form">
+                        <div class="form-group">
+                            <label>Frase Principal (Português)</label>
+                            <textarea id="mainPhrasePt" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Frase Principal (Inglês)</label>
+                            <textarea id="mainPhraseEn" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Frase Principal (Francês)</label>
+                            <textarea id="mainPhraseFr" rows="2"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Subtítulo (Português)</label>
+                            <textarea id="heroSubtitlePt" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Subtítulo (Inglês)</label>
+                            <textarea id="heroSubtitleEn" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Subtítulo (Francês)</label>
+                            <textarea id="heroSubtitleFr" rows="2"></textarea>
+                        </div>
+                        
+                        <button class="btn" id="saveHeroBtn">Salvar Hero Section</button>
+                    </div>
+                </section>
+
+                <!-- Sobre -->
+                <section id="about" class="admin-section">
+                    <h2>Sobre o Restaurante</h2>
+                    <div class="content-form">
+                        <div class="form-group">
+                            <label>Título da Seção</label>
+                            <input type="text" id="aboutTitle">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Texto 1 (Português)</label>
+                            <textarea id="aboutText1Pt" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Texto 1 (Inglês)</label>
+                            <textarea id="aboutText1En" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Texto 1 (Francês)</label>
+                            <textarea id="aboutText1Fr" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Imagem da Seção Sobre</label>
+                            <div class="upload-area" id="aboutImageUpload">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="upload-text">
+                                    <h4>Arraste e solte uma imagem aqui</h4>
+                                    <p>ou</p>
+                                </div>
+                                <input type="file" id="aboutImageFile" accept="image/*" style="display: none;">
+                                <label for="aboutImageFile" class="btn" style="margin-top: 15px;">
+                                    <i class="fas fa-folder-open"></i> Selecionar Imagem
+                                </label>
+                                <p class="upload-hint">Formatos: JPG, PNG, GIF. Tamanho máximo: 5MB.</p>
+                            </div>
+                            <div id="aboutImagePreview"></div>
+                        </div>
+                        
+                        <button class="btn" id="saveAboutBtn">Salvar Sobre</button>
+                    </div>
+                </section>
+
+                <!-- Menu -->
+                <section id="menu" class="admin-section">
+                    <h2>Gestão do Menu</h2>
+                    <div class="content-form">
+                        <div class="form-group">
+                            <label>Título da Seção Menu</label>
+                            <input type="text" id="menuTitle">
+                        </div>
+  <h3>Adicionar Item ao Menu</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nome do Prato</label>
+                                <input type="text" id="itemName">
+                            </div>
+                            <div class="form-group">
+                                <label>Preço</label>
+                                <input type="text" id="itemPrice" placeholder="Ex: 850 MZN">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Categoria</label>
+                                <select id="itemCategory">
+                                    <option value="seafood">Frutos do Mar</option>
+                                    <option value="mozambican">Pratos Moçambicanos</option>
+                                    <option value="chinese">Influência Chinesa</option>
+                                    <option value="drinks">Bebidas & Cocktails</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Descrição</label>
+                                <input type="text" id="itemDescription">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Imagem do Prato</label>
+                            <div class="upload-area" id="menuImageUpload">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <input type="file" id="menuImageFile" accept="image/*" style="display: none;">
+                                <label for="menuImageFile" class="btn" style="margin-top: 15px;">
+                                    <i class="fas fa-folder-open"></i> Selecionar Imagem
+                                </label>
+                            </div>
+                            <div id="menuImagePreview"></div>
+                        </div>
+                        
+                        <button class="btn" id="addMenuItemBtn">Adicionar ao Menu</button>
+                        <button class="btn btn-secondary" id="saveMenuTitleBtn" style="margin-left: 10px;">Salvar Título</button>
+                    </div>
+                    
+                    <div class="items-list">
+                        <h3>Itens do Menu</h3>
+                        <div id="menuItemsList"></div>
+                    </div>
+                </section>
+
+                <!-- Galeria -->
+                <section id="gallery" class="admin-section">
+                    <h2>Gestão da Galeria</h2>
+                    <div class="content-form">
+                        <div class="form-group">
+                            <label>Título da Seção Galeria</label>
+                            <input type="text" id="galleryTitle">
+                        </div>
+                        
+                        <h3>Adicionar Imagens</h3>
+                        <div class="upload-area" id="galleryUpload">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="upload-text">
+                                <h4>Arraste e solte imagens aqui</h4>
+                                <p>ou</p>
+                            </div>
+                            <input type="file" id="galleryFiles" multiple accept="image/*" style="display: none;">
+                            <label for="galleryFiles" class="btn" style="margin-top: 15px;">
+                                <i class="fas fa-folder-open"></i> Selecionar Imagens
+                            </label>
+                            <p class="upload-hint">Pode selecionar várias imagens. Tamanho máximo: 5MB cada.</p>
+                        </div>
+                        <div id="galleryUploadPreview"></div>
+                        
+                        <button class="btn" id="addGalleryImagesBtn" style="display: none;">Adicionar à Galeria</button>
+                        <button class="btn btn-secondary" id="saveGalleryTitleBtn" style="margin-left: 10px;">Salvar Título</button>
+                    </div>
+                    
+                    <div class="gallery-grid" id="galleryItems">
+                        <!-- Imagens da galeria serão mostradas aqui -->
+                    </div>
+                </section>
+
+                <!-- Postagens -->
+                <section id="posts" class="admin-section">
+                    <h2>Gestão de Postagens</h2>
+                    <div class="content-form">
+                        <div class="form-group">
+                            <label>Título da Seção Postagens</label>
+                            <input type="text" id="postsTitle">
+                        </div>
+                        
+                        <h3>Criar Nova Postagem</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Título</label>
+                                <input type="text" id="postTitle">
+                            </div>
+                            <div class="form-group">
+                                <label>Data</label>
+                                <input type="text" id="postDate" placeholder="Ex: 15 Dez 2023">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Conteúdo</label>
+                            <textarea id="postContent" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Imagem da Postagem</label>
+                            <div class="upload-area" id="postImageUpload">
+                                <input type="file" id="postImageFile" accept="image/*" style="display: none;">
+                                <label for="postImageFile" class="btn">
+                                    <i class="fas fa-folder-open"></i> Selecionar Imagem
+                                </label>
+                            </div>
+                            <div id="postImagePreview"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="postFeatured" checked>
+                                Destacar esta postagem
+                            </label>
+                        </div>
+                        
+                        <button class="btn" id="addPostBtn">Adicionar Postagem</button>
+                        <button class="btn btn-secondary" id="savePostsTitleBtn" style="margin-left: 10px;">Salvar Título</button>
+                    </div>
+                    
+                    <div class="items-list">
+                        <h3>Postagens Existentes</h3>
+                        <div id="postsList"></div>
+                    </div>
+                </section>
+
+                <!-- Ambiente -->
+                <section id="environment" class="admin-section">
+                    <h2>Ambiente & Experiência</h2>
+                    <div class="content-form">
+                        <div class="form-group">
+                            <label>Título da Seção Ambiente</label>
+                            <input type="text" id="environmentTitle">
+                        </div>
+                        
+                        <h3>Adicionar Item de Ambiente</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Título (Português)</label>
+                                <input type="text" id="envTitlePt">
+                            </div>
+                            <div class="form-group">
+                                <label>Título (Inglês)</label>
+                                <input type="text" id="envTitleEn">
+                            </div>
+                            <div class="form-group">
+                                <label>Título (Francês)</label>
+                                <input type="text" id="envTitleFr">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Descrição (Português)</label>
+                                <textarea id="envDescPt" rows="2"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Descrição (Inglês)</label>
+                                <textarea id="envDescEn" rows="2"></textarea>
+                            </div>
+                            <div="form-group">
+                                <label>Descrição (Francês)</label>
+                                <textarea id="envDescFr" rows="2"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Ícone</label>
+                            <select id="envIcon">
+                                <option value="users">Encontros Sociais</option>
+                                <option value="sun">Pôr-do-Sol</option>
+                                <option value="glass-cheers">Drinks</option>
+                                <option value="umbrella-beach">Praia</option>
+                                <option value="water">Mar</option>
+                                <option value="music">Música</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn" id="addEnvItemBtn">Adicionar Item</button>
+                        <button class="btn btn-secondary" id="saveEnvTitleBtn" style="margin-left: 10px;">Salvar Título</button>
+                    </div>
+                    
+                    <div class="items-list">
+                        <h3>Itens de Ambiente Existentes</h3>
+                        <div id="envItemsList"></div>
+                    </div>
+                </section>
+   <!-- Contactos -->
+                <section id="contact" class="admin-section">
+                    <h2>Contactos</h2>
+                    <div class="content-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Telefone</label>
+                                <input type="text" id="phone">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="email">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Endereço Completo</label>
+                                <input type="text" id="address">
+                            </div>
+                            <div class="form-group">
+                                <label>Endereço Resumido</label>
+                                <input type="text" id="footerAddress">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Descrição do Rodapé (Português)</label>
+                            <textarea id="footerDescPt" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Descrição do Rodapé (Inglês)</label>
+                            <textarea id="footerDescEn" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Descrição do Rodapé (Francês)</label>
+                            <textarea id="footerDescFr" rows="2"></textarea>
+                        </div>
+                        
+                        <h3>Horários</h3>
+                        <div id="hoursContainer"></div>
+                        <button class="btn" id="addHourBtn">+ Adicionar Horário</button>
+                        
+                        <h3 style="margin-top: 30px;">Redes Sociais</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Facebook</label>
+                                <input type="text" id="facebookLink">
+                            </div>
+                            <div class="form-group">
+                                <label>Instagram</label>
+                                <input type="text" id="instagramLink">
+                            </div>
+                        </div>
+                        
+                        <button class="btn" id="saveContactBtn">Salvar Contactos</button>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // PIN de acesso
+        const ADMIN_PIN = "8999";
+        
+        // Elementos do DOM
+        const loginScreen = document.getElementById('loginScreen');
+        const adminPanel = document.getElementById('adminPanel');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginPin = document.getElementById('loginPin');
+        const loginError = document.getElementById('loginError');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const viewSiteBtn = document.getElementById('viewSiteBtn');
+        const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+        const adminSections = document.querySelectorAll('.admin-section');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        // Variáveis para upload
+        let aboutImageData = null;
+        let menuImageData = null;
+        let postImageData = null;
+        let galleryImagesData = [];
+        
+        // Carregar dados
+        function loadData() {
+            const savedData = localStorage.getItem('oceanaData');
+            return savedData ? JSON.parse(savedData) : getDefaultData();
+        }
+        
+        // Dados padrão
+        function getDefaultData() {
+            return {
+                // Hero Section
+                mainPhrase: {
+                    pt: "Sabores do mar com um toque oriental, no coração da Beira",
+                    en: "Sea flavors with an oriental touch, in the heart of Beira",
+                    fr: "Saveurs de la mer avec une touche orientale, au cœur de Beira"
+                },
+                heroSubtitle: {
+                    pt: "Um restaurante à beira-mar que mistura a riqueza dos frutos do mar moçambicanos com a tradição culinária chinesa.",
+                    en: "A seaside restaurant that blends the richness of Mozambican seafood with Chinese culinary tradition.",
+                    fr: "Un restaurant en bord de mer qui mêle la richesse des fruits de mer mozambicains à la tradition culinaire chinoise."
+                },
+                
+                // Sobre
+                aboutTitle: "Sobre o Restaurante",
+                aboutText: {
+                    pt: "Localizado na Avenida Mateus Sansão Muthemba, na cidade costeira da Beira, o Sunlight Oceana Club é um ponto de encontro popular entre moradores e visitantes que procuram boa comida, ambiente descontraído e uma vista privilegiada com brisa marítima.",
+                    en: "Located on Avenida Mateus Sansão Muthemba in the coastal city of Beira, Sunlight Oceana Club is a popular meeting point for residents and visitors looking for good food, relaxed atmosphere and a privileged view with sea breeze.",
+                    fr: "Situé sur l'Avenida Mateus Sansão Muthemba dans la ville côtière de Beira, le Sunlight Oceana Club est un point de rencontre populaire pour les résidents et les visiteurs à la recherche de bonne nourriture, d'ambiance décontractée et d'une vue privilégiée avec brise marine."
+                },
+                aboutText2: {
+                    pt: "Há mais de 15 anos, oferecemos uma experiência gastronómica única que combina os melhores frutos do mar frescos com influências da culinária chinesa, criando pratos que celebram a fusão entre duas culturas ricas em sabores.",
+                    en: "For over 15 years, we have offered a unique gastronomic experience that combines the best fresh seafood with influences from Chinese cuisine, creating dishes that celebrate the fusion of two cultures rich in flavors.",
+                    fr: "Depuis plus de 15 ans, nous offrons une expérience gastronomique unique qui combine les meilleurs fruits de mer frais avec des influences de la cuisine chinoise, créant des plats qui célèbrent la fusion de deux cultures riches en saveurs."
+                },
+                aboutText3: {
+                    pt: "O nosso espaço externo com vista para o Índico é perfeito para refeições ao pôr-do-sol ou encontros sociais ao final da tarde, proporcionando momentos inesquecíveis à beira-mar.",
+                    en: "Our outdoor space with Indian Ocean view is perfect for sunset meals or social gatherings in the late afternoon, providing unforgettable moments by the sea.",
+                    fr: "Notre espace extérieur avec vue sur l'océan Indien est parfait pour les repas au coucher du soleil ou les rencontres sociales en fin d'après-midi, offrant des moments inoubliables au bord de la mer."
+                },
+                aboutImage: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                
+                // Avaliações
+                ratingScore: "3.9",
+                ratingSource: "Classificação baseada em 1.000+ avaliações online",
+                testimonials: [],
+                
+                // Menu
+                menuTitle: "Nosso Menu",
+                menuItems: [],
+                
+                // Galeria
+                galleryTitle: "Galeria",
+                galleryImages: [],
+                
+                // Posts
+                postsTitle: "Destaques & Novidades",
+                posts: [],
+                
+                // Ambiente
+                environmentTitle: "Ambiente & Experiência",
+                environmentItems: [],
+                
+                // Contactos
+                phone: "+258 84 123 4567",
+                email: "info@oceana.co.mz",
+                address: "Avenida Mateus Sansão Muthemba, Beira, Moçambique",
+                footerAddress: "Av. Mateus Sansão Muthemba, Beira",
+                footerDescription: {
+                    pt: "Sabores do mar com um toque oriental, no coração da Beira. Uma experiência gastronómica única que celebra a fusão das culturas moçambicana e chinesa.",
+                    en: "Sea flavors with an oriental touch, in the heart of Beira. A unique gastronomic experience that celebrates the fusion of Mozambican and Chinese cultures.",
+                    fr: "Saveurs de la mer avec une touche orientale, au cœur de Beira. Une expérience gastronomique unique qui célèbre la fusion des cultures mozambicaine et chinoise."
+                },
+                copyrightText: "© 2023 Sunlight Oceana Club - Beira. Todos os direitos reservados.",
+                hours: [
+                    { id: 1, day: "Segunda - Quinta", time: "11:00 - 22:00" },
+                    { id: 2, day: "Sexta - Sábado", time: "11:00 - 00:00" },
+                    { id: 3, day: "Domingo", time: "11:00 - 20:00" }
+                ],
+                socialLinks: {
+                    facebook: "#",
+                    instagram: "#",
+                    twitter: "#",
+                    tripadvisor: "#"
+                }
+            };
+        }
+        
+        // Salvar dados
+        function saveData(data) {
+            localStorage.setItem('oceanaData', JSON.stringify(data));
+            addActivity("Dados salvos no sistema");
+        }
+     // Inicializar dados
+        let appData = loadData();
+        
+        // Atualizar estatísticas
+        function updateStats() {
+            document.getElementById('menuItemsCount').textContent = appData.menuItems.length;
+            document.getElementById('galleryItemsCount').textContent = appData.galleryImages.length;
+            document.getElementById('postsCount').textContent = appData.posts.length;
+            document.getElementById('testimonialsCount').textContent = appData.testimonials.length;
+        }
+        
+        // Adicionar atividade
+        function addActivity(description) {
+            const activityList = document.getElementById('activityList');
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+            const dateString = now.toLocaleDateString('pt-PT');
+            
+            const activityItem = document.createElement('li');
+            activityItem.innerHTML = `
+                <div class="activity-icon">
+                    <i class="fas fa-save"></i>
+                </div>
+                <div>
+                    <p>${description}</p>
+                    <small>${dateString} às ${timeString}</small>
+                </div>
+            `;
+            
+            if (activityList.firstChild) {
+                activityList.insertBefore(activityItem, activityList.firstChild);
+            } else {
+                activityList.appendChild(activityItem);
+            }
+            
+            // Manter apenas as últimas 5 atividades
+            const items = activityList.querySelectorAll('li');
+            if (items.length > 5) {
+                activityList.removeChild(items[items.length - 1]);
+            }
+        }
+        
+        // Mostrar mensagem de sucesso
+        function showSuccess(message = "Alterações salvas com sucesso!") {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Mostrar mensagem de erro
+        function showError(message = "Ocorreu um erro ao salvar as alterações.") {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Converter arquivo para Data URL
+        function fileToDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.onerror = (e) => reject(e);
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        // Sistema de Login
+        loginBtn.addEventListener('click', () => {
+            const pin = loginPin.value;
+            
+            if (pin === ADMIN_PIN) {
+                loginScreen.style.display = 'none';
+                adminPanel.style.display = 'block';
+                loadAdminData();
+                updateStats();
+                addActivity("Administrador fez login no sistema");
+            } else {
+                loginError.style.display = 'block';
+                loginPin.value = '';
+                loginPin.focus();
+            }
+        });
+        
+        loginPin.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') loginBtn.click();
+        });
+        
+        // Logout
+        logoutBtn.addEventListener('click', () => {
+            if (confirm('Tem certeza que deseja sair do painel administrativo?')) {
+                adminPanel.style.display = 'none';
+                loginScreen.style.display = 'flex';
+                loginPin.value = '';
+                loginError.style.display = 'none';
+            }
+        });
+        
+        // Ver site
+        viewSiteBtn.addEventListener('click', () => {
+            window.open('oce.html', '_blank');
+        });
+        
+        // Navegação entre seções
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                const targetSection = link.getAttribute('data-section');
+                adminSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(targetSection).classList.add('active');
+            });
+        });
+        
+        // Carregar dados no painel
+        function loadAdminData() {
+            // Hero Section
+            document.getElementById('mainPhrasePt').value = appData.mainPhrase.pt || '';
+            document.getElementById('mainPhraseEn').value = appData.mainPhrase.en || '';
+            document.getElementById('mainPhraseFr').value = appData.mainPhrase.fr || '';
+            document.getElementById('heroSubtitlePt').value = appData.heroSubtitle.pt || '';
+            document.getElementById('heroSubtitleEn').value = appData.heroSubtitle.en || '';
+            document.getElementById('heroSubtitleFr').value = appData.heroSubtitle.fr || '';
+            
+            // Sobre
+            document.getElementById('aboutTitle').value = appData.aboutTitle || '';
+            document.getElementById('aboutText1Pt').value = appData.aboutText?.pt || '';
+            document.getElementById('aboutText1En').value = appData.aboutText?.en || '';
+            document.getElementById('aboutText1Fr').value = appData.aboutText?.fr || '';
+            
+            // Mostrar pré-visualização da imagem sobre
+            if (appData.aboutImage) {
+                const preview = document.getElementById('aboutImagePreview');
+                preview.innerHTML = `<img src="${appData.aboutImage}" style="max-width: 200px; border-radius: 5px; margin-top: 10px;">`;
+            }
+            
+            // Menu
+            document.getElementById('menuTitle').value = appData.menuTitle || '';
+            loadMenuItems();
+  // Galeria
+            document.getElementById('galleryTitle').value = appData.galleryTitle || '';
+            loadGallery();
+            
+            // Posts
+            document.getElementById('postsTitle').value = appData.postsTitle || '';
+            loadPosts();
+            
+            // Ambiente
+            document.getElementById('environmentTitle').value = appData.environmentTitle || '';
+            loadEnvItems();
+            
+            // Contactos
+            document.getElementById('phone').value = appData.phone || '';
+            document.getElementById('email').value = appData.email || '';
+            document.getElementById('address').value = appData.address || '';
+            document.getElementById('footerAddress').value = appData.footerAddress || '';
+            document.getElementById('footerDescPt').value = appData.footerDescription?.pt || '';
+            document.getElementById('footerDescEn').value = appData.footerDescription?.en || '';
+            document.getElementById('footerDescFr').value = appData.footerDescription?.fr || '';
+            document.getElementById('facebookLink').value = appData.socialLinks?.facebook || '';
+            document.getElementById('instagramLink').value = appData.socialLinks?.instagram || '';
+            
+            // Horários
+            loadHours();
+        }
+        
+        // Salvar Hero Section
+        document.getElementById('saveHeroBtn').addEventListener('click', () => {
+            appData.mainPhrase = {
+                pt: document.getElementById('mainPhrasePt').value,
+                en: document.getElementById('mainPhraseEn').value,
+                fr: document.getElementById('mainPhraseFr').value
+            };
+            appData.heroSubtitle = {
+                pt: document.getElementById('heroSubtitlePt').value,
+                en: document.getElementById('heroSubtitleEn').value,
+                fr: document.getElementById('heroSubtitleFr').value
+            };
+            saveData(appData);
+            showSuccess("Hero Section salva com sucesso!");
+        });
+        
+        // Upload imagem sobre
+        document.getElementById('aboutImageFile').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            if (!file.type.startsWith('image/')) {
+                showError("Por favor, selecione um arquivo de imagem válido.");
+                return;
+            }
+            
+            if (file.size > 5 * 1024 * 1024) {
+                showError("A imagem é muito grande. Tamanho máximo: 5MB.");
+                return;
+            }
+            
+            try {
+                const dataUrl = await fileToDataURL(file);
+                aboutImageData = dataUrl;
+                
+                const preview = document.getElementById('aboutImagePreview');
+                preview.innerHTML = `<img src="${dataUrl}" style="max-width: 200px; border-radius: 5px; margin-top: 10px;">`;
+                
+                showSuccess("Imagem carregada com sucesso!");
+            } catch (error) {
+                showError("Erro ao carregar imagem.");
+            }
+        });
+        
+        // Salvar Sobre
+        document.getElementById('saveAboutBtn').addEventListener('click', () => {
+            appData.aboutTitle = document.getElementById('aboutTitle').value;
+            appData.aboutText = {
+                pt: document.getElementById('aboutText1Pt').value,
+                en: document.getElementById('aboutText1En').value,
+                fr: document.getElementById('aboutText1Fr').value
+            };
+            
+            if (aboutImageData) {
+                appData.aboutImage = aboutImageData;
+            }
+            
+            saveData(appData);
+            showSuccess("Seção Sobre salva com sucesso!");
+        });
+        
+        // Carregar itens do menu
+        function loadMenuItems() {
+            const menuItemsList = document.getElementById('menuItemsList');
+            menuItemsList.innerHTML = '';
+            
+            appData.menuItems.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'item-row';
+                itemElement.innerHTML = `
+                    <div class="item-info">
+                        <h4>${item.name}</h4>
+                        <p>${item.description} - ${item.price}</p>
+                        <small>Categoria: ${item.category}</small>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-small btn-danger" onclick="removeMenuItem(${index})">
+                            <i class="fas fa-trash"></i> Remover
+                        </button>
+                    </div>
+                `;
+                menuItemsList.appendChild(itemElement);
+            });
+        }
+        
+        // Remover item do menu
+        window.removeMenuItem = function(index) {
+            if (confirm('Tem certeza que deseja remover este item do menu?')) {
+                appData.menuItems.splice(index, 1);
+                saveData(appData);
+                loadMenuItems();
+                updateStats();
+                showSuccess("Item removido do menu!");
+            }
+        };
+        
+        // Upload imagem do menu
+        document.getElementById('menuImageFile').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            if (!file.type.startsWith('image/')) {
+                showError("Por favor, selecione um arquivo de imagem válido.");
+                return;
+            }
+            
+            try {
+                const dataUrl = await fileToDataURL(file);
+                menuImageData = dataUrl;
+                
+                const preview = document.getElementById('menuImagePreview');
+                preview.innerHTML = `<img src="${dataUrl}" style="max-width: 200px; border-radius: 5px; margin-top: 10px;">`;
+                
+                showSuccess("Imagem carregada com sucesso!");
+            } catch (error) {
+                showError("Erro ao carregar imagem.");
+            }
+        });
+        
+        // Adicionar item ao menu
+        document.getElementById('addMenuItemBtn').addEventListener('click', () => {
+            const name = document.getElementById('itemName').value;
+            const price = document.getElementById('itemPrice').value;
+            const category = document.getElementById('itemCategory').value;
+            const description = document.getElementById('itemDescription').value;
+            
+            if (!name || !price || !description) {
+                showError("Por favor, preencha todos os campos.");
+                return;
+            }
+            
+            const newItem = {
+                id: Date.now(),
+                name: name,
+                price: price,
+                category: category,
+                description: description,
+                image: menuImageData || 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+            };
+            
+            appData.menuItems.push(newItem);
+            saveData(appData);
+            loadMenuItems();
+            updateStats();
+            
+            // Limpar formulário
+            document.getElementById('itemName').value = '';
+            document.getElementById('itemPrice').value = '';
+            document.getElementById('itemDescription').value = '';
+            document.getElementById('menuImagePreview').innerHTML = '';
+            menuImageData = null;
+            
+            showSuccess("Item adicionado ao menu com sucesso!");
+        });
+        
+        // Salvar título do menu
+        document.getElementById('saveMenuTitleBtn').addEventListener('click', () => {
+            appData.menuTitle = document.getElementById('menuTitle').value;
+            saveData(appData);
+            showSuccess("Título do menu salvo!");
+        });
+        
+        // Upload múltiplo para galeria
+        document.getElementById('galleryFiles').addEventListener('change', async (e) => {
+            const files = Array.from(e.target.files);
+            if (files.length === 0) return;
+            
+            galleryImagesData = [];
+            const preview = document.getElementById('galleryUploadPreview');
+            preview.innerHTML = '';
+            
+            for (const file of files) {
+                if (!file.type.startsWith('image/')) {
+                    showError(`Arquivo "${file.name}" não é uma imagem válida.`);
+                    continue;
+                }
+                
+                if (file.size > 5 * 1024 * 1024) {
+                    showError(`Imagem "${file.name}" é muito grande. Tamanho máximo: 5MB.`);
+                    continue;
+                }
+                
+                try {
+                    const dataUrl = await fileToDataURL(file);
+                    galleryImagesData.push(dataUrl);
+                    
+                    const img = document.createElement('img');
+                    img.src = dataUrl;
+                    img.className = 'image-preview';
+                    preview.appendChild(img);
+                } catch (error) {
+                    showError(`Erro ao carregar imagem "${file.name}".`);
+                }
+            }
+            
+            if (galleryImagesData.length > 0) {
+                document.getElementById('addGalleryImagesBtn').style.display = 'inline-block';
+                showSuccess(`${galleryImagesData.length} imagem(ns) carregada(s) com sucesso!`);
+            }
+        });
+    // Adicionar imagens à galeria
+        document.getElementById('addGalleryImagesBtn').addEventListener('click', () => {
+            appData.galleryImages.push(...galleryImagesData);
+            saveData(appData);
+            loadGallery();
+            updateStats();
+            
+            // Limpar
+            galleryImagesData = [];
+            document.getElementById('galleryUploadPreview').innerHTML = '';
+            document.getElementById('addGalleryImagesBtn').style.display = 'none';
+            document.getElementById('galleryFiles').value = '';
+            
+            showSuccess(`${galleryImagesData.length} imagem(ns) adicionada(s) à galeria!`);
+        });
+        
+        // Carregar galeria
+        function loadGallery() {
+            const galleryItems = document.getElementById('galleryItems');
+            galleryItems.innerHTML = '';
+            
+            appData.galleryImages.forEach((image, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.innerHTML = `
+                    <img src="${image}" alt="Imagem ${index + 1}">
+                    <div class="gallery-item-actions">
+                        <button class="btn btn-small btn-danger" onclick="removeGalleryImage(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                galleryItems.appendChild(item);
+            });
+        }
+        
+        // Remover imagem da galeria
+        window.removeGalleryImage = function(index) {
+            if (confirm('Tem certeza que deseja remover esta imagem da galeria?')) {
+                appData.galleryImages.splice(index, 1);
+                saveData(appData);
+                loadGallery();
+                updateStats();
+                showSuccess("Imagem removida da galeria!");
+            }
+        };
+        
+        // Salvar título da galeria
+        document.getElementById('saveGalleryTitleBtn').addEventListener('click', () => {
+            appData.galleryTitle = document.getElementById('galleryTitle').value;
+            saveData(appData);
+            showSuccess("Título da galeria salvo!");
+        });
+        
+        // Upload imagem para postagem
+        document.getElementById('postImageFile').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            try {
+                const dataUrl = await fileToDataURL(file);
+                postImageData = dataUrl;
+                
+                const preview = document.getElementById('postImagePreview');
+                preview.innerHTML = `<img src="${dataUrl}" style="max-width: 200px; border-radius: 5px; margin-top: 10px;">`;
+                
+                showSuccess("Imagem carregada com sucesso!");
+            } catch (error) {
+                showError("Erro ao carregar imagem.");
+            }
+        });
+        
+        // Adicionar postagem
+        document.getElementById('addPostBtn').addEventListener('click', () => {
+            const title = document.getElementById('postTitle').value;
+            const date = document.getElementById('postDate').value;
+            const content = document.getElementById('postContent').value;
+            const featured = document.getElementById('postFeatured').checked;
+            
+            if (!title || !date || !content) {
+                showError("Por favor, preencha todos os campos.");
+                return;
+            }
+            
+            const newPost = {
+                id: Date.now(),
+                title: title,
+                date: date,
+                content: content,
+                featured: featured,
+                image: postImageData || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+            };
+            
+            appData.posts.push(newPost);
+            saveData(appData);
+            loadPosts();
+            updateStats();
+            
+            // Limpar formulário
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postDate').value = '';
+            document.getElementById('postContent').value = '';
+            document.getElementById('postImagePreview').innerHTML = '';
+            postImageData = null;
+            
+            showSuccess("Postagem adicionada com sucesso!");
+        });
+        
+        // Carregar postagens
+        function loadPosts() {
+            const postsList = document.getElementById('postsList');
+            postsList.innerHTML = '';
+            
+            appData.posts.forEach((post, index) => {
+                const postElement = document.createElement('div');
+                postElement.className = 'item-row';
+                postElement.innerHTML = `
+                    <div class="item-info">
+                        <h4>${post.title} ${post.featured ? '<span style="color: var(--gold);">★</span>' : ''}</h4>
+                        <p>${post.date} - ${post.content.substring(0, 100)}...</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-small btn-danger" onclick="removePost(${index})">
+                            <i class="fas fa-trash"></i> Remover
+                        </button>
+                    </div>
+                `;
+                postsList.appendChild(postElement);
+            });
+        }
+        
+        // Remover postagem
+        window.removePost = function(index) {
+            if (confirm('Tem certeza que deseja remover esta postagem?')) {
+                appData.posts.splice(index, 1);
+                saveData(appData);
+                loadPosts();
+                updateStats();
+                showSuccess("Postagem removida!");
+            }
+        };
+        
+        // Salvar título das postagens
+        document.getElementById('savePostsTitleBtn').addEventListener('click', () => {
+            appData.postsTitle = document.getElementById('postsTitle').value;
+            saveData(appData);
+            showSuccess("Título das postagens salvo!");
+        });
+        
+        // Adicionar item de ambiente
+        document.getElementById('addEnvItemBtn').addEventListener('click', () => {
+            const titlePt = document.getElementById('envTitlePt').value;
+            const titleEn = document.getElementById('envTitleEn').value;
+            const titleFr = document.getElementById('envTitleFr').value;
+            const descPt = document.getElementById('envDescPt').value;
+            const descEn = document.getElementById('envDescEn').value;
+            const descFr = document.getElementById('envDescFr').value;
+            const icon = document.getElementById('envIcon').value;
+            
+            if (!titlePt || !descPt) {
+                showError("Por favor, preencha pelo menos os campos em português.");
+                return;
+            }
+            
+            const newItem = {
+                id: Date.now(),
+                title: {
+                    pt: titlePt,
+                    en: titleEn || titlePt,
+                    fr: titleFr || titlePt
+                },
+                description: {
+                    pt: descPt,
+                    en: descEn || descPt,
+                    fr: descFr || descPt
+                },
+                icon: icon
+            };
+            
+            appData.environmentItems.push(newItem);
+            saveData(appData);
+            loadEnvItems();
+   // Limpar formulário
+            document.getElementById('envTitlePt').value = '';
+            document.getElementById('envTitleEn').value = '';
+            document.getElementById('envTitleFr').value = '';
+            document.getElementById('envDescPt').value = '';
+            document.getElementById('envDescEn').value = '';
+            document.getElementById('envDescFr').value = '';
+            
+            showSuccess("Item de ambiente adicionado com sucesso!");
+        });
+        
+        // Carregar itens de ambiente
+        function loadEnvItems() {
+            const envItemsList = document.getElementById('envItemsList');
+            envItemsList.innerHTML = '';
+            
+            appData.environmentItems.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'item-row';
+                itemElement.innerHTML = `
+                    <div class="item-info">
+                        <h4><i class="fas fa-${item.icon}"></i> ${item.title.pt}</h4>
+                        <p>${item.description.pt.substring(0, 100)}...</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-small btn-danger" onclick="removeEnvItem(${index})">
+                            <i class="fas fa-trash"></i> Remover
+                        </button>
+                    </div>
+                `;
+                envItemsList.appendChild(itemElement);
+            });
+        }
+        
+        // Remover item de ambiente
+        window.removeEnvItem = function(index) {
+            if (confirm('Tem certeza que deseja remover este item de ambiente?')) {
+                appData.environmentItems.splice(index, 1);
+                saveData(appData);
+                loadEnvItems();
+                showSuccess("Item de ambiente removido!");
+            }
+        };
+        
+        // Salvar título do ambiente
+        document.getElementById('saveEnvTitleBtn').addEventListener('click', () => {
+            appData.environmentTitle = document.getElementById('environmentTitle').value;
+            saveData(appData);
+            showSuccess("Título do ambiente salvo!");
+        });
+        
+        // Carregar horários
+        function loadHours() {
+            const hoursContainer = document.getElementById('hoursContainer');
+            hoursContainer.innerHTML = '';
+            
+            appData.hours.forEach((hour, index) => {
+                const hourRow = document.createElement('div');
+                hourRow.className = 'form-row';
+                hourRow.innerHTML = `
+                    <div class="form-group">
+                        <label>Dias</label>
+                        <input type="text" class="hour-day" value="${hour.day}" data-index="${index}">
+                    </div>
+                    <div class="form-group">
+                        <label>Horário</label>
+                        <input type="text" class="hour-time" value="${hour.time}" data-index="${index}">
+                    </div>
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button type="button" class="btn btn-small btn-danger" onclick="removeHour(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                hoursContainer.appendChild(hourRow);
+            });
+        }
+        
+        // Adicionar horário
+        document.getElementById('addHourBtn').addEventListener('click', () => {
+            appData.hours.push({ id: Date.now(), day: "", time: "" });
+            loadHours();
+        });
+        
+        // Remover horário
+        window.removeHour = function(index) {
+            appData.hours.splice(index, 1);
+            loadHours();
+        };
+        
+        // Salvar contactos
+        document.getElementById('saveContactBtn').addEventListener('click', () => {
+            appData.phone = document.getElementById('phone').value;
+            appData.email = document.getElementById('email').value;
+            appData.address = document.getElementById('address').value;
+            appData.footerAddress = document.getElementById('footerAddress').value;
+            appData.footerDescription = {
+                pt: document.getElementById('footerDescPt').value,
+                en: document.getElementById('footerDescEn').value,
+                fr: document.getElementById('footerDescFr').value
+            };
+            
+            // Atualizar horários
+            const dayInputs = document.querySelectorAll('.hour-day');
+            const timeInputs = document.querySelectorAll('.hour-time');
+            appData.hours = [];
+            dayInputs.forEach((input, index) => {
+                appData.hours.push({
+                    id: index + 1,
+                    day: input.value,
+                    time: timeInputs[index].value
+                });
+            });
+            
+            // Redes sociais
+            appData.socialLinks.facebook = document.getElementById('facebookLink').value;
+            appData.socialLinks.instagram = document.getElementById('instagramLink').value;
+            
+            saveData(appData);
+            showSuccess("Contactos salvos com sucesso!");
+        });
+        
+        // Inicializar
+        console.log("Painel administrativo do Sunlight Oceana Club carregado.");
+        console.log("PIN de acesso: 8999");
+        
+        // Adicionar algumas atividades iniciais
+        setTimeout(() => {
+            if (appData.menuItems.length > 0) {
+                addActivity(`Sistema carregado com ${appData.menuItems.length} itens no menu`);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
