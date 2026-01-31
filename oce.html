@@ -160,10 +160,11 @@
         nav ul {
             display: flex;
             list-style: none;
+            align-items: center;
         }
         
         nav ul li {
-            margin-left: 30px;
+            margin-left: 20px;
         }
         
         nav ul li a {
@@ -187,6 +188,65 @@
         nav ul li a:hover:after,
         nav ul li a.active:after {
             width: 100%;
+        }
+        
+        /* Seletor de Língua */
+        .language-selector {
+            position: relative;
+            margin-left: 15px;
+        }
+        
+        .language-btn {
+            background: none;
+            border: 2px solid var(--light-blue);
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-weight: 600;
+            color: var(--primary-blue);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        
+        .language-btn:hover {
+            border-color: var(--gold);
+            background: rgba(218, 165, 32, 0.1);
+        }
+        
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+            min-width: 120px;
+            display: none;
+            z-index: 1001;
+        }
+        
+        .language-dropdown.show {
+            display: block;
+        }
+ .language-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+        
+        .language-option:hover {
+            background: var(--light-blue);
+            color: var(--white);
+        }
+        
+        .language-option.active {
+            background: var(--gold);
+            color: var(--white);
         }
         
         .mobile-menu-btn {
@@ -483,8 +543,7 @@
             font-size: 1.3rem;
             margin-bottom: 10px;
         }
-        
-        /* Ambiente */
+  /* Ambiente */
         .environment-content {
             display: flex;
             flex-direction: column;
@@ -723,6 +782,10 @@
             section {
                 padding: 60px 0;
             }
+            
+            .language-selector {
+                margin-left: 0;
+            }
         }
         
         @media (max-width: 576px) {
@@ -752,709 +815,3 @@
         }
     </style>
 </head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="container header-content">
-            <div class="logo">
-                <i class="fas fa-umbrella-beach"></i>
-                Sunlight <span>Oceana</span> Club<span class="chinese-detail">海</span>
-            </div>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <nav>
-                <ul id="mainMenu">
-                    <li><a href="#home" class="active">Início</a></li>
-                    <li><a href="#about">Sobre</a></li>
-                    <li><a href="#ratings">Avaliações</a></li>
-                    <li><a href="#menu">Menu</a></li>
-                    <li><a href="#gallery">Galeria</a></li>
-                    <li><a href="#environment">Ambiente</a></li>
-                    <li><a href="#location">Localização</a></li>
-                    <li><a href="#contact">Contactos</a></li>
-                    <li><a href="#" id="adminAccess" style="color: var(--red-accent); font-weight: bold;">
-                        <i class="fas fa-lock"></i> Admin
-                    </a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-  <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container hero-content">
-            <h1 id="mainPhrase">Sabores do mar com um toque oriental, no coração da Beira</h1>
-            <p id="heroSubtitle">Um restaurante à beira-mar que mistura a riqueza dos frutos do mar moçambicanos com a tradição culinária chinesa.</p>
-            <button class="btn btn-call" id="reserveBtn">
-                <i class="fas fa-phone-alt"></i> Reservar Mesa
-            </button>
-        </div>
-    </section>
-
-    <!-- Sobre -->
-    <section id="about">
-        <div class="container">
-            <h2>Sobre o Restaurante</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3 id="aboutTitle">Nossa História</h3>
-                    <p id="aboutText">Localizado na Avenida Mateus Sansão Muthemba, na cidade costeira da Beira, o Sunlight Oceana Club é um ponto de encontro popular entre moradores e visitantes que procuram boa comida, ambiente descontraído e uma vista privilegiada com brisa marítima.</p>
-                    <p id="aboutText2">Há mais de 15 anos, oferecemos uma experiência gastronómica única que combina os melhores frutos do mar frescos com influências da culinária chinesa, criando pratos que celebram a fusão entre duas culturas ricas em sabores.</p>
-                    <p id="aboutText3">O nosso espaço externo com vista para o Índico é perfeito para refeições ao pôr-do-sol ou encontros sociais ao final da tarde, proporcionando momentos inesquecíveis à beira-mar.</p>
-                </div>
-                <div class="about-image">
-                    <img id="aboutImage" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Interior do restaurante Oceana">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Avaliações -->
-    <section id="ratings" class="ratings">
-        <div class="container">
-            <h2 id="ratingsTitle">Avaliações e Comentários</h2>
-            
-            <div class="rating-overall">
-                <div class="rating-score" id="ratingScore">3.9</div>
-                <div class="rating-stars" id="ratingStars">
-                    <!-- Estrelas geradas por JavaScript -->
-                </div>
-                <div class="rating-source" id="ratingSource">Classificação baseada em 1.000+ avaliações online</div>
-            </div>
-            
-            <div class="testimonials-grid" id="testimonialsGrid">
-                <!-- Testemunhos carregados via JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Menu -->
-    <section id="menu" style="background-color: #f5f9ff;">
-        <div class="container">
-            <h2 id="menuTitle">Nosso Menu</h2>
-            
-            <div class="menu-categories">
-                <button class="category-btn active" data-category="all">Todos</button>
-                <button class="category-btn" data-category="seafood">Frutos do Mar</button>
-                <button class="category-btn" data-category="mozambican">Pratos Moçambicanos</button>
-                <button class="category-btn" data-category="chinese">Influência Chinesa</button>
-                <button class="category-btn" data-category="drinks">Bebidas & Cocktails</button>
-            </div>
-            
-            <div class="menu-items" id="menuItems">
-                <!-- Itens do menu carregados via JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Galeria -->
-    <section id="gallery">
-        <div class="container">
-            <h2 id="galleryTitle">Galeria</h2>
-            <div class="gallery-container" id="galleryContainer">
-                <!-- Imagens carregadas via JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Posts em Destaque -->
-    <section class="featured-posts" id="featured">
-        <div class="container">
-            <h2 id="postsTitle">Destaques & Novidades</h2>
-            <div class="posts-container" id="postsContainer">
-                <!-- Posts carregados via JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Ambiente -->
-    <section id="environment">
-        <div class="container">
-            <h2 id="environmentTitle">Ambiente & Experiência</h2>
-            <div class="environment-content" id="environmentContent">
-                <!-- Itens de ambiente carregados via JavaScript -->
-            </div>
-        </div>
-    </section>
-  <!-- Localização -->
-    <section id="location">
-        <div class="container">
-            <h2 id="locationTitle">Localização</h2>
-            <div class="location-content">
-                <div class="location-info">
-                    <h3 id="visitTitle">Visite-nos</h3>
-                    <p><i class="fas fa-map-marker-alt" style="color: var(--red-accent); margin-right: 10px;"></i> <strong id="address">Avenida Mateus Sansão Muthemba, Beira, Moçambique</strong></p>
-                    <p id="locationDescription">Estamos localizados na orla marítima da Beira, com vista direta para o Oceano Índico. Um local de fácil acesso e com estacionamento disponível.</p>
-                </div>
-                
-                <div class="location-map">
-                    <p>📍 Mapa: Sunlight Oceana Club - Beira</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Sunlight Oceana Club</h3>
-                    <p id="footerDescription">Sabores do mar com um toque oriental, no coração da Beira. Uma experiência gastronómica única que celebra a fusão das culturas moçambicana e chinesa.</p>
-                    <div class="social-icons">
-                        <a href="#" id="facebookLink"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" id="instagramLink"><i class="fab fa-instagram"></i></a>
-                        <a href="#" id="twitterLink"><i class="fab fa-twitter"></i></a>
-                        <a href="#" id="tripadvisorLink"><i class="fab fa-tripadvisor"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Contactos</h3>
-                    <ul>
-                        <li><i class="fas fa-phone" style="margin-right: 10px;"></i> <span id="phone">+258 84 123 4567</span></li>
-                        <li><i class="fas fa-envelope" style="margin-right: 10px;"></i> <span id="email">info@oceana.co.mz</span></li>
-                        <li><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> <span id="footerAddress">Av. Mateus Sansão Muthemba, Beira</span></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Horário</h3>
-                    <ul id="hoursList">
-                        <!-- Horários carregados via JavaScript -->
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p id="copyrightText">&copy; 2023 Sunlight Oceana Club - Beira. Todos os direitos reservados. | Desenvolvido com paixão pelo Oceano Índico.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Modal de Chamada para Reserva -->
-    <div class="modal" id="callModal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeModal">&times;</span>
-            <h2>Reservar Mesa</h2>
-            <p>Para fazer uma reserva, ligue diretamente para o nosso restaurante:</p>
-            
-            <div class="call-info">
-                <div class="call-number" id="callNumber">+258 84 123 4567</div>
-                <p>Nossa equipe terá prazer em atender sua reserva e responder a todas as suas perguntas.</p>
-            </div>
-            
-            <button class="btn btn-call" id="callBtn">
-                <i class="fas fa-phone-alt"></i> Ligar Agora
-            </button>
-            
-            <p class="call-note">
-                <i class="fas fa-info-circle"></i> Horário de atendimento para reservas: Segunda a Domingo, das 10h às 22h.
-            </p>
-        </div>
-    </div>
-
-    <!-- Modal de Acesso Admin -->
-    <div class="modal" id="adminModal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeAdminModal">&times;</span>
-            <h2>Acesso Administrador</h2>
-            <div class="form-group" style="margin-bottom: 20px;">
-                <label for="pinInput">PIN de Acesso</label>
-                <input type="password" id="pinInput" placeholder="Digite o PIN" maxlength="4" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
-                <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">Para acessar o painel de administração, digite o PIN secreto.</p>
-            </div>
-            <button class="btn" id="submitPin" style="width: 100%; margin-top: 20px;">Acessar Painel</button>
-            <p id="pinError" style="color: red; margin-top: 15px; display: none;">PIN incorreto. Tente novamente.</p>
-        </div>
-    </div>
-
-    <script>
-        // Dados iniciais (serão sobrescritos pelos dados do localStorage se existirem)
-        const initialData = {
-            // Hero Section
-            mainPhrase: "Sabores do mar com um toque oriental, no coração da Beira",
-            heroSubtitle: "Um restaurante à beira-mar que mistura a riqueza dos frutos do mar moçambicanos com a tradição culinária chinesa.",
-            
-            // Sobre
-            aboutTitle: "Nossa História",
-            aboutText: "Localizado na Avenida Mateus Sansão Muthemba, na cidade costeira da Beira, o Sunlight Oceana Club é um ponto de encontro popular entre moradores e visitantes que procuram boa comida, ambiente descontraído e uma vista privilegiada com brisa marítima.",
-            aboutText2: "Há mais de 15 anos, oferecemos uma experiência gastronómica única que combina os melhores frutos do mar frescos com influências da culinária chinesa, criando pratos que celebram a fusão entre duas culturas ricas em sabores.",
-            aboutText3: "O nosso espaço externo com vista para o Índico é perfeito para refeições ao pôr-do-sol ou encontros sociais ao final da tarde, proporcionando momentos inesquecíveis à beira-mar.",
-            aboutImage: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
- // Avaliações
-            ratingsTitle: "Avaliações e Comentários",
-            ratingScore: "3.9",
-            ratingTotal: "1000+",
-            ratingSource: "Classificação baseada em 1.000+ avaliações online",
-            testimonials: [
-                {
-                    id: 1,
-                    text: "Excelente localização com vista para o mar. Os frutos do mar são sempre frescos e bem preparados. O serviço é atencioso e o ambiente é perfeito para um jantar à beira-mar.",
-                    author: "João Carlos",
-                    rating: 5,
-                    authorImage: "https://randomuser.me/api/portraits/men/32.jpg"
-                },
-                {
-                    id: 2,
-                    text: "Cardápio extenso e variado que agrada a todos os gostos. Adorei a fusão de sabores moçambicanos e chineses. Os preços são justos para a qualidade oferecida.",
-                    author: "Maria Fernanda",
-                    rating: 4,
-                    authorImage: "https://randomuser.me/api/portraits/women/44.jpg"
-                },
-                {
-                    id: 3,
-                    text: "O terraço com vista para o oceano é o ponto alto! Ambiente animado nos fins de semana, perfeito para reunir amigos. Os cocktails são muito bem feitos.",
-                    author: "Pedro Santos",
-                    rating: 4,
-                    authorImage: "https://randomuser.me/api/portraits/men/65.jpg"
-                }
-            ],
-            
-            // Menu
-            menuTitle: "Nosso Menu",
-            menuItems: [
-                { id: 1, name: "Camarão Grelhado à Moda do Chefe", description: "Camarões frescos grelhados com especiarias especiais e limão.", price: "850 MZN", category: "seafood", image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
-                { id: 2, name: "Peixe à Moda da Beira", description: "Peixe do dia grelhado com molho de coco e arroz de coco.", price: "750 MZN", category: "mozambican", image: "https://images.unsplash.com/photo-1470116945706-e6bf5d5a53ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
-                { id: 3, name: "Frango com Amendoim", description: "Frango estufado com molho de amendoim e legumes.", price: "650 MZN", category: "mozambican", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
-                { id: 4, name: "Lagosta com Gengibre", description: "Lagosta fresca salteada com gengibre, alho e cebolinha.", price: "1200 MZN", category: "chinese", image: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
-                { id: 5, name: "Rolinhos Primavera", description: "Tradicionais rolinhos primavera com molho agridoce.", price: "350 MZN", category: "chinese", image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
-                { id: 6, name: "Polvo Grelhado", description: "Polvo grelhado com azeite, alho e ervas aromáticas.", price: "950 MZN", category: "seafood", image: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
-                { id: 7, name: "Caipirinha de Maracujá", description: "Coquetel refrescante com cachaça, maracujá e limão.", price: "250 MZN", category: "drinks", image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
-                { id: 8, name: "Mojito Tropical", description: "Mojito especial com hortelã, limão e frutas tropicais.", price: "280 MZN", category: "drinks", image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" }
-            ],
-            
-            // Galeria
-            galleryTitle: "Galeria",
-            galleryImages: [
-                "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                "https://images.unsplash.com/photo-1578474846511-04ba529f0b88?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                "https://images.unsplash.com/photo-1578474846511-04ba529f0b88?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-            ],
-            
-            // Posts
-            postsTitle: "Destaques & Novidades",
-            posts: [
-                { id: 1, title: "Promoção Especial de Verão", content: "Aproveite nossos pratos de frutos do mar com 15% de desconto durante todo o mês de Dezembro. Aproveite o verão na Beira com sabores especiais!", date: "01 Dez 2023", image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", featured: true },
-                { id: 2, title: "Novo: Menu de Brunch aos Domingos", content: "Todos os domingos das 10h às 14h, desfrute do nosso brunch especial com pratos exclusivos e drinks incluídos. Venha em família!", date: "15 Nov 2023", image: "https://images.unsplash.com/photo-1551218808-94e220e084d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", featured: true },
-                { id: 3, title: "Espaço para Eventos Privados", content: "Agora disponível: aluguel do nosso espaço para eventos privados, celebrações e reuniões corporativas. Capacidade para até 100 pessoas.", date: "10 Nov 2023", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", featured: true }
-            ],
-            
-            // Ambiente
-            environmentTitle: "Ambiente & Experiência",
-            environmentItems: [
-                { id: 1, title: "Encontros Sociais", description: "O Oceana é o local ideal para reunir amigos e familiares. Com nosso espaço ao ar livre e vista para o mar, cada encontro se torna especial. Ambiente perfeito para celebrações e reuniões informais.", icon: "users" },
-                { id: 2, title: "Pôr-do-Sol à Beira-Mar", description: "Desfrute de um pôr-do-sol deslumbrante no nosso terraço com vista direta para o Oceano Índico. A combinação de boa comida, brisa marítima e o espetáculo do pôr-do-sol cria momentos inesquecíveis.", icon: "sun" },
-                { id: 3, title: "Fins de Semana Animados", description: "Aos sábados e domingos, oferecemos um brunch especial com pratos da casa e drinks temáticos. Venha aproveitar o fim de semana com estilo em um ambiente descontraído e acolhedor!", icon: "glass-cheers" }
-            ],
-            
-            // Localização
-            locationTitle: "Localização",
-            visitTitle: "Visite-nos",
-            address: "Avenida Mateus Sansão Muthemba, Beira, Moçambique",
-            locationDescription: "Estamos localizados na orla marítima da Beira, com vista direta para o Oceano Índico. Um local de fácil acesso e com estacionamento disponível.",
-            
-            // Contactos
-            phone: "+258 84 123 4567",
-            email: "info@oceana.co.mz",
-            footerAddress: "Av. Mateus Sansão Muthemba, Beira",
-            
-            // Horários
-            hours: [
-                { id: 1, day: "Segunda - Quinta", time: "11:00 - 22:00" },
-                { id: 2, day: "Sexta - Sábado", time: "11:00 - 00:00" },
-                { id: 3, day: "Domingo", time: "11:00 - 20:00" }
-            ],
-    // Footer
-            footerDescription: "Sabores do mar com um toque oriental, no coração da Beira. Uma experiência gastronómica única que celebra a fusão das culturas moçambicana e chinesa.",
-            copyrightText: "&copy; 2023 Sunlight Oceana Club - Beira. Todos os direitos reservados. | Desenvolvido com paixão pelo Oceano Índico.",
-            
-            // Redes Sociais
-            socialLinks: {
-                facebook: "#",
-                instagram: "#",
-                twitter: "#",
-                tripadvisor: "#"
-            },
-            
-            // Configurações
-            settings: {
-                primaryColor: "#0a3d62",
-                chineseElements: true
-            }
-        };
-
-        // Carregar dados do localStorage ou usar dados iniciais
-        function loadData() {
-            const savedData = localStorage.getItem('oceanaData');
-            return savedData ? JSON.parse(savedData) : initialData;
-        }
-
-        // Salvar dados no localStorage
-        function saveData(data) {
-            localStorage.setItem('oceanaData', JSON.stringify(data));
-        }
-
-        // Inicializar dados
-        let appData = loadData();
-
-        // DOM Elements
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mainMenu = document.getElementById('mainMenu');
-        const menuItemsContainer = document.getElementById('menuItems');
-        const galleryContainer = document.getElementById('galleryContainer');
-        const postsContainer = document.getElementById('postsContainer');
-        const testimonialsGrid = document.getElementById('testimonialsGrid');
-        const environmentContent = document.getElementById('environmentContent');
-        const hoursList = document.getElementById('hoursList');
-        const reserveBtn = document.getElementById('reserveBtn');
-        const callModal = document.getElementById('callModal');
-        const closeModal = document.getElementById('closeModal');
-        const callBtn = document.getElementById('callBtn');
-        const callNumber = document.getElementById('callNumber');
-        const adminAccess = document.getElementById('adminAccess');
-        const adminModal = document.getElementById('adminModal');
-        const closeAdminModal = document.getElementById('closeAdminModal');
-        const submitPin = document.getElementById('submitPin');
-        const pinInput = document.getElementById('pinInput');
-        const pinError = document.getElementById('pinError');
-        const categoryBtns = document.querySelectorAll('.category-btn');
-
-        // Atualizar conteúdo do site com os dados
-        function updateSiteContent() {
-            // Atualizar Hero Section
-            document.getElementById('mainPhrase').textContent = appData.mainPhrase;
-            document.getElementById('heroSubtitle').textContent = appData.heroSubtitle;
-            
-            // Atualizar Sobre
-            document.getElementById('aboutTitle').textContent = appData.aboutTitle;
-            document.getElementById('aboutText').textContent = appData.aboutText;
-            document.getElementById('aboutText2').textContent = appData.aboutText2;
-            document.getElementById('aboutText3').textContent = appData.aboutText3;
-            document.getElementById('aboutImage').src = appData.aboutImage;
-            
-            // Atualizar Avaliações
-            document.getElementById('ratingsTitle').textContent = appData.ratingsTitle;
-            document.getElementById('ratingScore').textContent = appData.ratingScore;
-            document.getElementById('ratingSource').textContent = appData.ratingSource;
-            
-            // Gerar estrelas para avaliação
-            const ratingStars = document.getElementById('ratingStars');
-            ratingStars.innerHTML = '';
-            const score = parseFloat(appData.ratingScore);
-            const fullStars = Math.floor(score);
-            const hasHalfStar = score % 1 >= 0.5;
-            
-            for (let i = 0; i < 5; i++) {
-                const star = document.createElement('i');
-                if (i < fullStars) {
-                    star.className = 'fas fa-star';
-                } else if (i === fullStars && hasHalfStar) {
-                    star.className = 'fas fa-star-half-alt';
-                } else {
-                    star.className = 'far fa-star';
-                }
-                ratingStars.appendChild(star);
-            }
-            
-            // Atualizar testemunhos
-            renderTestimonials();
-            
-            // Atualizar Menu
-            document.getElementById('menuTitle').textContent = appData.menuTitle;
-            renderMenuItems('all');
-            
-            // Atualizar Galeria
-            document.getElementById('galleryTitle').textContent = appData.galleryTitle;
-            renderGallery();
-            
-            // Atualizar Posts
-            document.getElementById('postsTitle').textContent = appData.postsTitle;
-            renderPosts();
-            
-            // Atualizar Ambiente
-            document.getElementById('environmentTitle').textContent = appData.environmentTitle;
-            renderEnvironmentItems();
-            
-            // Atualizar Localização
-            document.getElementById('locationTitle').textContent = appData.locationTitle;
-            document.getElementById('visitTitle').textContent = appData.visitTitle;
-            document.getElementById('address').textContent = appData.address;
-            document.getElementById('locationDescription').textContent = appData.locationDescription;
-            
-            // Atualizar Contactos
-            document.getElementById('phone').textContent = appData.phone;
-            document.getElementById('email').textContent = appData.email;
-            document.getElementById('footerAddress').textContent = appData.footerAddress;
-            document.getElementById('callNumber').textContent = appData.phone;
-            
-            // Atualizar Horários
-            renderHours();
-            
-            // Atualizar Footer
-            document.getElementById('footerDescription').textContent = appData.footerDescription;
-            document.getElementById('copyrightText').innerHTML = appData.copyrightText;
-            
-            // Atualizar Redes Sociais
-            document.getElementById('facebookLink').href = appData.socialLinks.facebook;
-            document.getElementById('instagramLink').href = appData.socialLinks.instagram;
-            document.getElementById('twitterLink').href = appData.socialLinks.twitter;
-            document.getElementById('tripadvisorLink').href = appData.socialLinks.tripadvisor;
-        }
-
-        // Renderizar testemunhos
-        function renderTestimonials() {
-            testimonialsGrid.innerHTML = '';
-            
-            appData.testimonials.forEach(testimonial => {
-                const testimonialElement = document.createElement('div');
-                testimonialElement.className = 'testimonial';
-                testimonialElement.innerHTML = `
-                    <div class="testimonial-text">${testimonial.text}</div>
-                    <div class="testimonial-author">
-                        <img src="${testimonial.authorImage}" alt="${testimonial.author}">
-                        <div>
-                            <strong>${testimonial.author}</strong>
-                            <div style="color: var(--gold); font-size: 0.9rem;">
-                                ${generateStars(testimonial.rating)}
-                            </div>
-                        </div>
-                    </div>
-                `;
-                testimonialsGrid.appendChild(testimonialElement);
-            });
-        }
-    // Gerar estrelas para testemunhos
-        function generateStars(rating) {
-            let stars = '';
-            for (let i = 0; i < 5; i++) {
-                if (i < rating) {
-                    stars += '<i class="fas fa-star"></i>';
-                } else {
-                    stars += '<i class="far fa-star"></i>';
-                }
-            }
-            return stars;
-        }
-
-        // Renderizar itens do menu
-        function renderMenuItems(category) {
-            menuItemsContainer.innerHTML = '';
-            
-            const filteredItems = category === 'all' 
-                ? appData.menuItems 
-                : appData.menuItems.filter(item => item.category === category);
-            
-            filteredItems.forEach(item => {
-                const menuItem = document.createElement('div');
-                menuItem.className = 'menu-item';
-                menuItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}">
-                    <div class="menu-item-content">
-                        <div class="menu-item-header">
-                            <div class="menu-item-name">${item.name}</div>
-                            <div class="menu-item-price">${item.price}</div>
-                        </div>
-                        <p class="menu-item-desc">${item.description}</p>
-                    </div>
-                `;
-                menuItemsContainer.appendChild(menuItem);
-            });
-        }
-
-        // Renderizar galeria
-        function renderGallery() {
-            galleryContainer.innerHTML = '';
-            
-            appData.galleryImages.forEach(imageUrl => {
-                // Verificar se é uma URL de dados (imagem local)
-                const isDataUrl = imageUrl.startsWith('data:image');
-                const src = isDataUrl ? imageUrl : (imageUrl || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');
-                
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item';
-                galleryItem.innerHTML = `<img src="${src}" alt="Imagem do restaurante">`;
-                galleryContainer.appendChild(galleryItem);
-            });
-        }
-
-        // Renderizar posts
-        function renderPosts() {
-            postsContainer.innerHTML = '';
-            
-            // Filtrar apenas posts destacados
-            const featuredPosts = appData.posts.filter(post => post.featured);
-            
-            featuredPosts.forEach(post => {
-                // Verificar se é uma URL de dados (imagem local)
-                const isDataUrl = post.image.startsWith('data:image');
-                const src = isDataUrl ? post.image : (post.image || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');
-                
-                const postElement = document.createElement('div');
-                postElement.className = 'post';
-                postElement.innerHTML = `
-                    <div class="post-image">
-                        <img src="${src}" alt="${post.title}">
-                    </div>
-                    <div class="post-content">
-                        <div class="post-date">${post.date}</div>
-                        <h3 class="post-title">${post.title}</h3>
-                        <p>${post.content}</p>
-                    </div>
-                `;
-                postsContainer.appendChild(postElement);
-            });
-        }
-
-        // Renderizar itens de ambiente
-        function renderEnvironmentItems() {
-            environmentContent.innerHTML = '';
-            
-            appData.environmentItems.forEach(item => {
-                const environmentItem = document.createElement('div');
-                environmentItem.className = 'environment-item';
-                environmentItem.innerHTML = `
-                    <div class="environment-icon">
-                        <i class="fas fa-${item.icon}"></i>
-                    </div>
-                    <div class="environment-text">
-                        <h3>${item.title}</h3>
-                        <p>${item.description}</p>
-                    </div>
-                `;
-                environmentContent.appendChild(environmentItem);
-            });
-        }
-
-        // Renderizar horários
-        function renderHours() {
-            hoursList.innerHTML = '';
-            appData.hours.forEach(hour => {
-                const li = document.createElement('li');
-                li.innerHTML = `<strong>${hour.day}:</strong> ${hour.time}`;
-                hoursList.appendChild(li);
-            });
-        }
-
-        // Event Listeners
-        mobileMenuBtn.addEventListener('click', () => {
-            mainMenu.classList.toggle('active');
-            mobileMenuBtn.innerHTML = mainMenu.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
-
-        // Fechar menu mobile ao clicar em um link
-        document.querySelectorAll('#mainMenu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mainMenu.classList.remove('active');
-                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-            });
-        });
-
-        // Sistema de reservas via chamada telefônica
-        reserveBtn.addEventListener('click', () => {
-            callModal.style.display = 'flex';
-        });
-
-        closeModal.addEventListener('click', () => {
-            callModal.style.display = 'none';
-        });
-
-        // Botão para ligar
-        callBtn.addEventListener('click', () => {
-            const phoneNumber = appData.phone.replace(/\D/g, '');
-            // Em um dispositivo real, isso abriria o discador
-            alert(`Ligando para: ${appData.phone}\n\nEm um dispositivo móvel, esta ação abriria o discador telefônico.`);
-            // Para web, apenas mostra a mensagem
-        });
-
-        // Fechar modal ao clicar fora
-        window.addEventListener('click', (e) => {
-            if (e.target === callModal) {
-                callModal.style.display = 'none';
-            }
-            if (e.target === adminModal) {
-                adminModal.style.display = 'none';
-                pinError.style.display = 'none';
-                pinInput.value = '';
-            }
-        });
-
-        // Sistema de acesso admin
-        adminAccess.addEventListener('click', (e) => {
-            e.preventDefault();
-            adminModal.style.display = 'flex';
-        });
-
-        closeAdminModal.addEventListener('click', () => {
-            adminModal.style.display = 'none';
-            pinError.style.display = 'none';
-            pinInput.value = '';
-        });
-
-        submitPin.addEventListener('click', () => {
-            const pin = pinInput.value;
-            if (pin === '8999') {
-                // Redirecionar para o painel de administração
-                window.open('ad.html', '_blank');
-                adminModal.style.display = 'none';
-                pinInput.value = '';
-            } else {
-                pinError.style.display = 'block';
-            }
-        });
-
-        // Permitir enviar o PIN com Enter
-        pinInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                submitPin.click();
-            }
-        });
-
-        // Filtro de categorias do menu
-        categoryBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remover classe active de todos os botões
-                categoryBtns.forEach(b => b.classList.remove('active'));
-                // Adicionar classe active ao botão clicado
-                btn.classList.add('active');
-                // Filtrar itens do menu
-                renderMenuItems(btn.dataset.category);
-            });
-        });
- // Scroll suave para âncoras
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                if(this.getAttribute('href') === '#') return;
-                
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Inicializar o site
-        updateSiteContent();
-        
-        // Exibir mensagem de boas-vindas
-        setTimeout(() => {
-            console.log('Bem-vindo ao Sunlight Oceana Club! Site carregado com sucesso.');
-        }, 500);
-    </script>
-</body>
-</html>
